@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign } from "@fortawesome/free-solid-svg-icons";
 
@@ -28,7 +29,7 @@ export default function Home() {
         <>
             <Header />
             <main className="h-[calc(100vh-110px)] grid place-items-center">
-                <section className="w-650 mx-auto">
+                <motion.div className="w-650 mx-auto" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeOut" }}>
                     <h1 className="text-6xl font-bold text-center">Congruence</h1>
                     <h2 className="text-lg text-slate-400/60 font-medium my-4 text-center">Find &amp; summarise anything on the web with AI</h2>
                     <div className="flex items-center gap-5 mt-12">
@@ -54,7 +55,7 @@ export default function Home() {
                             <Tile icon={faDollarSign}>What are the best over-ear headphones?</Tile>
                         </div>
                     </div>
-                </section>
+                </motion.div>
             </main>
         </>
     );
