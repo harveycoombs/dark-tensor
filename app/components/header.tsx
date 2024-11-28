@@ -14,8 +14,8 @@ export default function Header() {
                 <Link href="/support" className="text-sm font-medium mx-4 duration-100 hover:text-slate-400">Support</Link>
             </nav>
             <div>
-                <Button>Sign In</Button>
-                <Button transparent={true} classes="ml-1.5">Register</Button>
+                <Button url="/login" classes="inline-block align-middle">Sign In</Button>
+                <Button url="/register" classes="inline-block align-middle ml-1.5" transparent={true}>Register</Button>
             </div>
         </header>
     );
