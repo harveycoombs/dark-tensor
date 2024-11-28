@@ -8,7 +8,6 @@ import Header from "@/app/components/header";
 import Button from "@/app/components/ui/button";
 import Tile from "@/app/components/ui/tile";
 
-
 export default function Home() {
     let [recentSearches, setRecentSearches] = useState<any[]>([]);
     let [recentSearchesAreLoading, setRecentSearchesAreLoading] = useState<boolean>(true);
