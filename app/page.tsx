@@ -1,11 +1,29 @@
+"use client";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClockRotateLeft, faSliders, faMagnifyingGlass, faNewspaper } from "@fortawesome/free-solid-svg-icons";
+import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "@/app/components/header";
 import Button from "@/app/components/ui/button";
 import Tile from "@/app/components/ui/tile";
 
+
 export default function Home() {
+    let [recentSearches, setRecentSearches] = useState<any[]>([]);
+    let [recentSearchesAreLoading, setRecentSearchesAreLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        (async () => {
+            setRecentSearchesAreLoading(true);
+
+            let response = await fetch("/api/users/searches/recent");
+            let searches = await response.json();
+
+            setRecentSearches(searches);
+            setRecentSearchesAreLoading(false);
+        })();
+    }, []);
+
     return (
         <>
             <Header />
@@ -22,21 +40,18 @@ export default function Home() {
                         <SearchOption icon={faSliders} />
                     </div>
                     <div className="mt-12">
+                        <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
+                        <div className="grid grid-cols-4 gap-4">{
+                            recentSearchesAreLoading ? <span>Loading...</span> : !recentSearches.length ? <span>You have no recent searches</span> : recentSearches.map((search, index) => <Tile key={index} icon={faMagnifyingGlass}>{search.query}</Tile>)
+                        }</div>
+                    </div>                    
+                    <div className="mt-12">
                         <h3 className="font-medium text-slate-400 mb-2">Suggestions</h3>
                         <div className="grid grid-cols-4 gap-4">
-                            <Tile icon={faMagnifyingGlass}>Lorem ipsum dolor sit amet, consectetur.</Tile>
-                            <Tile icon={faMagnifyingGlass}>Lorem ipsum dolor sit amet, consectetur.</Tile>
-                            <Tile icon={faMagnifyingGlass}>Lorem ipsum dolor sit amet, consectetur.</Tile>
-                            <Tile icon={faMagnifyingGlass}>Lorem ipsum dolor sit amet, consectetur.</Tile>
-                        </div>
-                    </div>
-                    <div className="mt-12">
-                        <h3 className="font-medium text-slate-400 mb-2">Latest Searches</h3>
-                        <div className="grid grid-cols-4 gap-4">
-                            <Tile icon={faNewspaper}>Lorem ipsum dolor sit amet, consectetur.</Tile>
-                            <Tile icon={faNewspaper}>Lorem ipsum dolor sit amet, consectetur.</Tile>
-                            <Tile icon={faNewspaper}>Lorem ipsum dolor sit amet, consectetur.</Tile>
-                            <Tile icon={faNewspaper}>Lorem ipsum dolor sit amet, consectetur.</Tile>
+                            <Tile icon={faNewspaper}>What&apos;s going on in the news today?</Tile>
+                            <Tile icon={faCode}>How do I write an generate bcrypt hashes in Python?</Tile>
+                            <Tile icon={faCompass}>Which restaurant is considered the best near me?</Tile>
+                            <Tile icon={faDollarSign}>What are the best over-ear headphones?</Tile>
                         </div>
                     </div>
                 </section>
