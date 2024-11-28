@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <>
             <Header />
-            <main className="h-full grid place-items-center">
+            <main className="h-[calc(100vh-110px)] grid place-items-center">
                 <section className="w-650 mx-auto">
                     <h1 className="text-6xl font-bold text-center">Congruence</h1>
                     <h2 className="text-lg text-slate-400/60 font-medium my-4 text-center">Find &amp; summarise anything on the web with AI</h2>

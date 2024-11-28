@@ -1,7 +1,3 @@
 export default function Footer() {
-    return (
-        <footer className="p-4">
-            
-        </footer>
-    );
+    return <footer className="p-4 text-sm text-slate-400/60 font-medium select-none text-center">&copy; {new Date().getFullYear()} Congruence AI &middot; Harvey Coombs</footer>
 }
