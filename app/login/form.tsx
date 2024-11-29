@@ -54,23 +54,31 @@ export default function LoginForm() {
         }
     }
 
+    function updateField(name: string, value: string) {
+        switch (name) {
+            case "email":
+                setEmail(value);
+                break;
+            case "password":
+                setPassword(value);
+                break;
+        }
+
+        setErrorExistence(false);
+        setWarningExistence(false);
+        setFeedback(null);
+    }
+
     return (
         <form onSubmit={login} className="w-60">
             {feedback}
+            
             <Label error={errorExists} warning={warningExists} classes="mt-6">Email Address</Label>
-            <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="email" error={errorExists} warning={warningExists} onInput={(e: any) => {
-                setEmail(e.target.value);
-                setErrorExistence(false);
-                setWarningExistence(false);
-                setFeedback(null);
-            }} />                    
+            <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="email" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("email", e.target.value)} />
+
             <Label error={errorExists} warning={warningExists} classes="mt-2.5">Password</Label>
-            <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="password" error={errorExists} warning={warningExists} onInput={(e: any) => {
-                setPassword(e.target.value);
-                setErrorExistence(false);
-                setWarningExistence(false);
-                setFeedback(null);
-            }} />
+            <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="password" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("password", e.target.value)} />
+                
             {button}
             <Button classes={`block w-full mt-2.5${disabled ? " pointer-events-none" : ""}`} disabled={disabled} transparent={true} url="/register">Register</Button>
         </form>
