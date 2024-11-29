@@ -1,5 +1,5 @@
 "use client";
-export default function RegisterForm() {
+export default function RegistrationForm() {
     return (
         <form>
             
