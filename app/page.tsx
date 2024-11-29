@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign } from "@fortawesome/free-solid-svg-icons";
+import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "@/app/components/header";
 import Button from "@/app/components/ui/button";
@@ -42,7 +42,7 @@ export default function Home() {
                     <div className="mt-12">
                         <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
                         <div className="grid grid-cols-4 gap-4">{
-                            recentSearchesAreLoading ? <span>Loading...</span> : !recentSearches.length ? <span>You have no recent searches</span> : recentSearches.map((search, index) => <Tile key={index} icon={faMagnifyingGlass}>{search.query}</Tile>)
+                            recentSearchesAreLoading ? <span className="text-sm font-medium text-slate-400/60"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /> Loading</span> : !recentSearches.length ? <span>You have no recent searches</span> : recentSearches.map((search, index) => <Tile key={index} icon={faMagnifyingGlass}>{search.query}</Tile>)
                         }</div>
                     </div>                    
                     <div className="mt-12">
