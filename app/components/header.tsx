@@ -32,7 +32,7 @@ export default function Header() {
             </nav>
             <div>{
                     user ? <>
-                        <div className="inline-block align-middle cursor-pointer duration-150 text-slate-400/60 hover:text-slate-400 hover:text-slate-500"><FontAwesomeIcon icon={faEllipsis} /></div>
+                        <div className="inline-block align-middle cursor-pointer duration-150 text-slate-400/60 hover:text-slate-400 active:text-slate-500"><FontAwesomeIcon icon={faEllipsis} /></div>
                         <div className="inline-grid align-middle place-items-center bg-blue-100 text-blue-600 text-[0.8rem] leading-none select-none font-medium w-8 h-8 rounded-full ml-3">{(user.first_name.charAt(0).toUpperCase() + user.last_name.charAt(0)).toUpperCase()}</div>
                     </> : <>
                         <Button url="/login" classes="inline-block align-middle">Sign In</Button>

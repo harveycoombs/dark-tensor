@@ -50,6 +50,7 @@ export default function LoginForm() {
         } catch {
             setWarningExistence(false);
             setErrorExistence(true);
+            setButton(<Button classes="block w-full mt-2.5">Continue</Button>);
             setFeedback(<div className="text-sm font-medium text-center text-red-500">Something went wrong</div>);
         }
     }
