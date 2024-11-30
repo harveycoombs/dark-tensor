@@ -11,6 +11,7 @@ import Tile from "@/app/components/ui/tile";
 
 export default function Home() {
     let searchField = useRef<HTMLInputElement>(null);
+    let searchButton = useRef<HTMLButtonElement>(null);
 
     let [recentSearchesAreVisible, setRecentSearchesVisibility] = useState<boolean>(false);
     let [recentSearchesArea, setRecentSearchesArea] = useState<React.JSX.Element|null>(null);
@@ -56,9 +57,11 @@ export default function Home() {
         })();
     }, [recentSearchesAreVisible]);
 
-    function populateSearchField(value: string) {
-        if (!searchField?.current) return;
+    function performSuggestedSearch(value: string) {
+        if (!searchField?.current || !searchButton?.current) return;
+
         searchField.current.value = value;
+        searchButton.current.click();
     }
 
     return (
@@ -71,7 +74,7 @@ export default function Home() {
                     <div className="flex items-center gap-5 mt-12">
                         <div className="py-2 pl-3.5 pr-2 rounded-xl border border-slate-300 flex items-center duration-100 justify-between gap-2 w-full has-[input:focus]:border-blue-600 has-[input:focus]:shadow-md">
                             <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} />
-                            <Button>Search</Button>
+                            <Button ref={searchButton}>Search</Button>
                         </div>
                         <SearchOption icon={faClockRotateLeft} selected={recentSearchesAreVisible} onClick={() => setRecentSearchesVisibility(!recentSearchesAreVisible)} title="Show Recent Searches" />
                         <SearchOption icon={faSliders} title="Show Filters" />
@@ -80,10 +83,10 @@ export default function Home() {
                     <div className="mt-12">
                         <h3 className="font-medium text-slate-400 mb-2">Suggestions</h3>
                         <div className="grid grid-cols-4 gap-4">
-                            <Tile icon={faNewspaper} onClick={(e: any) => populateSearchField(e.target.innerText)}>What&apos;s going on in the news today?</Tile>
-                            <Tile icon={faCode} onClick={(e: any) => populateSearchField(e.target.innerText)}>How do I write an generate bcrypt hashes in Python?</Tile>
-                            <Tile icon={faCompass} onClick={(e: any) => populateSearchField(e.target.innerText)}>Which restaurant is considered the best near me?</Tile>
-                            <Tile icon={faDollarSign} onClick={(e: any) => populateSearchField(e.target.innerText)}>What are the best over-ear headphones?</Tile>
+                            <Tile icon={faNewspaper} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>What&apos;s going on in the news today?</Tile>
+                            <Tile icon={faCode} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>How do I write an generate bcrypt hashes in Python?</Tile>
+                            <Tile icon={faCompass} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>Which restaurant is considered the best near me?</Tile>
+                            <Tile icon={faDollarSign} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>What are the best over-ear headphones?</Tile>
                         </div>
                     </div>
                 </motion.div>
