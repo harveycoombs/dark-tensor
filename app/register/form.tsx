@@ -53,8 +53,8 @@ export default function RegistrationForm() {
         setDisability(true);
 
         let credentials = new URLSearchParams({
-            firstName: firstName,
-            lastName: lastName,
+            firstname: firstName,
+            lastname: lastName,
             birthdate: birthdate,
             email: email,
             password: password
