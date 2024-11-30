@@ -28,7 +28,7 @@ export default function LoginForm() {
         let credentials = new URLSearchParams({ email: email, password: password });
 
         try {  
-            let response = await fetch("/api/sessions", {
+            let response = await fetch("/api/users/sessions", {
                 method: "POST",
                 body: credentials
             });

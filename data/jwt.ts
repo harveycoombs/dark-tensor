@@ -12,7 +12,7 @@ export async function authenticate(token: string): Promise<any> {
 				reject(ex.message);
 			}
 
-			user = await getUserByID(user.userid);
+			user = await getUserByID(user.user_id);
 			resolve(user);
 		});
 	});

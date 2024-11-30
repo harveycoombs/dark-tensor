@@ -1,13 +1,24 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 import { getUserByEmailAddress, verifyCredentials } from "@/data/users";
-import { createJWT } from "@/data/jwt";
+import { createJWT, authenticate } from "@/data/jwt";
+
+export async function GET(): Promise<NextResponse> {
+    let cookieJar = await cookies();
+    let token = cookieJar.get("token")?.value;
+    let currentSessionUser = await authenticate(token ?? "");
+
+    return NextResponse.json({ user: currentSessionUser }, { status: 200 });
+}
 
 export async function POST(request: Request): Promise<NextResponse> {
     let data = await request.formData();
 
     let email = data.get("email")?.toString();
     let password = data.get("password")?.toString();
+
+    console.log("\n\n\n", email, password, "\n\n\n");
 
     if (!email?.length) return NextResponse.json({ error: "Email address was not provided." }, { status: 400 });
     if (!password?.length) return NextResponse.json({ error: "Password was not provided." }, { status: 400 });

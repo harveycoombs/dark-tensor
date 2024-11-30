@@ -15,7 +15,7 @@ export async function deleteUser(userid: number): Promise<boolean> {
 }
 
 export async function getUserByID(userid: number): Promise<any> {
-	let [result]: any = await pool.query("SELECT user_id, creation_date, first_name, last_name, birth_date FROM users WHERE user_id= ? AND deleted = 0", [userid]);
+	let [result]: any = await pool.query("SELECT user_id, creation_date, first_name, last_name, birth_date FROM users WHERE user_id = ? AND deleted = 0", [userid]);
 	return result[0];
 }
 
@@ -27,7 +27,9 @@ export async function getUserByEmailAddress(email: string): Promise<any> {
 export async function getPasswordHash(identifier: string | number): Promise<string> {
 	let field = typeof identifier == "number" ? "user_id" : "email_address";
 
-	let [result]: any = await pool.query(`SELECT password_hash FROM users WHERE ${field} = ?`, [identifier]);
+    console.log(`SELECT password_hash FROM users WHERE ${field} = ?`, [identifier]);
+
+	let [result]: any = await pool.query(`SELECT password_hash AS \`password\` FROM users WHERE ${field} = ?`, [identifier]);
 
 	return result[0]?.password;
 }
