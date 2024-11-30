@@ -2,9 +2,9 @@
 import pool from "@/data/database";
 import { generateHash, verify } from "@/data/passwords";
 
-export async function createUser(email: string, password: string, firstName: string, lastName: string, location: string): Promise<number> {
+export async function createUser(email: string, password: string, firstName: string, lastName: string, birthday: string): Promise<number> {
     let passwordHash = await generateHash(password);
-    let [result]: any = await pool.query("INSERT INTO users (email_address, password_hash, first_name, last_name, location) VALUES (?, ?, ?, ?, ?)", [email, passwordHash, firstName, lastName, location]);
+    let [result]: any = await pool.query("INSERT INTO users (email_address, password_hash, first_name, last_name, birthday) VALUES (?, ?, ?, ?, ?)", [email, passwordHash, firstName, lastName, location]);
     
     return result.insertId ?? 0;
 }
@@ -15,12 +15,12 @@ export async function deleteUser(userid: number): Promise<boolean> {
 }
 
 export async function getUserByID(userid: number): Promise<any> {
-	let [result]: any = await pool.query("SELECT user_id, creation_date, first_name, last_name, location FROM users WHERE user_id= ? AND deleted = 0", [userid]);
+	let [result]: any = await pool.query("SELECT user_id, creation_date, first_name, last_name, birthday FROM users WHERE user_id= ? AND deleted = 0", [userid]);
 	return result[0];
 }
 
 export async function getUserByEmailAddress(email: string): Promise<any> {
-    let [result]: any = await pool.query("SELECT user_id, first_name, last_name, location FROM users WHERE email_address= ? AND deleted = 0", [email]);
+    let [result]: any = await pool.query("SELECT user_id, first_name, last_name, birthday FROM users WHERE email_address= ? AND deleted = 0", [email]);
     return result[0];
 }
 

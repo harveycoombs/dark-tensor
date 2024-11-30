@@ -10,16 +10,16 @@ export async function POST(request: Request): Promise<NextResponse> {
     let password = data.get("password")?.toString();
     let firstName = data.get("firstname")?.toString();
     let lastName = data.get("lastname")?.toString();
-    let location = data.get("location")?.toString();
+    let birthday = data.get("birthday")?.toString();
 
-    if (!email?.length || !password?.length || !firstName?.length || !lastName?.length || !location?.length) {
+    if (!email?.length || !password?.length || !firstName?.length || !lastName?.length || !birthday?.length) {
         return NextResponse.json({ error: "One or more fields were not provided." }, { status: 400 });
     }
 
     let emailAlreadyExists = await emailExists(email);
     if (emailAlreadyExists) return NextResponse.json({ error: "Provided email address already exists." }, { status: 409 });
 
-    let userid = await createUser(email, password, firstName, lastName, location);
+    let userid = await createUser(email, password, firstName, lastName, birthday);
 
     if (!userid) return NextResponse.json({ error: "Unable to create user." }, { status: 500 });
 

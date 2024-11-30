@@ -28,7 +28,12 @@ export default function RegistrationForm() {
         setButton(<Button classes="block w-60 mt-6 mx-auto opacity-65 pointer-events-none">&nbsp; Loading &nbsp;</Button>);
         setDisability(true);
 
-        let credentials = new URLSearchParams({ email: email, password: password });
+        let credentials = new URLSearchParams({
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
+        });
 
         try {  
             let response = await fetch("/api/users", {
