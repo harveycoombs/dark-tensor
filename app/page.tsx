@@ -30,7 +30,7 @@ export default function Home() {
             if (response.status == 401) {
                 setRecentSearchesArea(<div className="mt-12">
                     <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
-                    <div className="text-sm font-medium text-slate-400/60">You are not signed in. <Link href="/login">Click here</Link> to sign in and view your recent searches</div>
+                    <div className="text-sm font-medium text-slate-400/60">You are not signed in. <Link href="/login" className="hover:underline">Click here</Link> to sign in and view your recent searches</div>
                 </div>);
             } else if (!response.ok) return;
 
