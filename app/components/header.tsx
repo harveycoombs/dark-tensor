@@ -13,7 +13,7 @@ export default function Header() {
         (async () => {
             let response = await fetch("/api/users/sessions");
 
-            if (!response.ok) return
+            if (!response.ok) return;
 
             let data = await response.json();
             setUser(data.user);

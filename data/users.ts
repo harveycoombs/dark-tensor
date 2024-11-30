@@ -47,3 +47,8 @@ export async function emailExists(email: string): Promise<boolean> {
 	let [result]: any = await pool.query("SELECT COUNT(*) AS total FROM users WHERE email_address = ?", [email]);
 	return result[0].total;
 }
+
+export async function getSearchHistory(userid: number, limit: number): Promise<any[]> {
+    let [result]: any = await pool.query("SELECT * FROM searches WHERE user_id = ? ORDER BY search_date DESC LIMIT ?", [userid, limit]);
+    return result;
+}
