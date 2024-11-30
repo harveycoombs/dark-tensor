@@ -11,6 +11,7 @@ export default function RegistrationForm() {
     let [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
     let [firstName, setFirstName] = useState<string>("");
     let [lastName, setLastName] = useState<string>("");
+    let [birthdate, setBirthdate] = useState<string>("");
 
     let [errorExists, setErrorExistence] = useState<boolean>(false);
     let [warningExists, setWarningExistence] = useState<boolean>(false);
@@ -54,6 +55,7 @@ export default function RegistrationForm() {
         let credentials = new URLSearchParams({
             firstName: firstName,
             lastName: lastName,
+            birthdate: birthdate,
             email: email,
             password: password
         });
@@ -92,6 +94,9 @@ export default function RegistrationForm() {
                 break;
             case "lastname":
                 setLastName(value);
+                break;
+            case "birthdate":
+                setBirthdate(value);
                 break;
             case "email":
                 setEmail(value);

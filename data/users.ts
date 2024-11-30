@@ -2,9 +2,9 @@
 import pool from "@/data/database";
 import { generateHash, verify } from "@/data/passwords";
 
-export async function createUser(email: string, password: string, firstName: string, lastName: string, birthday: string): Promise<number> {
+export async function createUser(email: string, password: string, firstName: string, lastName: string, birthdate: string): Promise<number> {
     let passwordHash = await generateHash(password);
-    let [result]: any = await pool.query("INSERT INTO users (email_address, password_hash, first_name, last_name, birthday) VALUES (?, ?, ?, ?, ?)", [email, passwordHash, firstName, lastName, location]);
+    let [result]: any = await pool.query("INSERT INTO users (email_address, password_hash, first_name, last_name, birthdate) VALUES (?, ?, ?, ?, ?)", [email, passwordHash, firstName, lastName, birthdate]);
     
     return result.insertId ?? 0;
 }
