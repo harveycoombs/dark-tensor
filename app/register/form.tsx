@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Field from "@/app/components/ui/field";
 import Label from "@/app/components/ui/label";
@@ -17,12 +17,35 @@ export default function RegistrationForm() {
 
     let [disabled, setDisability] = useState<boolean>(false);
 
-    let [button, setButton] = useState<React.JSX.Element>(<Button classes="block w-60 mt-6 mx-auto">Continue</Button>);
+    let continueButton = useRef<HTMLButtonElement>(null);
+    let [button, setButton] = useState<React.JSX.Element>(<Button classes="block w-60 mt-6 mx-auto" ref={continueButton}>Continue</Button>);
 
     let [feedback, setFeedback] = useState<React.JSX.Element|null>(null);
 
+    useEffect(() => {
+        if (continueButton?.current) {
+            continueButton.current.disabled = (!email.length || !password.length || !firstName.length || !lastName.length);
+        }
+    }, [email, password, passwordConfirmation, firstName, lastName]);
+
     async function register(e: any) {
         e.preventDefault();
+
+        if (!email.length || !password.length || !firstName.length || !lastName.length) {
+            setErrorExistence(false);
+            setWarningExistence(true);
+            setFeedback(<div className="text-sm font-medium text-center text-amber-400">One or more fields were not provided</div>);
+
+            return;
+        }
+
+        if (password != passwordConfirmation) {
+            setErrorExistence(false);
+            setWarningExistence(true);
+            setFeedback(<div className="text-sm font-medium text-center text-amber-400">Passwords do not match</div>);
+
+            return;
+        }
 
         setErrorExistence(false);
         setButton(<Button classes="block w-60 mt-6 mx-auto opacity-65 pointer-events-none">&nbsp; Loading &nbsp;</Button>);
