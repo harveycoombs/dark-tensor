@@ -127,7 +127,7 @@ export default function RegistrationForm() {
                     <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("lastname", e.target.value)} />
 
                     <Label error={errorExists} warning={warningExists} classes="mt-2.5">Date of Birth</Label>
-                    <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="date" />
+                    <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="date" onInput={(e: any) => updateField("birthdate", e.target.value)} />
                 </div>
 
                 <div className="inline-block align-middle w-60 ml-5">
