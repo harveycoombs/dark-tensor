@@ -51,7 +51,7 @@ export default function Home() {
                 <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
                 {
                     !json.searches.length ? <div className="text-sm font-medium text-slate-400/60">You have no recent searches</div>
-                    : <div className="grid grid-cols-4 gap-4">{json.searches.map((search: any, index: any) => <Tile key={index} icon={faMagnifyingGlass}>{search.query}<div className="text-xs font-medium text-slate-400/60 mt-1.5">{new Date(search.search_date).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "numeric" })}</div></Tile>)}</div>
+                    : <div className="grid grid-cols-4 gap-4">{json.searches.map((search: any, index: any) => <Tile key={index} icon={faMagnifyingGlass} onClick={performRecentSearch}><p>{search.query}</p><div className="text-xs font-medium text-slate-400/60 mt-1.5">{new Date(search.search_date).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "numeric" })}</div></Tile>)}</div>
                 }
             </div>);
         })();
@@ -61,6 +61,13 @@ export default function Home() {
         if (!searchField?.current || !searchButton?.current) return;
 
         searchField.current.value = value;
+        searchButton.current.click();
+    }
+
+    function performRecentSearch(e: any) {
+        if (!searchField?.current || !searchButton?.current) return;
+
+        searchField.current.value = e.target.querySelector("p")?.innerText ?? "";
         searchButton.current.click();
     }
 
