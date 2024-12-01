@@ -4,7 +4,7 @@ import { generateHash, verify } from "@/data/passwords";
 
 export async function createUser(email: string, password: string, firstName: string, lastName: string, birthdate: string): Promise<number> {
     let passwordHash = await generateHash(password);
-    let [result]: any = await pool.query("INSERT INTO users (email_address, password_hash, first_name, last_name, birth_date) VALUES (?, ?, ?, ?, ?)", [email, passwordHash, firstName, lastName, birthdate]);
+    let [result]: any = await pool.query("INSERT INTO users (creation_date, email_address, password_hash, first_name, last_name, birth_date) VALUES ((SELECT NOW()), ?, ?, ?, ?, ?)", [email, passwordHash, firstName, lastName, birthdate]);
     
     return result.insertId ?? 0;
 }
@@ -17,6 +17,16 @@ export async function deleteUser(userid: number): Promise<boolean> {
 export async function getUserByID(userid: number): Promise<any> {
 	let [result]: any = await pool.query("SELECT user_id, creation_date, first_name, last_name, birth_date FROM users WHERE user_id = ? AND deleted = 0", [userid]);
 	return result[0];
+}
+
+export async function getUserDetails(userid: number): Promise<any> {
+    let [result]: any = await pool.query("SELECT user_id, creation_date, email_address, first_name, last_name, birth_date, gender, occupation, location FROM users WHERE user_id = ? AND deleted = 0", [userid]);
+    return result[0];
+}
+
+export async function getUserSettings(userid: number): Promise<any> {
+    let [result]: any = await pool.query("SELECT * FROM settings WHERE user_id = ?", [userid]);
+    return result[0];
 }
 
 export async function getUserByEmailAddress(email: string): Promise<any> {

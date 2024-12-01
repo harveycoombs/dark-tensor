@@ -1,7 +1,21 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
-import { emailExists, createUser, getUserByID, deleteUser } from "@/data/users";
-import { createJWT } from "@/data/jwt";
+import { emailExists, createUser, getUserByID, getUserDetails, getUserSettings, deleteUser } from "@/data/users";
+import { createJWT, authenticate } from "@/data/jwt";
+
+export async function GET(): Promise<NextResponse> {
+    let cookieJar = await cookies();
+    let token = cookieJar.get("token")?.value;
+    let currentSessionUser = await authenticate(token ?? "");
+
+    if (!currentSessionUser?.user_id) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
+
+    let user = await getUserDetails(currentSessionUser.user_id);
+    let settings = await getUserSettings(currentSessionUser.user_id);
+
+    return NextResponse.json({ user: user, settings: settings }, { status: 200 });
+}
 
 export async function POST(request: Request): Promise<NextResponse> {
     let data = await request.formData();
