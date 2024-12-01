@@ -45,13 +45,13 @@ export default function Home() {
 
             if (!response.ok) return;
 
-            let searches = await response.json();
+            let json = await response.json();
             
             setRecentSearchesArea(<div className="mt-12">
                 <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
                 {
-                    !searches.length ? <div className="text-sm font-medium text-slate-400/60">You have no recent searches</div>
-                    : <div className="grid grid-cols-4 gap-4">{searches.map((search: any, index: any) => <Tile key={index} icon={faMagnifyingGlass}>{search.query}</Tile>)}</div>
+                    !json.searches.length ? <div className="text-sm font-medium text-slate-400/60">You have no recent searches</div>
+                    : <div className="grid grid-cols-4 gap-4">{json.searches.map((search: any, index: any) => <Tile key={index} icon={faMagnifyingGlass}>{search.query}<div className="text-xs font-medium text-slate-400/60 mt-1.5">{new Date(search.search_date).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "numeric" })}</div></Tile>)}</div>
                 }
             </div>);
         })();
