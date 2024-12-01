@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
 
 import Button from "@/app/components/ui/button";
+import Popup from "@/app/components/ui/popup";
 
 export default function Header() {
     let [user, setUser] = useState<any>(null);
+    let [settingsPopupIsVisible, setSettingsPopupVisibility] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
@@ -32,13 +34,15 @@ export default function Header() {
             </nav>
             <div>{
                     user ? <>
-                        <div className="inline-block align-middle cursor-pointer duration-150 text-slate-400/60 hover:text-slate-400 active:text-slate-500"><FontAwesomeIcon icon={faEllipsis} /></div>
+                        <div className="inline-block align-middle cursor-pointer duration-150 text-slate-400/60 hover:text-slate-400 active:text-slate-500" onClick={() => setSettingsPopupVisibility(true)}><FontAwesomeIcon icon={faGear} /></div>
                         <div className="inline-grid align-middle place-items-center bg-blue-100 text-blue-600 text-[0.8rem] leading-none select-none font-medium w-8 h-8 rounded-full ml-3">{(user.first_name.charAt(0).toUpperCase() + user.last_name.charAt(0)).toUpperCase()}</div>
                     </> : <>
                         <Button url="/login" classes="inline-block align-middle">Sign In</Button>
                         <Button url="/register" classes="inline-block align-middle ml-1.5" transparent={true}>Register</Button>
                     </>
-                }</div>
+                }</div>{settingsPopupIsVisible ? <Popup title="Settings" onClose={() => setSettingsPopupVisibility(false)}>
+                    a
+                </Popup> : null}
         </header>
     );
 }
