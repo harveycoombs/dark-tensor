@@ -98,7 +98,7 @@ export default function Home() {
                         <h3 className="font-medium text-slate-400 mb-2">Suggestions</h3>
                         <div className="grid grid-cols-4 gap-4">
                             <Tile icon={faNewspaper} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>What&apos;s going on in the news today?</Tile>
-                            <Tile icon={faCode} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>How do I write an generate bcrypt hashes in Python?</Tile>
+                            <Tile icon={faCode} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>How do I generate bcrypt hashes in Python?</Tile>
                             <Tile icon={faCompass} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>Which restaurant is considered the best near me?</Tile>
                             <Tile icon={faDollarSign} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>What are the best over-ear headphones?</Tile>
                         </div>
