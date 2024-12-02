@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateText } from "@/data/models";
+import { generateText } from "@/data/model";
 
 export async function GET(request: Request): Promise<NextResponse> {
     let url = new URL(request.url);
