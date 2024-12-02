@@ -71,6 +71,13 @@ export default function Home() {
         searchButton.current.click();
     }
 
+    function search() {
+        if (!searchField?.current || !searchField.current.value?.length) return;
+
+        let query = searchField.current.value;
+        window.location.href = `/search?q=${query}`;
+    }
+
     return (
         <>
             <Header />
@@ -81,7 +88,7 @@ export default function Home() {
                     <div className="flex items-center gap-5 mt-12">
                         <div className="py-2 pl-3.5 pr-2 rounded-xl border border-slate-300 flex items-center duration-100 justify-between gap-2 w-full has-[input:focus]:border-blue-600 has-[input:focus]:shadow-md">
                             <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} />
-                            <Button ref={searchButton}>Search</Button>
+                            <Button ref={searchButton} onClick={search}>Search</Button>
                         </div>
                         <SearchOption icon={faClockRotateLeft} selected={recentSearchesAreVisible} onClick={() => setRecentSearchesVisibility(!recentSearchesAreVisible)} title="Show Recent Searches" />
                         <SearchOption icon={faSliders} title="Show Filters" />
