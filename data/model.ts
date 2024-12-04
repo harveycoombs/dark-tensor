@@ -11,7 +11,7 @@ export async function generateText({ model, prompt }: ModelOptions): Promise<any
     let response = await ollama.chat({
         model: model,
         messages: [{ role: "user", content: prompt.trim() }]
-    })
+    });
 
-    return response?.message;
+    return response?.message?.content;
 }

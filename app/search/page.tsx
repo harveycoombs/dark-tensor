@@ -36,14 +36,34 @@ export default function Home() {
                 return;
             }
 
+            let formatted = formatSummary(data.summary);
+
             setSummary(<motion.div className="w-650 rounded-xl px-4 py-3 bg-slate-50 text-slate-400 mx-auto" initial={{ height: 0, opacity: 0 }} animate={{ height: "70vh", opacity: 1 }} transition={{ duration: 1, ease: "easeInOut" }} style={{ overflow: "hidden", transformOrigin: "top center" }}>
                 <h2 className="block mb-2 text-slate-500 font-semibold select-none">Summary</h2>
-                <p className="text-sm leading-relaxed">{data.summary}</p>
+                <p className="text-sm leading-relaxed">{formatted}</p>
             </motion.div>);
 
             setResults(data.results);
         })();
     }, [query]);
+
+    function formatSummary(text: string): React.JSX.Element[] {
+        let formatted = [];
+        
+        let parts = text.split(/```([^```]+)```/g);
+    
+        for (let i = 0; i < parts.length; i++) {
+            if (i % 2 === 0) {
+                let lines = parts[i].split("\n").map((line, index) => <span key={`${i}-${index}`}>{line}<br/></span>);
+                formatted.push(...lines);
+                continue;
+            }
+
+            formatted.push(<code key={i} className="block bg-slate-800 text-slate-100 p-2 rounded-md mb-2">{parts[i]}</code>);
+        }
+    
+        return formatted;
+    }
 
     return (
         <>

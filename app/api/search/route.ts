@@ -18,6 +18,7 @@ export async function GET(request: Request): Promise<NextResponse> {
 
         return NextResponse.json({ summary: response ?? "", results: [] }, { status: 200 });
     } catch (ex: any) {
+        console.error(ex);
         return NextResponse.json({ error: `Unable to generate text: ${ex.message}.` }, { status: 500 });
     }
 }
