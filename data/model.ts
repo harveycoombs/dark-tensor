@@ -1,20 +1,17 @@
+import ollama from "ollama";
+
 interface ModelOptions {
     model: string;
     prompt: string;
-    maxLength: number;
 }
 
-export async function generateText({ model, prompt, maxLength }: ModelOptions): Promise<any> {
+export async function generateText({ model, prompt }: ModelOptions): Promise<any> {
     if (!model?.length || !prompt?.length) return null;
 
-    let transformers = await import(/* webpackIgnore: true */ "@huggingface/transformers");
-    
-    if (!transformers?.pipeline) {
-        throw new Error("Pipeline unavailable.");
-    }
+    let response = await ollama.chat({
+        model: model,
+        messages: [{ role: "user", content: prompt.trim() }]
+    })
 
-    let generator = await transformers.pipeline("text-generation", model, { device: "gpu" });
-    let result = await generator(prompt, { max_length: maxLength });
-
-    return result;
+    return response?.message;
 }
