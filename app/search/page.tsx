@@ -47,6 +47,21 @@ export default function Home() {
         })();
     }, [query]);
 
+    useEffect(() => {
+        if (!query?.length) return;
+
+        (async () => {
+            let response = await fetch("/api/search", {
+                method: "POST",
+                body: new URLSearchParams({ query: query })
+            });
+
+            if (!response.ok) {
+                console.error("Failed to insert search history.");
+            }
+        })();
+    }, [query]);
+
     function formatSummary(text: string): React.JSX.Element[] {
         let formatted = [];
         

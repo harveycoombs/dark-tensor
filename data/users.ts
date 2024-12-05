@@ -36,9 +36,7 @@ export async function getUserByEmailAddress(email: string): Promise<any> {
 
 export async function getPasswordHash(identifier: string | number): Promise<string> {
 	let field = typeof identifier == "number" ? "user_id" : "email_address";
-
-    console.log(`SELECT password_hash FROM users WHERE ${field} = ?`, [identifier]);
-
+    
 	let [result]: any = await pool.query(`SELECT password_hash AS \`password\` FROM users WHERE ${field} = ?`, [identifier]);
 
 	return result[0]?.password;
@@ -61,4 +59,9 @@ export async function emailExists(email: string): Promise<boolean> {
 export async function getSearchHistory(userid: number, limit: number): Promise<any[]> {
     let [result]: any = await pool.query("SELECT * FROM searches WHERE user_id = ? ORDER BY search_date DESC LIMIT ?", [userid, limit]);
     return result;
+}
+
+export async function insertSearchHistory(userid: number, query: string): Promise<boolean> {
+    let [result]: any = await pool.query("INSERT INTO searches (user_id, search_date, search_query) VALUES (?, NOW(), ?)", [userid, query]);
+    return result.affectedRows > 0;
 }
