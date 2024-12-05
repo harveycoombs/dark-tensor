@@ -82,7 +82,7 @@ export default function Home() {
         <>
             <Header />
             <main className="h-[calc(100vh-110px)] grid place-items-center">
-                <motion.div className="w-650 mx-auto" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeOut" }}>
+                <motion.div className="w-650 mx-auto max-[700px]:w-full max-[700px]:px-3" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeOut" }}>
                     <h1 className="text-6xl font-bold text-center">Congruence</h1>
                     <h2 className="text-lg text-slate-400/60 font-medium my-4 text-center">Find &amp; summarise anything on the web with AI</h2>
                     <div className="flex items-center gap-5 mt-12">
@@ -96,7 +96,7 @@ export default function Home() {
                     {recentSearchesArea}              
                     <div className="mt-12">
                         <h3 className="font-medium text-slate-400 mb-2">Suggestions</h3>
-                        <div className="grid grid-cols-4 gap-4">
+                        <div className="grid grid-cols-4 gap-4 max-[700px]:grid-cols-2 max-[700px]:gap-2">
                             <Tile icon={faNewspaper} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>What&apos;s going on in the news today?</Tile>
                             <Tile icon={faCode} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>How do I generate bcrypt hashes in Python?</Tile>
                             <Tile icon={faCompass} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>Which restaurant is considered the best near me?</Tile>

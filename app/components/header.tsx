@@ -25,7 +25,7 @@ export default function Header() {
     return (
         <header className="p-3 select-none bg-white sticky top-0 border-b border-b-slate-300 flex justify-between items-center z-30">
             <Link href="/" className="font-bold duration-100 hover:opacity-85 active:opacity-70">Congruence <span className="text-blue-600">AI</span></Link>
-            <nav>
+            <nav className="max-[700px]:hidden">
                 <Link href="/about" className="text-sm font-medium mx-4 duration-100 hover:text-slate-400">About</Link>
                 <Link href="/privacy" className="text-sm font-medium mx-4 duration-100 hover:text-slate-400">Privacy</Link>
                 <Link href="/pricing" className="text-sm font-medium mx-4 duration-100 hover:text-slate-400">Pricing</Link>
