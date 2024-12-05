@@ -62,6 +62,6 @@ export async function getSearchHistory(userid: number, limit: number): Promise<a
 }
 
 export async function insertSearchHistory(userid: number, query: string): Promise<boolean> {
-    let [result]: any = await pool.query("INSERT INTO searches (user_id, search_date, search_query) VALUES (?, NOW(), ?)", [userid, query]);
+    let [result]: any = await pool.query("INSERT INTO searches (user_id, search_date, query) VALUES (?, NOW(), ?)", [userid, query]);
     return result.affectedRows > 0;
 }

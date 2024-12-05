@@ -63,7 +63,7 @@ export default function Home() {
         searchField.current.value = value;
 
         searchButton.current.disabled = false;
-        searchButton.current.click();
+        search();
     }
 
     function performRecentSearch(e: any) {
@@ -72,7 +72,7 @@ export default function Home() {
         searchField.current.value = e.target.querySelector("p")?.innerText ?? "";
 
         searchButton.current.disabled = false;
-        searchButton.current.click();
+        search();
     }
 
     function search() {
