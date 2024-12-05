@@ -41,7 +41,24 @@ export default function Header() {
                         <Button url="/register" classes="inline-block align-middle ml-1.5" transparent={true}>Register</Button>
                     </>
                 }</div>{settingsPopupIsVisible ? <Popup title="Settings" onClose={() => setSettingsPopupVisibility(false)}>
-                    <div className="w-650 flex"></div>
+                    <div className="w-650 flex">
+                        <div className="w-44 mt-2">
+                            <div>
+                                <div className="inline-grid align-middle place-items-center bg-blue-100 text-blue-600 text-sm leading-none select-none font-medium w-9 h-9 rounded-full">{(user.first_name.charAt(0).toUpperCase() + user.last_name.charAt(0)).toUpperCase()}</div>
+                                <div className="inline-block align-middle ml-2">
+                                    <strong className="text-sm font-bold">{user.first_name} {user.last_name}</strong>
+                                    <div className="text-xs font-medium text-slate-400/80">Joined {new Date(user.creation_date).toLocaleString(undefined, { year: "numeric", month: "short" })}</div>
+                                </div>
+                                <div className="mt-2">
+                                    <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1">General</div>
+                                    <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1">Account</div>
+                                    <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1">Security</div>
+                                    <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1">Advanced</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
                 </Popup> : null}
         </header>
     );
