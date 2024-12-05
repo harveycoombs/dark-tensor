@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch, faL } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "@/app/components/header";
 import Button from "@/app/components/ui/button";
@@ -61,6 +61,8 @@ export default function Home() {
         if (!searchField?.current || !searchButton?.current) return;
 
         searchField.current.value = value;
+
+        searchButton.current.disabled = false;
         searchButton.current.click();
     }
 
@@ -68,14 +70,27 @@ export default function Home() {
         if (!searchField?.current || !searchButton?.current) return;
 
         searchField.current.value = e.target.querySelector("p")?.innerText ?? "";
+
+        searchButton.current.disabled = false;
         searchButton.current.click();
     }
 
     function search() {
-        if (!searchField?.current || !searchField.current.value?.length) return;
+        if (!searchField?.current?.value?.length) return;
 
         let query = searchField.current.value;
         window.location.href = `/search?q=${query}`;
+    }
+
+    function updateButtonAvailability(e: any) {
+        if (!searchButton?.current) return;
+        searchButton.current.disabled = !e.target.value.length;
+
+        if (e.target.value.length) {
+            searchButton.current.addEventListener("click", search);
+        } else {
+            searchButton.current.removeEventListener("click", search);
+        }
     }
 
     return (
@@ -87,8 +102,8 @@ export default function Home() {
                     <h2 className="text-lg text-slate-400/60 font-medium my-4 text-center">Find &amp; summarise anything on the web with AI</h2>
                     <div className="flex items-center gap-5 mt-12">
                         <div className="py-2 pl-3.5 pr-2 rounded-xl border border-slate-300 flex items-center duration-100 justify-between gap-2 w-full has-[input:focus]:border-blue-600 has-[input:focus]:shadow-md">
-                            <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} />
-                            <Button ref={searchButton} onClick={search}>Search</Button>
+                            <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} onInput={updateButtonAvailability} />
+                            <Button ref={searchButton} disabled>Search</Button>
                         </div>
                         <SearchOption icon={faClockRotateLeft} selected={recentSearchesAreVisible} onClick={() => setRecentSearchesVisibility(!recentSearchesAreVisible)} title="Show Recent Searches" />
                         <SearchOption icon={faSliders} title="Show Filters" />
