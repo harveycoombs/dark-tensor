@@ -41,7 +41,7 @@ export default function Header() {
                         <Button url="/register" classes="inline-block align-middle ml-1.5" transparent={true}>Register</Button>
                     </>
                 }</div>{settingsPopupIsVisible ? <Popup title="Settings" onClose={() => setSettingsPopupVisibility(false)}>
-                    Settings
+                    <div className="w-650 flex"></div>
                 </Popup> : null}
         </header>
     );
