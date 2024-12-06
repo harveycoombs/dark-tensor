@@ -13,7 +13,8 @@ export default {
         foreground: "var(--foreground)"
       },
       width: {
-        "650": "650px"
+        "650": "650px",
+        "23/50": "46%",
       },
       height: {
         "1/2-screen": "50vh",

@@ -5,7 +5,7 @@ import Button from "@/app/components/ui/button";
 import Field from "@/app/components/ui/field";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faClockRotateLeft, faDownload } from "@fortawesome/free-solid-svg-icons";
 
 interface Properties {
     onClose: any;
@@ -15,16 +15,36 @@ export default function ChatPopup({ onClose }: Properties) {
     let [prompt, setPrompt] = useState<string>("");
     let [messages, setMessages] = useState<any[]>([]);
 
-    /*useEffect(() => {
+    let [isLoading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (!isLoading) return;
+
         (async () => {
             let response = await fetch(encodeURI(`/api/chat?prompt=${prompt}`));
             let data = await response.json();
 
             if (!response.ok) return;
 
-            setMessages([...messages, data.text]);
+            setMessages([...messages, {
+                content: data.text,
+                you: false,
+                timestamp: new Date()
+            }]);
+
+            setLoading(false);
         })();
-    }, []);*/
+    }, [isLoading]);
+
+    function sendMessage() {
+        setMessages([...messages, {
+            content: prompt,
+            you: true,
+            timestamp: new Date()
+        }]);
+
+        setLoading(true);
+    }
 
     return (
         <Popup title="Chat" onClose={onClose}>
@@ -32,7 +52,9 @@ export default function ChatPopup({ onClose }: Properties) {
                 <div className="flex justify-between items-center text-sm mb-2">
                     <div className="text-slate-400/60">Model: <strong className="font-bold text-slate-600">DeepSeek V2 Lite &#40;15.7B&#41;</strong></div>
                     <div>
-                        <ChatOption icon={faFileExport} />
+                        <ChatOption icon={faPlus} title="New Conversation" />
+                        <ChatOption icon={faClockRotateLeft} title="View Conversation History" />
+                        <ChatOption icon={faDownload} title="Download Conversation Transcript" />
                     </div>
                 </div>
                 <div className={`h-1/2-screen ${messages.length ? "" : "grid place-items-center pointer-events-none"}`}>{
@@ -40,8 +62,8 @@ export default function ChatPopup({ onClose }: Properties) {
                     : <div className="text-center"><strong className="text-xl text-slate-400/60 font-semibold">Welcome to Chat</strong><div className="text-xs text-slate-400 mt-1.5">Start a conversation by typing a message below</div></div>
                 }</div>
                 <div className="flex gap-3">
-                    <Field classes="w-full" />
-                    <Button>Send</Button>
+                    <Field classes="w-full" onInput={(e: any) => setPrompt(e.target.value)} />
+                    <Button onClick={sendMessage}>Send</Button>
                 </div>
             </div>
         </Popup>
@@ -49,9 +71,14 @@ export default function ChatPopup({ onClose }: Properties) {
 }
 
 function ChatMessage({ message, ...rest }: any) {
-    return <div className="" {...rest}>{message.content}</div>;
+    return (
+        <div className={`w-5/12 mt-3 ${message.you ? "ml-auto" : "mr-auto"}`}>
+            <div className={`p-2 text-sm max-w-23/50 font-medium rounded-lg ${message.you ? "bg-slate-100 text-slate-400" : "bg-blue-400 text-white"}`} {...rest}>{message.content}</div>
+            <div className="text-xs text-slate-400 mt-1">{message.timestamp.toLocaleString(undefined, { hour: "2-digit", minute: "2-digit" })}</div>
+        </div>
+    );
 }
 
 function ChatOption({ icon, ...rest }: any) {
-    return <div className="text-base text-slate-400/60" {...rest}><FontAwesomeIcon icon={icon} /></div>
+    return <div className="inline-block align-middle ml-3.5 text-base cursor-pointer duration-100 text-slate-400/60 hover:text-slate-400 active:text-slate-500" {...rest}><FontAwesomeIcon icon={icon} /></div>
 }
