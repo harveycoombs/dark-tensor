@@ -32,11 +32,11 @@ export default function ChatPopup({ onClose }: Properties) {
                         options will go here
                     </div>
                 </div>
-                <div className={`h-96 ${messages.length ? "" : "grid place-items-center pointer-events-none"}`}>{
+                <div className={`h-1/2-screen ${messages.length ? "" : "grid place-items-center pointer-events-none"}`}>{
                     messages.length ? messages.map((message, index) => <ChatMessage key={index} message={message} />)
-                    : <div className="text-center"><strong className="text-xl text-slate-400/60 font-semibold">Welcome to Chat</strong><div className="text-sm text-slate-400 font-medium mt-1.5">Start a conversation by typing a message below</div></div>
+                    : <div className="text-center"><strong className="text-xl text-slate-400/60 font-semibold">Welcome to Chat</strong><div className="text-xs text-slate-400 mt-1.5">Start a conversation by typing a message below</div></div>
                 }</div>
-                <div className="flex gap-2">
+                <div className="flex gap-3">
                     <Field classes="w-full" />
                     <Button>Send</Button>
                 </div>

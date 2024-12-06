@@ -14,6 +14,10 @@ export default {
       },
       width: {
         "650": "650px"
+      },
+      height: {
+        "1/2-screen": "50vh",
+        "3/4-screen": "75vh"
       }
     },
   },
