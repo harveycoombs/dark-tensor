@@ -5,7 +5,7 @@ import Button from "@/app/components/ui/button";
 import Field from "@/app/components/ui/field";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faClockRotateLeft, faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faClockRotateLeft, faDownload, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 
 interface Properties {
     onClose: any;
@@ -70,7 +70,9 @@ export default function ChatPopup({ onClose }: Properties) {
                 <div className={`h-1/2-screen overflow-auto ${messages.length ? "" : "grid place-items-center pointer-events-none"}`} ref={chatArea}>{
                     messages.length ? messages.map((message, index) => <ChatMessage key={index} message={message} />)
                     : <div className="text-center"><strong className="text-xl text-slate-400/60 font-semibold">Welcome to Chat</strong><div className="text-xs text-slate-400 mt-1.5">Start a conversation by typing a message below</div></div>
-                }</div>
+                }
+                {isLoading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-blue-400 text-white w-fit"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
+                </div>
                 <div className="flex gap-3 mt-3.5">
                     <Field classes="w-full" onInput={(e: any) => setPrompt(e.target.value)} ref={promptField} />
                     <Button onClick={sendMessage} disabled={isLoading}>Send</Button>
