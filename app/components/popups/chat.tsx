@@ -4,6 +4,9 @@ import Popup from "@/app/components/ui/popup";
 import Button from "@/app/components/ui/button";
 import Field from "@/app/components/ui/field";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+
 interface Properties {
     onClose: any;
 }
@@ -29,7 +32,7 @@ export default function ChatPopup({ onClose }: Properties) {
                 <div className="flex justify-between items-center text-sm mb-2">
                     <div className="text-slate-400/60">Model: <strong className="font-bold text-slate-600">DeepSeek V2 Lite &#40;15.7B&#41;</strong></div>
                     <div>
-                        options will go here
+                        <ChatOption icon={faFileExport} />
                     </div>
                 </div>
                 <div className={`h-1/2-screen ${messages.length ? "" : "grid place-items-center pointer-events-none"}`}>{
@@ -47,4 +50,8 @@ export default function ChatPopup({ onClose }: Properties) {
 
 function ChatMessage({ message, ...rest }: any) {
     return <div className="" {...rest}>{message.content}</div>;
+}
+
+function ChatOption({ icon, ...rest }: any) {
+    return <div className="text-base text-slate-400/60" {...rest}><FontAwesomeIcon icon={icon} /></div>
 }
