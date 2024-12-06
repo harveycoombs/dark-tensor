@@ -1,20 +1,20 @@
 import { NextResponse } from "next/server";
 
-import { generateText } from "@/data/model";
+import { generateFromContext } from "@/data/model";
 
 export async function GET(request: Request): Promise<NextResponse> {
     let url = new URL(request.url);
     let params = url.searchParams;
-    let prompt = params.get("prompt");
+    let messages = JSON.parse(params.get("messages") ?? "[]");
 
-    if (!prompt) {
-        return NextResponse.json({ error: "Invalid prompt." }, { status: 400 });
+    if (!messages?.length) {
+        return NextResponse.json({ error: "Invalid messages." }, { status: 400 });
     }
 
     try {
-        let response = await generateText({
+        let response = await generateFromContext({
             model: "deepseek-v2:lite",
-            prompt: prompt
+            messages: messages
         });
 
         return NextResponse.json({ text: response ?? "", }, { status: 200 });
