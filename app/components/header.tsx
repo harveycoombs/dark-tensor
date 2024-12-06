@@ -34,7 +34,8 @@ export default function Header() {
             </nav>
             <div>{
                     user ? <>
-                        <div className="inline-block align-middle cursor-pointer duration-150 text-slate-400/60 hover:text-slate-400 active:text-slate-500" onClick={() => setSettingsPopupVisibility(true)}><FontAwesomeIcon icon={faGear} /></div>
+<HeaderIconOption icon={faMessage} title="Open Chat" />
+                        <HeaderIconOption icon={faGear} title="Open Settings" onClick={() => setSettingsPopupVisibility(true)} />
                         <div className="inline-grid align-middle place-items-center bg-blue-100 text-blue-600 text-[0.8rem] leading-none select-none font-medium w-8 h-8 rounded-full ml-3">{(user.first_name.charAt(0).toUpperCase() + user.last_name.charAt(0)).toUpperCase()}</div>
                     </> : <>
                         <Button url="/login" classes="inline-block align-middle">Sign In</Button>
@@ -66,4 +67,8 @@ export default function Header() {
 
 function HeaderNavigationOption({ text, url }: any) {
     return <Link href={url} className="mx-4 duration-100 hover:text-slate-400">{text}</Link>;
+}
+
+function HeaderIconOption({ icon, ...rest }) {
+    return <div className="inline-block align-middle cursor-pointer duration-150 text-slate-400/60 hover:text-slate-400 active:text-slate-500" {...rest}><FontAwesomeIcon icon={icon} /></div>;
 }
