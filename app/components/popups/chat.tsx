@@ -14,6 +14,7 @@ interface Properties {
 export default function ChatPopup({ onClose }: Properties) {
     let [prompt, setPrompt] = useState<string>("");
     let [messages, setMessages] = useState<any[]>([]);
+    let [conversationid, setConversationID] = useState<number>(0);
 
     let [isLoading, setLoading] = useState<boolean>(false);
 
@@ -39,6 +40,8 @@ export default function ChatPopup({ onClose }: Properties) {
                 timestamp: new Date()
             }]);
 
+            await updateConversation();
+
             chatArea.current?.scrollTo(0, chatArea?.current?.scrollHeight ?? 0);
 
             setLoading(false);
@@ -47,6 +50,21 @@ export default function ChatPopup({ onClose }: Properties) {
 
     function startNewConversation() {
         setMessages([]);
+    }
+
+    async function updateConversation() {
+        setLoading(true);
+
+        let response = await fetch("/api/chat", {
+            method: "PATCH",
+            body: new URLSearchParams({ messages: JSON.stringify(messages), conversationid: conversationid.toString() })
+        });
+
+        let data = await response.json();
+
+        if (!response.ok) return;
+
+        setConversationID(data.conversationid);
     }
 
     function sendMessage() {
