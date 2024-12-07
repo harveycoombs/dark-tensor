@@ -94,7 +94,7 @@ function ChatMessage({ message, ...rest }: any) {
     return (
         <div className={`w-5/12 mt-4 ${message.you ? "ml-auto" : "mr-auto"}`}>
             <div className={`px-3 py-2 text-sm max-w-23/50 rounded-lg ${message.you ? "bg-slate-100 text-slate-400" : "bg-blue-400 text-white"}`} {...rest}>{message.content}</div>
-            <div className="text-xs text-slate-400 mt-1">{message.timestamp.toLocaleString(undefined, { hour: "2-digit", minute: "2-digit" })}</div>
+            <div className="text-xs text-slate-400 mt-1" title={message.timestamp.toLocaleString()}>{message.timestamp.toLocaleString(undefined, { hour: "2-digit", minute: "2-digit" })}</div>
         </div>
     );
 }
