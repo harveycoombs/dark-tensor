@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import { generateText } from "@/data/model";
+import { generate } from "@/data/model";
 import { insertSearchHistory } from "@/data/users";
 import { authenticate } from "@/data/jwt";
 
@@ -15,7 +15,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     }
 
     try {
-        let response = await generateText({
+        let response = await generate({
             model: "deepseek-v2:lite",
             prompt: query
         });

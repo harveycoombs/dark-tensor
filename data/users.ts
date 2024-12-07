@@ -1,6 +1,7 @@
 "use server";
 import pool from "@/data/database";
 import { generateHash, verify } from "@/data/passwords";
+import { generate } from "@/data/model";
 
 export async function createUser(email: string, password: string, firstName: string, lastName: string, birthdate: string): Promise<number> {
     let passwordHash = await generateHash(password);
@@ -64,4 +65,14 @@ export async function getSearchHistory(userid: number, limit: number): Promise<a
 export async function insertSearchHistory(userid: number, query: string): Promise<boolean> {
     let [result]: any = await pool.query("INSERT INTO searches (user_id, search_date, query) VALUES (?, NOW(), ?)", [userid, query]);
     return result.affectedRows > 0;
+}
+
+export async function recordConversation(userid: number, messages: any): Promise<number> {
+    let summary = await generate({
+        model: "deepseek-v2:lite",
+        prompt: `Summarise the following text into a sentence no longer than 8 words: ${messages[0].content}`
+    }) ?? "Unknown Chat";
+
+    let [result]: any = await pool.query("INSERT INTO conversations (user_id, start_date, summary, messages) VALUES (?, NOW(), ?, ?)", [userid, summary, JSON.stringify(messages)]);
+    return result.insertId ?? 0;
 }

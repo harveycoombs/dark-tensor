@@ -24,7 +24,11 @@ export default function ChatPopup({ onClose }: Properties) {
         if (!isLoading) return;
 
         (async () => {
-            let response = await fetch(encodeURI(`/api/chat?messages=${JSON.stringify(messages)}`));
+            let response = await fetch("/api/chat", {
+                method: "POST",
+                body: new URLSearchParams({ messages: JSON.stringify(messages) })
+            });
+
             let data = await response.json();
 
             if (!response.ok) return;
@@ -40,6 +44,10 @@ export default function ChatPopup({ onClose }: Properties) {
             setLoading(false);
         })();
     }, [isLoading]);
+
+    function startNewConversation() {
+        setMessages([]);
+    }
 
     function sendMessage() {
         setMessages([...messages, {
@@ -62,7 +70,7 @@ export default function ChatPopup({ onClose }: Properties) {
                 <div className="flex justify-between items-center text-sm mb-2">
                     <div className="text-slate-400/60">Model: <strong className="font-bold text-slate-600">DeepSeek V2 Lite &#40;15.7B&#41;</strong></div>
                     <div>
-                        <ChatOption icon={faPlus} title="New Conversation" />
+                        <ChatOption icon={faPlus} title="New Conversation" onClick={startNewConversation} />
                         <ChatOption icon={faClockRotateLeft} title="View Conversation History" />
                         <ChatOption icon={faDownload} title="Download Conversation Transcript" />
                     </div>
