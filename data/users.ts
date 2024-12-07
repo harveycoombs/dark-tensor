@@ -68,11 +68,26 @@ export async function insertSearchHistory(userid: number, query: string): Promis
 }
 
 export async function recordConversation(userid: number, messages: any): Promise<number> {
-    let summary = await generate({
-        model: "deepseek-v2:lite",
-        prompt: `Summarise the following text into a sentence no longer than 8 words: ${messages[0].content}`
-    }) ?? "Unknown Chat";
+    try {
+        let summary = await generate({
+            model: "deepseek-v2:lite",
+            prompt: `Summarise the following text into a sentence no longer than 8 words: ${messages[0].content}`
+        }) ?? "Unknown Chat";
 
-    let [result]: any = await pool.query("INSERT INTO conversations (user_id, start_date, summary, messages) VALUES (?, NOW(), ?, ?)", [userid, summary, JSON.stringify(messages)]);
-    return result.insertId ?? 0;
+        let [result]: any = await pool.query("INSERT INTO conversations (user_id, start_date, summary, messages) VALUES (?, NOW(), ?, ?)", [userid, summary, JSON.stringify(messages)]);
+        return result.insertId ?? 0;
+    } catch (ex: any) {
+        console.error(ex);
+        return 0;
+    }
+}
+
+export async function updateConversation(conversationid: number, messages: any): Promise<boolean> {
+    try {
+        let [result]: any = await pool.query("UPDATE conversations SET messages = ? WHERE conversation_id = ?", [JSON.stringify(messages), conversationid]);
+        return result.affectedRows > 0;
+    } catch (ex: any) {
+        console.error(ex);
+        return false;
+    }
 }
