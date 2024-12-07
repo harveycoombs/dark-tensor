@@ -49,7 +49,9 @@ export default function ChatPopup({ onClose }: Properties) {
     }, [isLoading]);
 
     function startNewConversation() {
+        setPrompt("");
         setMessages([]);
+        setConversationID(0);
     }
 
     async function updateConversation() {
@@ -67,7 +69,11 @@ export default function ChatPopup({ onClose }: Properties) {
         setConversationID(data.conversationid);
     }
 
-    function sendMessage() {
+    function sendMessage(e: any) {
+        if (e.type == "keyup" && e.key != "Enter") return;
+        
+        if (!prompt.length) return;
+
         setMessages([...messages, {
             content: prompt,
             you: true,
@@ -76,7 +82,8 @@ export default function ChatPopup({ onClose }: Properties) {
 
         if (promptField?.current) {
             promptField.current.blur();
-            promptField.current.value = "";
+            //promptField.current.value = "";
+            setPrompt("");
         }
 
         setLoading(true);
@@ -97,10 +104,10 @@ export default function ChatPopup({ onClose }: Properties) {
                     messages.length ? messages.map((message, index) => <ChatMessage key={index} message={message} />)
                     : <div className="text-center"><strong className="text-xl text-slate-400/60 font-semibold">Welcome to Chat</strong><div className="text-xs text-slate-400 mt-1.5">Start a conversation by typing a message below</div></div>
                 }
-                {isLoading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-blue-400 text-white w-fit"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
+                {isLoading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-blue-400 text-white w-fit mb-5"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
                 </div>
                 <div className="flex gap-3 pt-2.5 shadow-[0_0_6px_6px_white]">
-                    <Field classes="w-full" onInput={(e: any) => setPrompt(e.target.value)} ref={promptField} />
+                    <Field classes="w-full" onInput={(e: any) => setPrompt(e.target.value)} value={prompt} onKeyUp={sendMessage} ref={promptField} />
                     <Button onClick={sendMessage} disabled={isLoading}>Send</Button>
                 </div>
             </div>
