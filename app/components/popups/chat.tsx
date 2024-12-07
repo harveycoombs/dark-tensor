@@ -84,8 +84,8 @@ export default function ChatPopup({ onClose }: Properties) {
 
     return (
         <Popup title="Chat" onClose={onClose}>
-            <div className="w-1300 mt-2">
-                <div className="flex justify-between items-center text-sm mb-2">
+            <div className="w-1300">
+                <div className="flex justify-between items-center text-sm relative z-10 pb-2.5 shadow-[0_0_6px_6px_white]">
                     <div className="text-slate-400/60">Model: <strong className="font-bold text-slate-600">DeepSeek V2 Lite &#40;15.7B&#41;</strong></div>
                     <div>
                         <ChatOption icon={faPlus} title="New Conversation" onClick={startNewConversation} />
@@ -99,7 +99,7 @@ export default function ChatPopup({ onClose }: Properties) {
                 }
                 {isLoading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-blue-400 text-white w-fit"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
                 </div>
-                <div className="flex gap-3 mt-3.5">
+                <div className="flex gap-3 pt-2.5 shadow-[0_0_6px_6px_white]">
                     <Field classes="w-full" onInput={(e: any) => setPrompt(e.target.value)} ref={promptField} />
                     <Button onClick={sendMessage} disabled={isLoading}>Send</Button>
                 </div>
