@@ -20,12 +20,16 @@ export async function POST(request: Request): Promise<NextResponse> {
     if (!currentSessionUser) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
     try {
+        let beginning = new Date().getTime();
+
         let response = await generateFromContext({
             model: "deepseek-v2:lite",
             messages: messages
         }) ?? "";
 
-        return NextResponse.json({ text: response }, { status: 200 });
+        let end = new Date().getTime();
+
+        return NextResponse.json({ text: response, interval: (end - beginning) }, { status: 200 });
     } catch (ex: any) {
         return NextResponse.json({ error: `Unable to generate response: ${ex.message}.` }, { status: 500 });
     }

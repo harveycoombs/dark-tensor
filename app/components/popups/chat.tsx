@@ -82,7 +82,6 @@ export default function ChatPopup({ onClose }: Properties) {
 
         if (promptField?.current) {
             promptField.current.blur();
-            //promptField.current.value = "";
             setPrompt("");
         }
 

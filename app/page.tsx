@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch, faL } from "@fortawesome/free-solid-svg-icons";
+import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch, faCamera } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "@/app/components/header";
 import Button from "@/app/components/ui/button";
@@ -105,6 +105,7 @@ export default function Home() {
                             <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} onInput={updateButtonAvailability} />
                             <Button ref={searchButton} disabled>Search</Button>
                         </div>
+                        <SearchOption icon={faCamera} title="Search with Image" />
                         <SearchOption icon={faClockRotateLeft} selected={recentSearchesAreVisible} onClick={() => setRecentSearchesVisibility(!recentSearchesAreVisible)} title="Show Recent Searches" />
                         <SearchOption icon={faSliders} title="Show Filters" />
                     </div>
