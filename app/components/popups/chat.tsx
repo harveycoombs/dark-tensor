@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { motion } from "framer-motion";
 
 import Popup from "@/app/components/ui/popup";
 import Button from "@/app/components/ui/button";
@@ -17,6 +18,9 @@ export default function ChatPopup({ onClose }: Properties) {
     let [conversationid, setConversationID] = useState<number>(0);
 
     let [isLoading, setLoading] = useState<boolean>(false);
+
+    let [conversationHistory, setConversationHistory] = useState<any[]>([]);
+    let [conversationHistoryIsVisible, setConversationHistoryVisibility] = useState<boolean>(false);
 
     let chatArea = useRef<HTMLDivElement>(null);
     let promptField = useRef<HTMLInputElement>(null);
@@ -91,25 +95,33 @@ export default function ChatPopup({ onClose }: Properties) {
 
     return (
         <Popup title="Chat" onClose={onClose}>
-            <div className="w-1300">
-                <div className="flex justify-between items-center text-sm relative z-10 pb-2.5 shadow-[0_0_6px_6px_white]">
-                    <div className="text-slate-400/60">Model: <strong className="font-bold text-slate-600">DeepSeek V2 Lite &#40;15.7B&#41;</strong></div>
-                    <div>
-                        <ChatOption icon={faPlus} title="New Conversation" onClick={startNewConversation} />
-                        <ChatOption icon={faClockRotateLeft} title="View Conversation History" />
-                        <ChatOption icon={faDownload} title="Download Conversation Transcript" />
+            <div className={`w-1300${conversationHistoryIsVisible ? " flex gap-3" : ""}`}>
+                <div className="w-full pt-2.5">
+                    <div className="flex justify-between items-center text-sm relative z-10 pb-2.5 shadow-[0_0_6px_6px_white]">
+                        <div className="text-slate-400/60">Model: <strong className="font-bold text-slate-600">DeepSeek V2 Lite &#40;15.7B&#41;</strong></div>
+                        <div>
+                            <ChatOption icon={faPlus} title="New Conversation" onClick={startNewConversation} />
+                            <ChatOption icon={faClockRotateLeft} title="View Conversation History" onClick={() => setConversationHistoryVisibility(!conversationHistoryIsVisible)} />
+                            <ChatOption icon={faDownload} title="Download Conversation Transcript" />
+                        </div>
+                    </div>
+                    <div className={`h-1/2-screen overflow-auto ${messages.length ? "" : "grid place-items-center pointer-events-none"}`} ref={chatArea}>{
+                        messages.length ? messages.map((message, index) => <ChatMessage key={index} message={message} />)
+                        : <div className="text-center"><strong className="text-xl text-slate-400/60 font-semibold">Welcome to Chat</strong><div className="text-xs text-slate-400 mt-1.5">Start a conversation by typing a message below</div></div>
+                    }
+                    {isLoading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-blue-400 text-white w-fit mb-5"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
+                    </div>
+                    <div className="flex gap-3 pt-2.5 shadow-[0_0_6px_6px_white]">
+                        <Field classes="w-full" onInput={(e: any) => setPrompt(e.target.value)} value={prompt} onKeyUp={sendMessage} ref={promptField} />
+                        <Button onClick={sendMessage} disabled={isLoading}>Send</Button>
                     </div>
                 </div>
-                <div className={`h-1/2-screen overflow-auto ${messages.length ? "" : "grid place-items-center pointer-events-none"}`} ref={chatArea}>{
-                    messages.length ? messages.map((message, index) => <ChatMessage key={index} message={message} />)
-                    : <div className="text-center"><strong className="text-xl text-slate-400/60 font-semibold">Welcome to Chat</strong><div className="text-xs text-slate-400 mt-1.5">Start a conversation by typing a message below</div></div>
-                }
-                {isLoading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-blue-400 text-white w-fit mb-5"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
-                </div>
-                <div className="flex gap-3 pt-2.5 shadow-[0_0_6px_6px_white]">
-                    <Field classes="w-full" onInput={(e: any) => setPrompt(e.target.value)} value={prompt} onKeyUp={sendMessage} ref={promptField} />
-                    <Button onClick={sendMessage} disabled={isLoading}>Send</Button>
-                </div>
+                {conversationHistoryIsVisible ? <motion.div className="w-64 h-full" initial={{ width: 0 }} animate={{ width: "256px" }} transition={{ duration: 0.2, ease: "easeInOut" }} style={{ overflow: "hidden" }}>
+                    <div className="w-full h-full px-3 pt-2.5 border-l border-l-slate-300">
+                        <strong className="block text-sm font-semibold">History</strong>
+                        <div></div>
+                    </div>
+                </motion.div> : null}
             </div>
         </Popup>
     );
