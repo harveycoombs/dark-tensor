@@ -110,13 +110,13 @@ export default function ChatPopup({ onClose }: Properties) {
 
     return (
         <Popup title="Chat" onClose={onClose}>
-            <div className={`w-1300${conversationHistoryIsVisible ? " flex gap-3" : ""}`}>
+            <div className={`w-1300 flex${conversationHistoryIsVisible ? " gap-3" :""}`}>
                 <div className="w-full pt-2.5">
                     <div className="flex justify-between items-center text-sm relative z-10 pb-2.5 shadow-[0_0_6px_6px_white]">
                         <div className="text-slate-400/60">Model: <strong className="font-bold text-slate-600">DeepSeek V2 Lite &#40;15.7B&#41;</strong></div>
                         <div>
                             <ChatOption icon={faPlus} title="New Conversation" onClick={startNewConversation} />
-                            <ChatOption icon={faClockRotateLeft} title="View Conversation History" onClick={() => setConversationHistoryVisibility(!conversationHistoryIsVisible)} />
+                            <ChatOption icon={faClockRotateLeft} title="View Conversation History" onClick={() => setConversationHistoryVisibility(!conversationHistoryIsVisible)} selected={conversationHistoryIsVisible} />
                             <ChatOption icon={faDownload} title="Download Conversation Transcript" />
                         </div>
                     </div>
@@ -126,17 +126,17 @@ export default function ChatPopup({ onClose }: Properties) {
                     }
                     {isLoading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-blue-400 text-white w-fit mb-5"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
                     </div>
-                    <div className="flex gap-3 pt-2.5 shadow-[0_0_6px_6px_white]">
+                    <div className="flex gap-3 py-3 shadow-[0_0_6px_6px_white]">
                         <Field classes="w-full" onInput={(e: any) => setPrompt(e.target.value)} value={prompt} onKeyUp={sendMessage} ref={promptField} />
                         <Button onClick={sendMessage} disabled={isLoading}>Send</Button>
                     </div>
                 </div>
-                {conversationHistoryIsVisible ? <motion.div className="w-64 h-full" initial={{ width: 0 }} animate={{ width: "256px" }} transition={{ duration: 0.2, ease: "easeInOut" }} style={{ overflow: "hidden" }}>
+                <motion.div className="w-56 shrink-0 overflow-hidden" initial={{ width: conversationHistoryIsVisible ? "0px" : "256px" }} animate={{ width: conversationHistoryIsVisible ? "256px" : "0px" }} transition={{ duration: 0.25, ease: "easeInOut" }}>
                     <div className="w-full h-full px-3 pt-2.5 border-l border-l-slate-300">
                         <strong className="block text-sm font-semibold">History</strong>
                         <div></div>
                     </div>
-                </motion.div> : null}
+                </motion.div>
             </div>
         </Popup>
     );
@@ -152,6 +152,6 @@ function ChatMessage({ message, ...rest }: any) {
     );
 }
 
-function ChatOption({ icon, ...rest }: any) {
-    return <div className="inline-block align-middle ml-3.5 text-base cursor-pointer duration-100 text-slate-400/60 hover:text-slate-400 active:text-slate-500" {...rest}><FontAwesomeIcon icon={icon} /></div>
+function ChatOption({ icon, selected, ...rest }: any) {
+    return <div className={`inline-block align-middle ml-3.5 text-base cursor-pointer duration-100 ${selected ? "text-slate-400" : "text-slate-400/60"} hover:text-slate-400 active:text-slate-500`} {...rest}><FontAwesomeIcon icon={icon} /></div>
 }

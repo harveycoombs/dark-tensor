@@ -13,3 +13,7 @@ body {
     pointer-events: none;
     opacity: .6;
 }
+
+* {
+    box-sizing: border-box;
+}
