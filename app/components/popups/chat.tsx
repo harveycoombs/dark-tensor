@@ -18,6 +18,7 @@ export default function ChatPopup({ onClose }: Properties) {
     let [conversationid, setConversationID] = useState<number>(0);
 
     let [isLoading, setLoading] = useState<boolean>(false);
+    let [isHistoryLoading, setHistoryLoading] = useState<boolean>(false);
 
     let [conversationHistory, setConversationHistory] = useState<any[]>([]);
     let [conversationHistoryIsVisible, setConversationHistoryVisibility] = useState<boolean>(false);
@@ -52,6 +53,20 @@ export default function ChatPopup({ onClose }: Properties) {
             setLoading(false);
         })();
     }, [isLoading]);
+
+    useEffect(() => {
+        if (!isHistoryLoading) return;
+
+        (async () => {
+            let response = await fetch("/api/chat");
+            let json = await response.json();
+
+            setHistoryLoading(false);
+
+            if (!response.ok) return;
+            setConversationHistory(json.history);
+        })();
+    }, [isHistoryLoading]);
 
     function startNewConversation() {
         setPrompt("");
