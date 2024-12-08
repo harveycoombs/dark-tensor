@@ -6,7 +6,7 @@ import Button from "@/app/components/ui/button";
 import Field from "@/app/components/ui/field";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faClockRotateLeft, faDownload, faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faClockRotateLeft, faDownload, faEllipsis, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 interface Properties {
     onClose: any;
@@ -18,9 +18,9 @@ export default function ChatPopup({ onClose }: Properties) {
     let [conversationid, setConversationID] = useState<number>(0);
 
     let [isLoading, setLoading] = useState<boolean>(false);
-    let [isHistoryLoading, setHistoryLoading] = useState<boolean>(false);
+    let [historyIsLoading, setHistoryLoading] = useState<boolean>(false);
 
-    let [conversationHistory, setConversationHistory] = useState<any[]>([]);
+    let [conversationHistory, setConversationHistory] = useState<React.JSX.Element|null>(null);
     let [conversationHistoryIsVisible, setConversationHistoryVisibility] = useState<boolean>(false);
 
     let chatArea = useRef<HTMLDivElement>(null);
@@ -55,18 +55,28 @@ export default function ChatPopup({ onClose }: Properties) {
     }, [isLoading]);
 
     useEffect(() => {
-        if (!isHistoryLoading) return;
+        if (!historyIsLoading) return;
 
         (async () => {
-            let response = await fetch("/api/chat");
-            let json = await response.json();
+            try {
+                let response = await fetch("/api/chat");
+                let json = await response.json();
 
-            setHistoryLoading(false);
+                setHistoryLoading(false);
 
-            if (!response.ok) return;
-            setConversationHistory(json.history);
+                if (!response.ok) {
+                    setConversationHistory(<div className="mt-1.5 text-sm text-red-500">Something went wrong</div>);
+                    return;
+                }
+
+                setConversationHistory(json.history.map((conversation: any, index: number) => <Conversation key={index} data={conversation} />));
+            } catch {
+                setHistoryLoading(false);
+                setConversationHistory(<div className="mt-1.5 text-sm text-red-500">Something went wrong</div>);
+            }
+
         })();
-    }, [isHistoryLoading]);
+    }, [historyIsLoading]);
 
     function startNewConversation() {
         setPrompt("");
@@ -108,6 +118,11 @@ export default function ChatPopup({ onClose }: Properties) {
         setLoading(true);
     }
 
+    function openConversationHistory() {
+        setHistoryLoading(!conversationHistoryIsVisible);
+        setConversationHistoryVisibility(!conversationHistoryIsVisible);
+    }
+
     return (
         <Popup title="Chat" onClose={onClose}>
             <div className={`w-1300 flex${conversationHistoryIsVisible ? " gap-3" :""}`}>
@@ -116,7 +131,7 @@ export default function ChatPopup({ onClose }: Properties) {
                         <div className="text-slate-400/60">Model: <strong className="font-bold text-slate-600">DeepSeek V2 Lite &#40;15.7B&#41;</strong></div>
                         <div>
                             <ChatOption icon={faPlus} title="New Conversation" onClick={startNewConversation} />
-                            <ChatOption icon={faClockRotateLeft} title="View Conversation History" onClick={() => setConversationHistoryVisibility(!conversationHistoryIsVisible)} selected={conversationHistoryIsVisible} />
+                            <ChatOption icon={faClockRotateLeft} title="View Conversation History" onClick={openConversationHistory} selected={conversationHistoryIsVisible} />
                             <ChatOption icon={faDownload} title="Download Conversation Transcript" />
                         </div>
                     </div>
@@ -134,7 +149,10 @@ export default function ChatPopup({ onClose }: Properties) {
                 <motion.div className="w-56 shrink-0 overflow-hidden" initial={{ width: conversationHistoryIsVisible ? "0px" : "256px" }} animate={{ width: conversationHistoryIsVisible ? "256px" : "0px" }} transition={{ duration: 0.25, ease: "easeInOut" }}>
                     <div className="w-full h-full px-3 pt-2.5 border-l border-l-slate-300">
                         <strong className="block text-sm font-semibold">History</strong>
-                        <div></div>
+                        {historyIsLoading ? <div className="text-slate-400/60 mt-1.5">
+                            <FontAwesomeIcon icon={faCircleNotch} className="animate-spin leading-none inline-block align-middle" />
+                            <span className="text-sm leading-none inline-block align-middle font-medium ml-1.5">Loading</span>
+                        </div> : conversationHistory}
                     </div>
                 </motion.div>
             </div>
@@ -154,4 +172,13 @@ function ChatMessage({ message, ...rest }: any) {
 
 function ChatOption({ icon, selected, ...rest }: any) {
     return <div className={`inline-block align-middle ml-3.5 text-base cursor-pointer duration-100 ${selected ? "text-slate-400" : "text-slate-400/60"} hover:text-slate-400 active:text-slate-500`} {...rest}><FontAwesomeIcon icon={icon} /></div>
+}
+
+function Conversation({ data, ...rest }: any) {
+    return (
+        <div className="px-2 py-1 rounded-md mt-1 cursor-pointer duration-100 hover:bg-slate-50">
+            <div className="text-sm leading-snug font-semibold">{data.summary}</div>
+            <div className="text-xs mt-1 text-slate-400/60">{new Date(data.start_date).toLocaleString(undefined, { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}</div>
+        </div>
+    );
 }

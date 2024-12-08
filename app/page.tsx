@@ -38,7 +38,7 @@ export default function Home() {
             } else if (!response.ok) {
                 setRecentSearchesArea(<div className="mt-12">
                     <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
-                    <div className="text-sm font-medium text-red-500">Unable to show recent searches. Please try again later or report this issue if it persists</div>
+                    <div className="text-sm font-medium text-red-500">Something went wrong. Please try again later or report this issue if it persists</div>
                 </div>);
                 return;
             }

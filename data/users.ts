@@ -71,7 +71,7 @@ export async function recordConversation(userid: number, messages: any): Promise
     try {
         let summary = await generate({
             model: "deepseek-v2:lite",
-            prompt: `Summarise the following text into a sentence no longer than 8 words: ${messages[0].content}`
+            prompt: `Summarise the following text into a sentence no longer than 5 words: ${messages[0].content}`
         }) ?? "Unknown Chat";
 
         let [result]: any = await pool.query("INSERT INTO conversations (user_id, start_date, summary, messages) VALUES (?, NOW(), ?, ?)", [userid, summary, JSON.stringify(messages)]);
@@ -90,4 +90,9 @@ export async function updateConversation(conversationid: number, messages: any):
         console.error(ex);
         return false;
     }
+}
+
+export async function getConversationHistory(userid: number): Promise<any[]> {
+    let [result]: any = await pool.query("SELECT * FROM conversations WHERE user_id = ? ORDER BY start_date DESC", [userid]);
+    return result;
 }

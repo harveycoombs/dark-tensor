@@ -1,10 +1,21 @@
 import { NextResponse } from "next/server";
 
 import { generateFromContext } from "@/data/model";
-import { recordConversation, updateConversation } from "@/data/users";
+import { getConversationHistory, recordConversation, updateConversation } from "@/data/users";
 
 import { authenticate } from "@/data/jwt";
 import { cookies } from "next/headers";
+
+export async function GET(): Promise<NextResponse> {
+    let cookieJar = await cookies();
+    let token = cookieJar.get("token")?.value;
+    let currentSessionUser = await authenticate(token ?? "");
+
+    if (!currentSessionUser) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
+
+    let history = await getConversationHistory(currentSessionUser.user_id);
+    return NextResponse.json({ history: history }, { status: 200 });
+}
 
 export async function POST(request: Request): Promise<NextResponse> {
     let data = await request.formData();
