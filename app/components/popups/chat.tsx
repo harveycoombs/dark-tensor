@@ -147,7 +147,7 @@ export default function ChatPopup({ onClose }: Properties) {
                     </div>
                 </div>
                 <motion.div className="w-56 shrink-0 overflow-hidden" initial={{ width: conversationHistoryIsVisible ? "0px" : "256px" }} animate={{ width: conversationHistoryIsVisible ? "256px" : "0px" }} transition={{ duration: 0.25, ease: "easeInOut" }}>
-                    <div className="w-full h-full px-3 pt-2.5 border-l border-l-slate-300">
+                    <div className="w-full h-full pl-3 pt-2.5 border-l border-l-slate-300">
                         <strong className="block text-sm font-semibold">History</strong>
                         {historyIsLoading ? <div className="text-slate-400/60 mt-1.5">
                             <FontAwesomeIcon icon={faCircleNotch} className="animate-spin leading-none inline-block align-middle" />
