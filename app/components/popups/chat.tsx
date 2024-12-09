@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 
-import Popup from "@/app/components/ui/popup";
-import Button from "@/app/components/ui/button";
-import Field from "@/app/components/ui/field";
+import Popup from "@/app/components/common/popup";
+import Button from "@/app/components/common/button";
+import Field from "@/app/components/common/field";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faClockRotateLeft, faDownload, faEllipsis, faCircleNotch } from "@fortawesome/free-solid-svg-icons";

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faGear } from "@fortawesome/free-solid-svg-icons";
 
-import Button from "@/app/components/ui/button";
+import Button from "@/app/components/common/button";
 
 import SettingsPopup from "@/app/components/popups/settings";
 import ChatPopup from "@/app/components/popups/chat";

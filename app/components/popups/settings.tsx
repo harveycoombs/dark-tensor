@@ -1,4 +1,4 @@
-import Popup from "@/app/components/ui/popup";
+import Popup from "@/app/components/common/popup";
 
 interface Properties {
     user: any;

@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-import Field from "@/app/components/ui/field";
-import Label from "@/app/components/ui/label";
-import Button from "@/app/components/ui/button";
+import Field from "@/app/components/common/field";
+import Label from "@/app/components/common/label";
+import Button from "@/app/components/common/button";
 
 export default function RegistrationForm() {
     let [email, setEmail] = useState<string>("");

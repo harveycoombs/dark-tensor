@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch, faCamera } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "@/app/components/header";
-import Button from "@/app/components/ui/button";
-import Tile from "@/app/components/ui/tile";
+import Button from "@/app/components/common/button";
+import Tile from "@/app/components/common/tile";
 
 export default function Home() {
     let searchField = useRef<HTMLInputElement>(null);

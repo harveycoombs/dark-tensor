@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 
-import Field from "@/app/components/ui/field";
-import Label from "@/app/components/ui/label";
-import Button from "@/app/components/ui/button";
+import Field from "@/app/components/common/field";
+import Label from "@/app/components/common/label";
+import Button from "@/app/components/common/button";
 
 export default function LoginForm() {
     let [email, setEmail] = useState<string>("");
