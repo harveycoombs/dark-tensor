@@ -8,7 +8,7 @@ interface Properties {
 export default function SettingsPopup({ user, onClose }: Properties) {
     return (
         <Popup title="Settings" onClose={onClose}>
-            <div className="w-650 flex">
+            <div className="w-650 flex pb-3">
                 <div className="w-44 mt-2">
                     <div>
                         <div className="inline-grid align-middle place-items-center bg-blue-100 text-blue-600 text-sm leading-none select-none font-medium w-9 h-9 rounded-full">{(user.first_name.charAt(0).toUpperCase() + user.last_name.charAt(0)).toUpperCase()}</div>
@@ -17,10 +17,10 @@ export default function SettingsPopup({ user, onClose }: Properties) {
                             <div className="text-xs font-medium text-slate-400/80">Joined {new Date(user.creation_date).toLocaleString(undefined, { year: "numeric", month: "short" })}</div>
                         </div>
                         <div className="mt-2">
-                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1">General</div>
-                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1">Account</div>
-                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1">Security</div>
-                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1">Advanced</div>
+                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80">General</div>
+                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80">Account</div>
+                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80">Security</div>
+                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80">Advanced</div>
                         </div>
                     </div>
                 </div>
