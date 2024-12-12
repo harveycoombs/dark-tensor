@@ -33,7 +33,6 @@ export default function Header() {
                 <HeaderNavigationOption text="About" url="/about" />
                 <HeaderNavigationOption text="Privacy" url="/privacy" />
                 <HeaderNavigationOption text="Pricing" url="/pricing" />
-                <HeaderNavigationOption text="Developers" url="/developers" />
                 <HeaderNavigationOption text="Support" url="/support" />
             </nav>
             <div>{
