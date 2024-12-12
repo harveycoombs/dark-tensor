@@ -19,7 +19,7 @@ export default function RegistrationForm() {
     let [disabled, setDisability] = useState<boolean>(false);
 
     let continueButton = useRef<HTMLButtonElement>(null);
-    let [button, setButton] = useState<React.JSX.Element>(<Button classes="block w-60 mt-6 mx-auto" ref={continueButton}>Continue</Button>);
+    let [button, setButton] = useState<React.JSX.Element>(<Button classes="block w-60 mt-6 mx-auto max-[530px]:w-full" ref={continueButton}>Continue</Button>);
 
     let [feedback, setFeedback] = useState<React.JSX.Element|null>(null);
 
@@ -49,7 +49,7 @@ export default function RegistrationForm() {
         }
 
         setErrorExistence(false);
-        setButton(<Button classes="block w-60 mt-6 mx-auto opacity-65 pointer-events-none">&nbsp; Loading &nbsp;</Button>);
+        setButton(<Button classes="block w-60 mt-6 mx-auto opacity-65 pointer-events-none max-[530px]:w-full">&nbsp; Loading &nbsp;</Button>);
         setDisability(true);
 
         let credentials = new URLSearchParams({
@@ -73,7 +73,7 @@ export default function RegistrationForm() {
                 setWarningExistence(true);
                 setDisability(false);
 
-                setButton(<Button classes="block w-60 mt-6 mx-auto">Continue</Button>);
+                setButton(<Button classes="block w-60 mt-6 mx-auto max-[530px]:w-full">Continue</Button>);
                 setFeedback(<div className="text-sm font-medium text-center text-amber-400">Invalid credentials</div>);
 
                 return;
@@ -118,8 +118,8 @@ export default function RegistrationForm() {
         <form onSubmit={register}>
             {feedback}
 
-            <div className="mt-6">
-                <div className="inline-block align-middle w-60">
+            <div className="mt-6 max-[350px]:w-full">
+                <div className="inline-block align-middle w-60 max-[530px]:block max-[530px]:w-full">
                     <Label error={errorExists} warning={warningExists}>First Name</Label>
                     <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("firstname", e.target.value)} />
 
@@ -130,7 +130,7 @@ export default function RegistrationForm() {
                     <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="date" onInput={(e: any) => updateField("birthdate", e.target.value)} />
                 </div>
 
-                <div className="inline-block align-middle w-60 ml-5">
+                <div className="inline-block align-middle w-60 ml-5 max-[530px]:block max-[530px]:w-full max-[530px]:ml-0  max-[530px]:mt-3">
                     <Label error={errorExists} warning={warningExists}>Email Address</Label>
                     <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="email" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("email", e.target.value)} />
 
@@ -143,7 +143,7 @@ export default function RegistrationForm() {
             </div>
 
             {button}
-            <Button classes={`block w-60 mt-2.5 mx-auto${disabled ? " pointer-events-none" : ""}`} disabled={disabled} transparent={true} url="/login">I Already Have an Account</Button>
+            <Button classes={`block w-60 mt-2.5 mx-auto${disabled ? " pointer-events-none" : ""} max-[530px]:w-full`} disabled={disabled} transparent={true} url="/login">I Already Have an Account</Button>
         </form>
     );
 }
