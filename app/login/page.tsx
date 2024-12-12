@@ -9,7 +9,7 @@ export default function Login() {
                 <strong className="block text-sm font-medium select-none text-slate-400/60">Log in to your account</strong>
                 <LoginForm />
                 <div className="text-[0.825rem] font-medium text-slate-400 mt-3 text-center select-none">
-                    <Link href="/register" className="hover:underline">Reset Password</Link><span className="px-1.5">&middot;</span><Link href="/report" className="hover:underline">Report An Issue</Link>
+                    <Link href="/reset-password" className="hover:underline">Reset Password</Link><span className="px-1.5">&middot;</span><Link href="mailto:issues@aicongruence.com" className="hover:underline">Report An Issue</Link>
                 </div>
             </section>
         </main>
