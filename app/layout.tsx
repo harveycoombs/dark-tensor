@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: `Congruence · ${process.env.APP_VERSION}`,
+    title: `Collate · ${process.env.APP_VERSION}`,
     description: "Find & summarise anything on the web with AI",
     icons: {
         icon: "/images/icon.png"

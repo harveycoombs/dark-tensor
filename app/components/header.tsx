@@ -29,7 +29,7 @@ export default function Header() {
 
     return (
         <header className="p-3 select-none bg-white sticky top-0 border-b border-b-slate-300 flex justify-between items-center z-30">
-            <Link href="/" className="font-bold duration-100 hover:opacity-85 active:opacity-70">Congruence <span className="text-blue-600">AI</span></Link>
+            <Link href="/" className="font-bold duration-100 hover:opacity-85 active:opacity-70">Collate <span className="text-blue-600">AI</span></Link>
             <nav className="text-sm leading-none font-medium max-[700px]:hidden">
                 <HeaderNavigationOption text="About" url="/about" />
                 <HeaderNavigationOption text="Privacy" url="/privacy" />
