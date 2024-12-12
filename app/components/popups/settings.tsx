@@ -17,10 +17,10 @@ export default function SettingsPopup({ user, onClose }: Properties) {
                             <div className="text-xs font-medium text-slate-400/80">Joined {new Date(user.creation_date).toLocaleString(undefined, { year: "numeric", month: "short" })}</div>
                         </div>
                         <div className="mt-2">
-                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80">General</div>
-                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80">Account</div>
-                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80">Security</div>
-                            <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80">Advanced</div>
+                            <SettingsMenuItem title="General" />
+                            <SettingsMenuItem title="Security" />
+                            <SettingsMenuItem title="Advanced" />
+                            <div className="p-2 rounded-md leading-none text-sm text-red-500 font-medium mt-1 cursor-pointer duration-100 hover:bg-red-50 active:bg-red-100/80">Log Out</div>
                         </div>
                     </div>
                 </div>
@@ -28,4 +28,8 @@ export default function SettingsPopup({ user, onClose }: Properties) {
             </div>
         </Popup>
     );
+}
+
+function SettingsMenuItem({ title }: any) {
+    return <div className="p-2 rounded-md leading-none text-sm text-slate-400/60 font-medium mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80">{title}</div>;
 }
