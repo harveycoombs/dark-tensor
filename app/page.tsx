@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch, faCamera } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "@/app/components/header";
+import Logo from "@/app/components/common/logo";
 import Button from "@/app/components/common/button";
 import Tile from "@/app/components/common/tile";
 
@@ -98,10 +99,10 @@ export default function Home() {
             <Header />
             <main className="h-[calc(100vh-110px)] grid place-items-center">
                 <motion.div className="w-650 mx-auto max-[700px]:w-full max-[700px]:px-3" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeOut" }}>
-                    <h1 className="text-6xl font-bold text-center">Collate</h1>
+                    <div className="w-fit mx-auto"><Logo width={354} height={60} /></div>
                     <h2 className="text-lg text-slate-400/60 font-medium my-4 text-center">Find &amp; summarise anything on the web with AI</h2>
                     <div className="flex items-center gap-5 mt-12">
-                        <div className="py-2 pl-3.5 pr-2 rounded-xl border border-slate-300 flex items-center duration-100 justify-between gap-2 w-full has-[input:focus]:border-blue-600 has-[input:focus]:shadow-md">
+                        <div className="py-2 pl-3.5 pr-2 rounded-xl border border-slate-300 flex items-center duration-100 justify-between gap-2 w-full has-[input:focus]:border-sky-500 has-[input:focus]:shadow-md">
                             <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} onInput={updateButtonAvailability} />
                             <Button ref={searchButton} disabled>Search</Button>
                         </div>

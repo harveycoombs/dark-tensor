@@ -139,7 +139,7 @@ export default function ChatPopup({ onClose }: Properties) {
                         messages.length ? messages.map((message, index) => <ChatMessage key={index} message={message} />)
                         : <div className="text-center"><strong className="text-xl text-slate-400/60 font-semibold">Welcome to Chat</strong><div className="text-xs text-slate-400 mt-1.5">Start a conversation by typing a message below</div></div>
                     }
-                    {isLoading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-blue-400 text-white w-fit mb-5"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
+                    {isLoading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-sky-400 text-white w-fit mb-5"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
                     </div>
                     <div className="flex gap-3 py-3 shadow-[0_0_6px_6px_white]">
                         <Field classes="w-full" onInput={(e: any) => setPrompt(e.target.value)} value={prompt} onKeyUp={sendMessage} ref={promptField} />
@@ -163,7 +163,7 @@ export default function ChatPopup({ onClose }: Properties) {
 function ChatMessage({ message, ...rest }: any) {
     return (
         <div className={`w-5/12 mt-4 ${message.you ? "ml-auto" : "mr-auto"}`}>
-            <div className={`px-3 py-2 text-sm max-w-23/50 rounded-lg ${message.you ? "bg-slate-100 text-slate-400" : "bg-blue-400 text-white"}`} {...rest}>{message.content.split("\n").map((line: any, index: number) => <span key={index}>{line}<br/></span>)}</div>
+            <div className={`px-3 py-2 text-sm max-w-23/50 rounded-lg ${message.you ? "bg-slate-100 text-slate-400" : "bg-sky-400 text-white"}`} {...rest}>{message.content.split("\n").map((line: any, index: number) => <span key={index}>{line}<br/></span>)}</div>
             <div className="text-xs text-slate-400 mt-1" title={message.timestamp.toLocaleString()}>{message.timestamp.toLocaleString(undefined, { hour: "2-digit", minute: "2-digit" })}{!message.you ? <> &middot; Thought for {Math.round(message.interval / 1000
             )} seconds</> : null}</div>
         </div>
