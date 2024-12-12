@@ -61,5 +61,5 @@ function HeaderNavigationOption({ text, url }: any) {
 }
 
 function HeaderIconOption({ icon, ...rest }: any) {
-    return <div className="inline-block align-middle mr-4 cursor-pointer duration-150 text-slate-400/60 hover:text-slate-400 active:text-slate-500" {...rest}><FontAwesomeIcon icon={icon} /></div>;
+    return <div className="inline-block align-middle mr-4 cursor-pointer duration-100 text-slate-400/60 hover:text-slate-400 active:text-slate-500" {...rest}><FontAwesomeIcon icon={icon} /></div>;
 }

@@ -1,11 +1,13 @@
 import Link from "next/link";
 import LoginForm from "./form";
 
+import Logo from "@/app/components/common/logo";
+
 export default function Login() {
     return (
         <main className="h-[calc(100vh-55px)] grid place-items-center">
             <section className="text-center">
-                <Link href="/" className="text-2xl font-bold select-none hover:opacity-85 active:opacity-70">Collate <span className="text-sky-500">AI</span></Link>
+                <Link href="/" className="block w-fit mx-auto mb-2 duration-100 hover:opacity-85 active:opacity-70"><Logo width={157} height={26} /></Link>
                 <strong className="block text-sm font-medium select-none text-slate-400/60">Log in to your account</strong>
                 <LoginForm />
                 <div className="text-[0.825rem] font-medium text-slate-400 mt-3 text-center select-none">
