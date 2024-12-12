@@ -7,9 +7,9 @@ import { createJWT, authenticate } from "@/data/jwt";
 export async function GET(): Promise<NextResponse> {
     let cookieJar = await cookies();
     let token = cookieJar.get("token")?.value;
-    let currentSessionUser = await authenticate(token ?? "");
+    let user = await authenticate(token ?? "");
 
-    return NextResponse.json({ user: currentSessionUser }, { status: 200 });
+    return NextResponse.json({ user }, { status: 200 });
 }
 
 export async function POST(request: Request): Promise<NextResponse> {

@@ -11,7 +11,7 @@ export async function GET(): Promise<NextResponse> {
 
     if (!currentSessionUser) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
-    let searchHistory = await getSearchHistory(currentSessionUser.user_id, 4);
+    let searches = await getSearchHistory(currentSessionUser.user_id, 4);
 
-    return NextResponse.json({ searches: searchHistory }, { status: 200 });
+    return NextResponse.json({ searches }, { status: 200 });
 }

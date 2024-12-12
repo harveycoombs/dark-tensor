@@ -14,7 +14,7 @@ export async function GET(): Promise<NextResponse> {
     if (!currentSessionUser) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
     let history = await getConversationHistory(currentSessionUser.user_id);
-    return NextResponse.json({ history: history }, { status: 200 });
+    return NextResponse.json({ history }, { status: 200 });
 }
 
 export async function POST(request: Request): Promise<NextResponse> {
@@ -33,14 +33,14 @@ export async function POST(request: Request): Promise<NextResponse> {
     try {
         let beginning = new Date().getTime();
 
-        let response = await generateFromContext({
+        let text = await generateFromContext({
             model: "deepseek-v2:lite",
             messages: messages
         }) ?? "";
 
         let end = new Date().getTime();
 
-        return NextResponse.json({ text: response, interval: (end - beginning) }, { status: 200 });
+        return NextResponse.json({ text, interval: (end - beginning) }, { status: 200 });
     } catch (ex: any) {
         return NextResponse.json({ error: `Unable to generate response: ${ex.message}.` }, { status: 500 });
     }
@@ -66,5 +66,5 @@ export async function PATCH(request: Request): Promise<NextResponse> {
         await updateConversation(conversationid, messages);
     }
 
-    return NextResponse.json({ conversationid: conversationid }, { status: 200 });
+    return NextResponse.json({ conversationid }, { status: 200 });
 }

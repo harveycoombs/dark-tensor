@@ -15,12 +15,12 @@ export async function GET(request: Request): Promise<NextResponse> {
     }
 
     try {
-        let response = await generate({
+        let summary = await generate({
             model: "deepseek-v2:lite",
             prompt: query
         });
 
-        return NextResponse.json({ summary: response ?? "", results: [] }, { status: 200 });
+        return NextResponse.json({ summary, results: [] }, { status: 200 });
     } catch (ex: any) {
         return NextResponse.json({ error: `Unable to generate text: ${ex.message}.` }, { status: 500 });
     }
@@ -38,7 +38,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     if (!currentSessionUser) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
-    let inserted = await insertSearchHistory(currentSessionUser.user_id, query);
+    let success = await insertSearchHistory(currentSessionUser.user_id, query);
 
-    return NextResponse.json({ success: inserted }, { status: 200 });
+    return NextResponse.json({ success }, { status: 200 });
 }

@@ -14,7 +14,7 @@ export async function GET(): Promise<NextResponse> {
     let user = await getUserDetails(currentSessionUser.user_id);
     let settings = await getUserSettings(currentSessionUser.user_id);
 
-    return NextResponse.json({ user: user, settings: settings }, { status: 200 });
+    return NextResponse.json({ user, settings }, { status: 200 });
 }
 
 export async function POST(request: Request): Promise<NextResponse> {
@@ -55,9 +55,9 @@ export async function DELETE(request: Request): Promise<NextResponse> {
     let data = await request.formData();
     let userid = parseInt(data.get("userid")?.toString() ?? "0");
 
-    let deleted = await deleteUser(userid);
+    let success = await deleteUser(userid);
 
-    let response = NextResponse.json({ success: deleted }, { status: 200 });
+    let response = NextResponse.json({ success }, { status: 200 });
     response.cookies.delete("token");
 
     return response;
