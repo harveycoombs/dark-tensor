@@ -54,7 +54,7 @@ export default function Header() {
 }
 
 function HeaderNavigationOption({ text, url }: any) {
-    return <Link href={url} className="mx-4 duration-100 hover:text-slate-400">{text}</Link>;
+    return <Link href={url} className="mx-4 duration-100 hover:text-slate-500/85 active:text-slate-400">{text}</Link>;
 }
 
 function HeaderIconOption({ icon, ...rest }: any) {
