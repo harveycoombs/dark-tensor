@@ -57,6 +57,8 @@ export default function SettingsPopup({ onClose }: Properties) {
     let chatStyleField = useRef<HTMLSelectElement>(null);
     let summaryStyleField = useRef<HTMLSelectElement>(null);
 
+    let [saveButton, setSaveButton] = useState<React.JSX.Element>(<Button>Save Changes</Button>);
+
     useEffect(() => {
         (async () => {
             let response = await fetch("/api/users");
@@ -84,6 +86,8 @@ export default function SettingsPopup({ onClose }: Properties) {
             !summaryStyleField.current
         ) return;
 
+        setSaveButton(<Button disabled={true}>Saving</Button>);
+
         let details = new URLSearchParams({
             firstname: firstNameField.current.value,
             lastname: lastNameField.current.value,
@@ -106,13 +110,15 @@ export default function SettingsPopup({ onClose }: Properties) {
         let json = await response.json();
 
         if (!response.ok) {
-            // to-do, json.error + error message with red text
+            setSaveButton(<Button classes="bg-red-500">{json.error}</Button>);
             return;
         } else if (!json.success) {
+            setSaveButton(<Button classes="bg-red-500">Something went wrong</Button>);
             return;
         }
 
-        // to-do, success message with green text
+        setSaveButton(<Button classes="bg-green-500">Saved</Button>);
+        setTimeout(() => setSaveButton(<Button>Save Changes</Button>), 2250);
     }
 
     useEffect(() => {
@@ -168,7 +174,7 @@ export default function SettingsPopup({ onClose }: Properties) {
                 <div className="py-3 w-full h-96 overflow-y-auto">
                     <div className="flex justify-between items-center">
                         <strong className="block text-sm leading-none font-semibold">{sectionTitle}</strong>
-                        <Button>Save Changes</Button>
+                        {saveButton}
                     </div>
                     <div>{sectionContent}</div>
                 </div>
