@@ -71,7 +71,13 @@ export async function PATCH(request: Request): Promise<NextResponse> {
         data.get("email")?.toString() ?? ""
     );
 
-    let settingsUpdated = await updateSettings(currentSessionUser.user_id);
+    let settingsUpdated = await updateSettings(
+        currentSessionUser.user_id,
+        data.get("theme")?.toString() ?? "",
+        data.get("model")?.toString() ?? "",
+        data.get("summarystyle")?.toString() ?? "",
+        data.get("chatstyle")?.toString() ?? ""
+    );
 
     return NextResponse.json({ success: detailsUpdated && settingsUpdated }, { status: 200 });
 }
