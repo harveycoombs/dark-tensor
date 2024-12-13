@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack -p 84",
+    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start -p 84",
+    "start": "next start -p 89",
     "lint": "next lint"
   },
   "dependencies": {
