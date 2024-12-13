@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";  
+import { useEffect, useState, useRef } from "react";  
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
@@ -44,6 +44,19 @@ export default function SettingsPopup({ onClose }: Properties) {
     let [sectionTitle, setSectionTitle] = useState<string>();
     let [sectionContent, setSectionContent] = useState<React.JSX.Element>();
 
+    let firstNameField = useRef<HTMLInputElement>(null);
+    let lastNameField = useRef<HTMLInputElement>(null);
+    let locationField = useRef<HTMLInputElement>(null);
+    let birthDateField = useRef<HTMLInputElement>(null);
+    let genderField = useRef<HTMLSelectElement>(null);
+    let occupationField = useRef<HTMLInputElement>(null);
+    let emailField = useRef<HTMLInputElement>(null);
+
+    let modelField = useRef<HTMLSelectElement>(null);
+    let themeField = useRef<HTMLSelectElement>(null);
+    let chatStyleField = useRef<HTMLSelectElement>(null);
+    let summaryStyleField = useRef<HTMLSelectElement>(null);
+
     useEffect(() => {
         (async () => {
             let response = await fetch("/api/users");
@@ -56,6 +69,10 @@ export default function SettingsPopup({ onClose }: Properties) {
         })();
     }, []);
 
+    async function updateUser() {
+
+    }
+
     useEffect(() => {
         if (!currentSection) return;    
 
@@ -67,22 +84,22 @@ export default function SettingsPopup({ onClose }: Properties) {
             case "account":
                 setSectionTitle("Account Details");
                 setSectionContent(<div>
-                    <FieldContainer title="First Name"><Field classes="w-full" defaultValue={user.first_name} /></FieldContainer>
-                    <FieldContainer title="Last Name"><Field classes="w-full" defaultValue={user.last_name} /></FieldContainer>
-                    <FieldContainer title="Location"><Field classes="w-full" defaultValue={user.location} /></FieldContainer>
-                    <FieldContainer title="Date of Birth"><Field type="date" classes="w-full" defaultValue={user.birth_date} /></FieldContainer>
-                    <FieldContainer title="Gender"><Menu classes="w-full" choices={genders} defaultValue={user.gender} /></FieldContainer>
-                    <FieldContainer title="Occupation"><Field classes="w-full" defaultValue={user.occupation} /></FieldContainer>
-                    <FieldContainer title="Email Address"><Field classes="w-full" defaultValue={user.email_address} /></FieldContainer>
+                    <FieldContainer title="First Name"><Field classes="w-full" defaultValue={user.first_name} ref={firstNameField} /></FieldContainer>
+                    <FieldContainer title="Last Name"><Field classes="w-full" defaultValue={user.last_name} ref={lastNameField} /></FieldContainer>
+                    <FieldContainer title="Location"><Field classes="w-full" defaultValue={user.location} ref={locationField} /></FieldContainer>
+                    <FieldContainer title="Date of Birth"><Field type="date" classes="w-full" defaultValue={user.birth_date} ref={birthDateField} /></FieldContainer>
+                    <FieldContainer title="Gender"><Menu classes="w-full" choices={genders} defaultValue={user.gender} ref={genderField} /></FieldContainer>
+                    <FieldContainer title="Occupation"><Field classes="w-full" defaultValue={user.occupation} ref={occupationField} /></FieldContainer>
+                    <FieldContainer title="Email Address"><Field classes="w-full" defaultValue={user.email_address} ref={emailField} /></FieldContainer>
                 </div>);
                 break;
             default:
                 setSectionTitle("General Settings");
                 setSectionContent(<div>
-                    <FieldContainer title="Preferred Model"><Menu choices={models} classes="w-full" defaultValue={settings.model} /></FieldContainer>
-                    <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" defaultValue={settings.theme} /></FieldContainer>
-                    <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" defaultValue={settings.chat_style} /></FieldContainer>
-                    <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" defaultValue={settings.summary_style} /></FieldContainer>
+                    <FieldContainer title="Preferred Model"><Menu choices={models} classes="w-full" defaultValue={settings.model} ref={modelField} /></FieldContainer>
+                    <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" defaultValue={settings.theme} ref={themeField} /></FieldContainer>
+                    <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" defaultValue={settings.chat_style} ref={summaryStyleField} /></FieldContainer>
+                    <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" defaultValue={settings.summary_style} ref={chatStyleField} /></FieldContainer>
                 </div>);
                 break;
         }
