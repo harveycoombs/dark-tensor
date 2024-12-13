@@ -121,6 +121,13 @@ export default function SettingsPopup({ onClose }: Properties) {
         setTimeout(() => setSaveButton(<Button onClick={updateUser}>Save Changes</Button>), 2250);
     }
 
+    async function logout() {
+        let response = await fetch("/api/users", { method: "DELETE" });
+        if (!response.ok) return;
+    
+        window.location.reload();
+    }
+
     useEffect(() => {
         if (!currentSection) return;
 
@@ -167,7 +174,7 @@ export default function SettingsPopup({ onClose }: Properties) {
                             <SettingsMenuItem title="General" selected={currentSection == "general"} onClick={() => setCurrentSection("general")} />
                             <SettingsMenuItem title="Account" selected={currentSection == "account"} onClick={() => setCurrentSection("account")} />
                             <SettingsMenuItem title="Privacy & Security" selected={currentSection == "security"} onClick={() => setCurrentSection("security")} />
-                            <div className= "p-2 rounded-md leading-none text-[0.81rem] text-red-500 font-medium mt-1 cursor-pointer duration-100 hover:bg-red-50 active:bg-red-100/80">Log Out</div>
+                            <div className= "p-2 rounded-md leading-none text-[0.81rem] text-red-500 font-medium mt-1 cursor-pointer duration-100 hover:bg-red-50 active:bg-red-100/80" onClick={logout}>Log Out</div>
                         </div>
                     </div>
                 </div>
