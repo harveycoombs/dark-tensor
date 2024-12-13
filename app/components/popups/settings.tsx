@@ -1,7 +1,8 @@
 import { useState } from "react";  
 
 import Popup from "@/app/components/common/popup";
-import Menu from "../common/menu";
+import Button from "@/app/components/common/button";
+import Menu from "@/app/components/common/menu";
 
 interface Properties {
     user: any;
@@ -10,16 +11,29 @@ interface Properties {
 
 export default function SettingsPopup({ user, onClose }: Properties) {
     let models = [
-        { value: "deepseek-v2:lite", label: "DeepSeek-V2-Lite (15.7B)" },
+        { value: "deepseek-v2:lite", label: "DeepSeek-V2-Lite (15.7B)", selected: true },
         { value: "llama3.1", label: "Llama 3.1 (8B)" },
         { value: "qwq", label: "QwQ (32B)" }
     ];
 
+    let themes = [
+        { value: "light", label: "Light" },
+        { value: "dark", label: "Dark" },
+        { value: "system", label: "System", selected: true }
+    ];
+    
+    let styles = [
+        { value: "verbose", label: "Verbose" },
+        { value: "concise", label: "Concise" },
+        { value: "balanced", label: "Balanced", selected: true }
+    ];
+
     let [sectionTitle, setSectionTitle] = useState<string>("General");
     let [sectionContent, setSectionContent] = useState<React.JSX.Element>(<div>
-        <FieldContainer title="Preferred Model">
-            <Menu type="select" choices={models} />
-        </FieldContainer>
+        <FieldContainer title="Preferred Model"><Menu type="select" choices={models} classes="w-full" /></FieldContainer>
+        <FieldContainer title="Theme"><Menu type="select" choices={themes} classes="w-full" /></FieldContainer>
+        <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" /></FieldContainer>
+        <FieldContainer title="Response Style (Chat)"><Menu type="select" choices={styles} classes="w-full" /></FieldContainer>
     </div>);
 
     return (
@@ -41,7 +55,10 @@ export default function SettingsPopup({ user, onClose }: Properties) {
                     </div>
                 </div>
                 <div className="py-3 w-full min-h-96">
-                    <strong className="block text-sm leading-none font-semibold mb-2">{sectionTitle}</strong>
+                    <div className="flex justify-between items-center">
+                        <strong className="block text-sm leading-none font-semibold">{sectionTitle}</strong>
+                        <Button>Save Changes</Button>
+                    </div>
                     <div className="text-slate-400/80">{sectionContent}</div>
                 </div>
             </div>
@@ -55,9 +72,9 @@ function SettingsMenuItem({ title }: any) {
 
 function FieldContainer({ title, children }: any) {
     return (
-        <div>
-            <div className="text-[0.81rem]">{title}</div>
-            <div>{children}</div>
+        <div className="flex items-center gap-3 w-full mt-2.5">
+            <div className="text-[0.81rem] w-1/2">{title}</div>
+            <div className="w-1/2">{children}</div>
         </div>
     );
 }
