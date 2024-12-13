@@ -50,7 +50,7 @@ export default function Header() {
                     </>
                 }</div>
                 
-            {settingsPopupIsVisible && user ? <SettingsPopup user={user} onClose={() => setSettingsPopupVisibility(false)} /> : null}
+            {settingsPopupIsVisible && user ? <SettingsPopup onClose={() => setSettingsPopupVisibility(false)} /> : null}
             {chatPopupIsVisible && user ? <ChatPopup onClose={() => setChatPopupVisibility(false)} /> : null}
         </header>
     );

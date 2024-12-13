@@ -21,7 +21,7 @@ export async function getUserByID(userid: number): Promise<any> {
 }
 
 export async function getUserDetails(userid: number): Promise<any> {
-    let [result]: any = await pool.query("SELECT user_id, creation_date, email_address, first_name, last_name, birth_date, gender, occupation, location FROM users WHERE user_id = ? AND deleted = 0", [userid]);
+    let [result]: any = await pool.query("SELECT user_id, creation_date, email_address, first_name, last_name, CAST(birth_date AS CHAR) AS birth_date, gender, occupation, location FROM users WHERE user_id = ? AND deleted = 0", [userid]);
     return result[0];
 }
 

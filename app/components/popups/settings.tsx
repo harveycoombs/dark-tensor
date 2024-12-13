@@ -9,11 +9,10 @@ import Menu from "@/app/components/common/menu";
 import Field from "@/app/components/common/field";
 
 interface Properties {
-    user: any;
     onClose: any;
 }
 
-export default function SettingsPopup({ user, onClose }: Properties) {
+export default function SettingsPopup({ onClose }: Properties) {
     let models = [
         { value: "deepseek-v2:lite", label: "DeepSeek-V2-Lite (15.7B)" },
         { value: "llama3.1", label: "Llama 3.1 (8B)" },
@@ -37,6 +36,7 @@ export default function SettingsPopup({ user, onClose }: Properties) {
         { value: "f", label: "Female" }
     ];
 
+    let [user, setUser] = useState<any>();
     let [settings, setSettings] = useState<any>();
 
     let [currentSection, setCurrentSection] = useState<string>();
@@ -45,10 +45,12 @@ export default function SettingsPopup({ user, onClose }: Properties) {
 
     useEffect(() => {
         (async () => {
-            let response = await fetch("/api/users/settings");
+            let response = await fetch("/api/users");
             let json = await response.json();
             
+            setUser(json.details);
             setSettings(json.settings);
+
             setCurrentSection("general");
         })();
     }, []);
@@ -65,7 +67,7 @@ export default function SettingsPopup({ user, onClose }: Properties) {
                 setSectionTitle("Account Details");
                 setSectionContent(<div>
                     <FieldContainer title="First Name"><Field classes="w-full" defaultValue={user.first_name} /></FieldContainer>
-                    <FieldContainer title="First Name"><Field classes="w-full" defaultValue={user.last_name} /></FieldContainer>
+                    <FieldContainer title="Last Name"><Field classes="w-full" defaultValue={user.last_name} /></FieldContainer>
                     <FieldContainer title="Location"><Field classes="w-full" defaultValue={user.location} /></FieldContainer>
                     <FieldContainer title="Date of Birth"><Field type="date" classes="w-full" defaultValue={user.birth_date} /></FieldContainer>
                     <FieldContainer title="Gender"><Menu classes="w-full" choices={genders} defaultValue={user.gender} /></FieldContainer>
@@ -87,7 +89,7 @@ export default function SettingsPopup({ user, onClose }: Properties) {
 
     return (
         <Popup title="Settings" onClose={onClose}>
-            {settings ? <div className="w-650 flex gap-3">
+            {settings && user ? <div className="w-650 flex gap-3">
                 <div className="w-44 py-3 pr-3 border-r border-r-slate-300 shrink-0">
                     <div>
                         <div className="inline-grid align-middle place-items-center bg-sky-100 text-sky-500 text-sm leading-none select-none font-medium w-9 h-9 rounded-full">{(user.first_name.charAt(0).toUpperCase() + user.last_name.charAt(0)).toUpperCase()}</div>
@@ -108,7 +110,7 @@ export default function SettingsPopup({ user, onClose }: Properties) {
                         <strong className="block text-sm leading-none font-semibold">{sectionTitle}</strong>
                         <Button>Save Changes</Button>
                     </div>
-                    <div className="text-slate-400/80">{sectionContent}</div>
+                    <div>{sectionContent}</div>
                 </div>
             </div> : <div className="w-650 h-96 grid place-items-center text-2xl text-slate-400/60 leading-none"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /></div>}
         </Popup>
@@ -122,7 +124,7 @@ function SettingsMenuItem({ title, selected, ...rest }: any) {
 function FieldContainer({ title, children }: any) {
     return (
         <div className="flex items-center gap-3 w-full mt-2.5">
-            <div className="text-[0.81rem] w-1/2">{title}</div>
+            <div className="text-[0.81rem] text-slate-400/80 w-1/2">{title}</div>
             <div className="w-1/2">{children}</div>
         </div>
     );
