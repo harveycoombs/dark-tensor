@@ -48,10 +48,10 @@ export default function SettingsPopup({ user, onClose }: Properties) {
                     break;
                 default:
                     setSectionContent(<div>
-                        <FieldContainer title="Preferred Model"><Menu type="select" choices={models} classes="w-full" /></FieldContainer>
-                        <FieldContainer title="Theme"><Menu type="select" choices={themes} classes="w-full" /></FieldContainer>
+                        <FieldContainer title="Preferred Model"><Menu choices={models} classes="w-full" /></FieldContainer>
+                        <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" /></FieldContainer>
                         <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" /></FieldContainer>
-                        <FieldContainer title="Response Style (Chat)"><Menu type="select" choices={styles} classes="w-full" /></FieldContainer>
+                        <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" /></FieldContainer>
                     </div>);
                     break;
             }
