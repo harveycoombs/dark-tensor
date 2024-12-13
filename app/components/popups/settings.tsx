@@ -70,11 +70,51 @@ export default function SettingsPopup({ onClose }: Properties) {
     }, []);
 
     async function updateUser() {
+        if (
+            !firstNameField.current ||
+            !lastNameField.current ||
+            !locationField.current ||
+            !birthDateField.current ||
+            !genderField.current ||
+            !occupationField.current ||
+            !emailField.current ||
+            !modelField.current ||
+            !themeField.current ||
+            !chatStyleField.current ||
+            !summaryStyleField.current
+        ) return;
 
+        let details = new URLSearchParams({
+            firstname: firstNameField.current.value,
+            lastname: lastNameField.current.value,
+            location: locationField.current.value,
+            birthdate: birthDateField.current.value,
+            gender: genderField.current.value,
+            email: emailField.current.value,
+            occupation: occupationField.current.value,
+            model: modelField.current.value,
+            theme: themeField.current.value,
+            chatstyle: chatStyleField.current.value,
+            summarystyle: summaryStyleField.current.value
+        });
+
+        let response = await fetch("/api/users", {
+            method: "PATCH",
+            body: details
+        });
+
+        let json = await response.json();
+
+        if (!response.ok) {
+            // to-do, json.error + error message with red text
+            return;
+        }
+
+        // to-do, success message with green text
     }
 
     useEffect(() => {
-        if (!currentSection) return;    
+        if (!currentSection) return;
 
         switch (currentSection) {
             case "security":
