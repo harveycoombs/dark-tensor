@@ -28,6 +28,7 @@ export default function SettingsPopup({ user, onClose }: Properties) {
         { value: "balanced", label: "Balanced", selected: true }
     ];
 
+    let [currentSection, setCurrentSection] = useState<string>("general");
     let [sectionTitle, setSectionTitle] = useState<string>("General");
     let [sectionContent, setSectionContent] = useState<React.JSX.Element>(<div>
         <FieldContainer title="Preferred Model"><Menu type="select" choices={models} classes="w-full" /></FieldContainer>
@@ -47,9 +48,9 @@ export default function SettingsPopup({ user, onClose }: Properties) {
                             <div className="text-xs font-medium text-slate-400/80">Joined {new Date(user.creation_date).toLocaleString(undefined, { year: "numeric", month: "short" })}</div>
                         </div>
                         <div className="mt-2">
-                            <SettingsMenuItem title="General" />
-                            <SettingsMenuItem title="Account" />
-                            <SettingsMenuItem title="Privacy & Security" />
+                            <SettingsMenuItem title="General" selected={currentSection == "general"} />
+                            <SettingsMenuItem title="Account" selected={currentSection == "account"} />
+                            <SettingsMenuItem title="Privacy & Security" selected={currentSection == "security"} />
                             <div className= "p-2 rounded-md leading-none text-[0.81rem] text-red-500 font-medium mt-1 cursor-pointer duration-100 hover:bg-red-50 active:bg-red-100/80">Log Out</div>
                         </div>
                     </div>
@@ -66,8 +67,8 @@ export default function SettingsPopup({ user, onClose }: Properties) {
     );
 }
 
-function SettingsMenuItem({ title }: any) {
-    return <div className="p-2 rounded-md leading-none text-[0.81rem] text-slate-400/60 font-medium mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80">{title}</div>;
+function SettingsMenuItem({ title, selected }: any) {
+    return <div className={`p-2 rounded-md leading-none text-[0.81rem] text-slate-400/60 font-medium${selected ? " bg-slate-100/80" : ""} mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80`}>{title}</div>;
 }
 
 function FieldContainer({ title, children }: any) {
