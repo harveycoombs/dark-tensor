@@ -57,7 +57,7 @@ export default function SettingsPopup({ onClose }: Properties) {
     let chatStyleField = useRef<HTMLSelectElement>(null);
     let summaryStyleField = useRef<HTMLSelectElement>(null);
 
-    let [saveButton, setSaveButton] = useState<React.JSX.Element>(<Button>Save Changes</Button>);
+    let [saveButton, setSaveButton] = useState<React.JSX.Element>(<Button onClick={updateUser}>Save Changes</Button>);
 
     useEffect(() => {
         (async () => {
@@ -118,7 +118,7 @@ export default function SettingsPopup({ onClose }: Properties) {
         }
 
         setSaveButton(<Button classes="bg-green-500">Saved</Button>);
-        setTimeout(() => setSaveButton(<Button>Save Changes</Button>), 2250);
+        setTimeout(() => setSaveButton(<Button onClick={updateUser}>Save Changes</Button>), 2250);
     }
 
     useEffect(() => {
