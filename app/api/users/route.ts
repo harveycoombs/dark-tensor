@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import { emailExists, createUser, getUserByID, getUserDetails, getUserSettings, deleteUser } from "@/data/users";
+import { emailExists, createUser, updateUser, updateSettings, getUserByID, getUserDetails, getUserSettings, deleteUser } from "@/data/users";
 import { createJWT, authenticate } from "@/data/jwt";
 
 export async function GET(): Promise<NextResponse> {
@@ -49,6 +49,31 @@ export async function POST(request: Request): Promise<NextResponse> {
     });
 
     return response;
+}
+
+export async function PATCH(request: Request): Promise<NextResponse> {
+    let cookieJar = await cookies();
+    let token = cookieJar.get("token")?.value;
+    let currentSessionUser = await authenticate(token ?? "");
+
+    if (!currentSessionUser?.user_id) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
+
+    let data = await request.formData();
+
+    let detailsUpdated = await updateUser(
+        currentSessionUser.user_id,
+        data.get("firstname")?.toString() ?? "",
+        data.get("lastname")?.toString() ?? "",
+        data.get("location")?.toString() ?? "",
+        new Date(data.get("birthdate")?.toString() ?? ""),
+        data.get("gender")?.toString() ?? "",
+        data.get("occupation")?.toString() ?? "",
+        data.get("email")?.toString() ?? ""
+    );
+
+    let settingsUpdated = await updateSettings(currentSessionUser.user_id);
+
+    return NextResponse.json({ success: detailsUpdated && settingsUpdated }, { status: 200 });
 }
 
 export async function DELETE(request: Request): Promise<NextResponse> {

@@ -10,6 +10,16 @@ export async function createUser(email: string, password: string, firstName: str
     return result.insertId ?? 0;
 }
 
+export async function updateUser(userid: number, firstName: string, lastName: string, location: string, birthDate: Date, gender: string, occupation: string, emailAddress: string): Promise<boolean> {
+    let [result]: any = await pool.query("UPDATE users SET first_name = ?, last_name = ?, location = ?, birth_date = ?, gender = ?, occupation = ?, email_address = ? WHERE user_id = ?", [firstName, lastName, location, birthDate, gender, occupation, emailAddress, userid]);
+    return result.affectedRows > 0;
+}
+
+export async function updateSettings(userid: number): Promise<boolean> {
+    let [result]: any = await pool.query("UPDATE settings", []);
+    return result.affectedRows > 0;
+}
+
 export async function deleteUser(userid: number): Promise<boolean> {
     let [result]: any = await pool.query("UPDATE users SET deleted = 1 WHERE user_id = ?", [userid]);
     return result.affectedRows > 0;

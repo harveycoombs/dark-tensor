@@ -108,6 +108,8 @@ export default function SettingsPopup({ onClose }: Properties) {
         if (!response.ok) {
             // to-do, json.error + error message with red text
             return;
+        } else if (!json.success) {
+            return;
         }
 
         // to-do, success message with green text
