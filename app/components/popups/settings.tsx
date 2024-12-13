@@ -32,6 +32,11 @@ export default function SettingsPopup({ user, onClose }: Properties) {
         { value: "balanced", label: "Balanced" }
     ];
 
+    let genders = [
+        { value: "m", label: "Male" },
+        { value: "f", label: "Female" }
+    ];
+
     let [settings, setSettings] = useState<any>();
 
     let [currentSection, setCurrentSection] = useState<string>();
@@ -54,16 +59,18 @@ export default function SettingsPopup({ user, onClose }: Properties) {
         switch (currentSection) {
             case "security":
                 setSectionTitle("Security & Privacy");
-                setSectionContent(<div>
-
-                </div>);
+                setSectionContent(<div></div>);
                 break;
             case "account":
                 setSectionTitle("Account Details");
                 setSectionContent(<div>
-                    <FieldContainer title="Email Address"><Field classes="w-full" defaultValue={user.email_address} /></FieldContainer>
                     <FieldContainer title="First Name"><Field classes="w-full" defaultValue={user.first_name} /></FieldContainer>
                     <FieldContainer title="First Name"><Field classes="w-full" defaultValue={user.last_name} /></FieldContainer>
+                    <FieldContainer title="Location"><Field classes="w-full" defaultValue={user.location} /></FieldContainer>
+                    <FieldContainer title="Date of Birth"><Field type="date" classes="w-full" defaultValue={user.birth_date} /></FieldContainer>
+                    <FieldContainer title="Gender"><Menu classes="w-full" choices={genders} defaultValue={user.gender} /></FieldContainer>
+                    <FieldContainer title="Occupation"><Field classes="w-full" defaultValue={user.occupation} /></FieldContainer>
+                    <FieldContainer title="Email Address"><Field classes="w-full" defaultValue={user.email_address} /></FieldContainer>
                 </div>);
                 break;
             default:
