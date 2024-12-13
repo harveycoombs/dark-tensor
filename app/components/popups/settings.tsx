@@ -6,6 +6,7 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import Popup from "@/app/components/common/popup";
 import Button from "@/app/components/common/button";
 import Menu from "@/app/components/common/menu";
+import Field from "@/app/components/common/field";
 
 interface Properties {
     user: any;
@@ -42,30 +43,36 @@ export default function SettingsPopup({ user, onClose }: Properties) {
             let response = await fetch("/api/users/settings");
             let json = await response.json();
             
-            setSettings(json);
+            setSettings(json.settings);
             setCurrentSection("general");
         })();
     }, []);
 
     useEffect(() => {
-        if (!currentSection) return;
+        if (!currentSection) return;    
 
         switch (currentSection) {
             case "security":
                 setSectionTitle("Security & Privacy");
-                setSectionContent(<div></div>);
+                setSectionContent(<div>
+
+                </div>);
                 break;
             case "account":
                 setSectionTitle("Account Details");
-                setSectionContent(<div></div>);
+                setSectionContent(<div>
+                    <FieldContainer title="Email Address"><Field classes="w-full" defaultValue={user.email_address} /></FieldContainer>
+                    <FieldContainer title="First Name"><Field classes="w-full" defaultValue={user.first_name} /></FieldContainer>
+                    <FieldContainer title="First Name"><Field classes="w-full" defaultValue={user.last_name} /></FieldContainer>
+                </div>);
                 break;
             default:
                 setSectionTitle("General Settings");
                 setSectionContent(<div>
-                    <FieldContainer title="Preferred Model"><Menu choices={models} classes="w-full" /></FieldContainer>
-                    <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" /></FieldContainer>
-                    <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" /></FieldContainer>
-                    <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" /></FieldContainer>
+                    <FieldContainer title="Preferred Model"><Menu choices={models} classes="w-full" defaultValue={settings.model} /></FieldContainer>
+                    <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" defaultValue={settings.theme} /></FieldContainer>
+                    <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" defaultValue={settings.chat_style} /></FieldContainer>
+                    <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" defaultValue={settings.summary_style} /></FieldContainer>
                 </div>);
                 break;
         }
