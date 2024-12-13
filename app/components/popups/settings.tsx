@@ -1,4 +1,4 @@
-import { useState } from "react";  
+import { useEffect, useState } from "react";  
 
 import Popup from "@/app/components/common/popup";
 import Button from "@/app/components/common/button";
@@ -11,7 +11,7 @@ interface Properties {
 
 export default function SettingsPopup({ user, onClose }: Properties) {
     let models = [
-        { value: "deepseek-v2:lite", label: "DeepSeek-V2-Lite (15.7B)", selected: true },
+        { value: "deepseek-v2:lite", label: "DeepSeek-V2-Lite (15.7B)" },
         { value: "llama3.1", label: "Llama 3.1 (8B)" },
         { value: "qwq", label: "QwQ (32B)" }
     ];
@@ -19,23 +19,44 @@ export default function SettingsPopup({ user, onClose }: Properties) {
     let themes = [
         { value: "light", label: "Light" },
         { value: "dark", label: "Dark" },
-        { value: "system", label: "System", selected: true }
+        { value: "system", label: "System" }
     ];
     
     let styles = [
         { value: "verbose", label: "Verbose" },
         { value: "concise", label: "Concise" },
-        { value: "balanced", label: "Balanced", selected: true }
+        { value: "balanced", label: "Balanced" }
     ];
 
     let [currentSection, setCurrentSection] = useState<string>("general");
-    let [sectionTitle, setSectionTitle] = useState<string>("General");
-    let [sectionContent, setSectionContent] = useState<React.JSX.Element>(<div>
-        <FieldContainer title="Preferred Model"><Menu type="select" choices={models} classes="w-full" /></FieldContainer>
-        <FieldContainer title="Theme"><Menu type="select" choices={themes} classes="w-full" /></FieldContainer>
-        <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" /></FieldContainer>
-        <FieldContainer title="Response Style (Chat)"><Menu type="select" choices={styles} classes="w-full" /></FieldContainer>
-    </div>);
+    let [sectionTitle, setSectionTitle] = useState<string>();
+    let [sectionContent, setSectionContent] = useState<React.JSX.Element>();
+
+    useEffect(() => {
+        setSectionTitle((currentSection == "security") ? "Privacy & Security" : (currentSection == "account") ? "Account" : "General");
+
+        (async () => {
+            let response = await fetch(`/api/users/${(currentSection == "general") ? "settings" : currentSection}`);
+            let json = await response.json();
+
+            switch (currentSection) {
+                case "security":
+                    setSectionContent(<div></div>);
+                    break;
+                case "account":
+                    setSectionContent(<div></div>);
+                    break;
+                default:
+                    setSectionContent(<div>
+                        <FieldContainer title="Preferred Model"><Menu type="select" choices={models} classes="w-full" /></FieldContainer>
+                        <FieldContainer title="Theme"><Menu type="select" choices={themes} classes="w-full" /></FieldContainer>
+                        <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" /></FieldContainer>
+                        <FieldContainer title="Response Style (Chat)"><Menu type="select" choices={styles} classes="w-full" /></FieldContainer>
+                    </div>);
+                    break;
+            }
+        })();
+    }, [currentSection]);
 
     return (
         <Popup title="Settings" onClose={onClose}>
@@ -48,9 +69,9 @@ export default function SettingsPopup({ user, onClose }: Properties) {
                             <div className="text-xs font-medium text-slate-400/80">Joined {new Date(user.creation_date).toLocaleString(undefined, { year: "numeric", month: "short" })}</div>
                         </div>
                         <div className="mt-2">
-                            <SettingsMenuItem title="General" selected={currentSection == "general"} />
-                            <SettingsMenuItem title="Account" selected={currentSection == "account"} />
-                            <SettingsMenuItem title="Privacy & Security" selected={currentSection == "security"} />
+                            <SettingsMenuItem title="General" selected={currentSection == "general"} onClick={() => setCurrentSection("general")} />
+                            <SettingsMenuItem title="Account" selected={currentSection == "account"} onClick={() => setCurrentSection("account")} />
+                            <SettingsMenuItem title="Privacy & Security" selected={currentSection == "security"} onClick={() => setCurrentSection("security")} />
                             <div className= "p-2 rounded-md leading-none text-[0.81rem] text-red-500 font-medium mt-1 cursor-pointer duration-100 hover:bg-red-50 active:bg-red-100/80">Log Out</div>
                         </div>
                     </div>
@@ -67,8 +88,8 @@ export default function SettingsPopup({ user, onClose }: Properties) {
     );
 }
 
-function SettingsMenuItem({ title, selected }: any) {
-    return <div className={`p-2 rounded-md leading-none text-[0.81rem] text-slate-400/60 font-medium${selected ? " bg-slate-100/80" : ""} mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80`}>{title}</div>;
+function SettingsMenuItem({ title, selected, ...rest }: any) {
+    return <div className={`p-2 rounded-md leading-none text-[0.81rem] text-slate-400/60 font-medium${selected ? " bg-slate-100/80" : ""} mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80`} {...rest}>{title}</div>;
 }
 
 function FieldContainer({ title, children }: any) {
