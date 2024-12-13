@@ -33,7 +33,8 @@ export default function SettingsPopup({ onClose }: Properties) {
 
     let genders = [
         { value: "m", label: "Male" },
-        { value: "f", label: "Female" }
+        { value: "f", label: "Female" },
+        { value: "", label: "Prefer not to say" }
     ];
 
     let [user, setUser] = useState<any>();
