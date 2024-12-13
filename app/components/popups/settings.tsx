@@ -54,7 +54,7 @@ export default function SettingsPopup({ user, onClose }: Properties) {
                         </div>
                     </div>
                 </div>
-                <div className="py-3 w-full min-h-96">
+                <div className="py-3 w-full h-96 overflow-y-auto">
                     <div className="flex justify-between items-center">
                         <strong className="block text-sm leading-none font-semibold">{sectionTitle}</strong>
                         <Button>Save Changes</Button>
