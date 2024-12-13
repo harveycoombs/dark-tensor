@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";  
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+
 import Popup from "@/app/components/common/popup";
 import Button from "@/app/components/common/button";
 import Menu from "@/app/components/common/menu";
@@ -28,39 +31,49 @@ export default function SettingsPopup({ user, onClose }: Properties) {
         { value: "balanced", label: "Balanced" }
     ];
 
-    let [currentSection, setCurrentSection] = useState<string>("general");
+    let [settings, setSettings] = useState<any>();
+
+    let [currentSection, setCurrentSection] = useState<string>();
     let [sectionTitle, setSectionTitle] = useState<string>();
     let [sectionContent, setSectionContent] = useState<React.JSX.Element>();
 
     useEffect(() => {
-        setSectionTitle((currentSection == "security") ? "Privacy & Security" : (currentSection == "account") ? "Account" : "General");
-
         (async () => {
-            let response = await fetch(`/api/users/${(currentSection == "general") ? "settings" : currentSection}`);
+            let response = await fetch("/api/users/settings");
             let json = await response.json();
-
-            switch (currentSection) {
-                case "security":
-                    setSectionContent(<div></div>);
-                    break;
-                case "account":
-                    setSectionContent(<div></div>);
-                    break;
-                default:
-                    setSectionContent(<div>
-                        <FieldContainer title="Preferred Model"><Menu choices={models} classes="w-full" /></FieldContainer>
-                        <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" /></FieldContainer>
-                        <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" /></FieldContainer>
-                        <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" /></FieldContainer>
-                    </div>);
-                    break;
-            }
+            
+            setSettings(json);
+            setCurrentSection("general");
         })();
+    }, []);
+
+    useEffect(() => {
+        if (!currentSection) return;
+
+        switch (currentSection) {
+            case "security":
+                setSectionTitle("Security & Privacy");
+                setSectionContent(<div></div>);
+                break;
+            case "account":
+                setSectionTitle("Account Details");
+                setSectionContent(<div></div>);
+                break;
+            default:
+                setSectionTitle("General Settings");
+                setSectionContent(<div>
+                    <FieldContainer title="Preferred Model"><Menu choices={models} classes="w-full" /></FieldContainer>
+                    <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" /></FieldContainer>
+                    <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" /></FieldContainer>
+                    <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" /></FieldContainer>
+                </div>);
+                break;
+        }
     }, [currentSection]);
 
     return (
         <Popup title="Settings" onClose={onClose}>
-            <div className="w-650 flex gap-3">
+            {settings ? <div className="w-650 flex gap-3">
                 <div className="w-44 py-3 pr-3 border-r border-r-slate-300 shrink-0">
                     <div>
                         <div className="inline-grid align-middle place-items-center bg-sky-100 text-sky-500 text-sm leading-none select-none font-medium w-9 h-9 rounded-full">{(user.first_name.charAt(0).toUpperCase() + user.last_name.charAt(0)).toUpperCase()}</div>
@@ -83,7 +96,7 @@ export default function SettingsPopup({ user, onClose }: Properties) {
                     </div>
                     <div className="text-slate-400/80">{sectionContent}</div>
                 </div>
-            </div>
+            </div> : <div className="w-650 h-96 grid place-items-center text-2xl text-slate-400/60 leading-none"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /></div>}
         </Popup>
     );
 }

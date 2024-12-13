@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import { emailExists, createUser, getUserByID, getUserDetails, getUserSettings, deleteUser } from "@/data/users";
+import { emailExists, createUser, getUserByID, getUserDetails, deleteUser } from "@/data/users";
 import { createJWT, authenticate } from "@/data/jwt";
 
 export async function GET(): Promise<NextResponse> {
@@ -12,9 +12,8 @@ export async function GET(): Promise<NextResponse> {
     if (!currentSessionUser?.user_id) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
     let user = await getUserDetails(currentSessionUser.user_id);
-    let settings = await getUserSettings(currentSessionUser.user_id);
 
-    return NextResponse.json({ user, settings }, { status: 200 });
+    return NextResponse.json({ user }, { status: 200 });
 }
 
 export async function POST(request: Request): Promise<NextResponse> {
