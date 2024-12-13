@@ -122,7 +122,7 @@ export default function SettingsPopup({ onClose }: Properties) {
     }
 
     async function logout() {
-        let response = await fetch("/api/users", { method: "DELETE" });
+        let response = await fetch("/api/users/sessions", { method: "DELETE" });
         if (!response.ok) return;
     
         window.location.reload();
