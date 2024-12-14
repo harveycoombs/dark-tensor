@@ -31,7 +31,7 @@ export default function Header() {
     return (
         <header className="p-3 select-none bg-white sticky top-0 border-b border-b-slate-300 flex justify-between items-center z-30">
             <Link href="/" className="duration-100 hover:opacity-85 active:opacity-70">
-                <Icon width={24} height={24} />
+                <Icon width={16} height={24} />
             </Link>
             <nav className="text-sm leading-none font-medium max-[700px]:hidden">
                 <HeaderNavigationOption text="About" url="/about" />

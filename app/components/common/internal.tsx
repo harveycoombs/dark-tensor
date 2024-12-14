@@ -19,8 +19,8 @@ export default function InternalPage({ title, children }: Properties) {
 
 export function PageSection({ title, children }: Properties) {
     return (
-        <section className="w-650 mx-auto mt-4 max-[700px]:w-full max-[700px]:px-3">
-            <h2>{title}</h2>
+        <section className="w-650 mx-auto mt-5 max-[700px]:w-full max-[700px]:px-3">
+            <h2 className="text-xl font-semibold mb-2">{title}</h2>
             <div className="text-sm text-slate-400/80 leading-relaxed">{children}</div>
         </section>
     );
