@@ -72,8 +72,6 @@ export default function SettingsPopup({ onClose }: Properties) {
     }, []);
 
     async function updateUserDetails() {
-        console.log("user details", firstNameField.current, lastNameField.current, locationField.current, birthDateField.current, genderField.current, occupationField.current, emailField.current,);
-
         if (
             !firstNameField.current ||
             !lastNameField.current ||
@@ -104,10 +102,10 @@ export default function SettingsPopup({ onClose }: Properties) {
         let json = await response.json();
 
         if (!response.ok) {
-            setSaveButton(<Button classes="bg-red-500">{json.error}</Button>);
+            setSaveButton(<Button color="red">{json.error}</Button>);
             return;
         } else if (!json.success) {
-            setSaveButton(<Button classes="bg-red-500">Something went wrong</Button>);
+            setSaveButton(<Button color="red">Something went wrong</Button>);
             return;
         }
 
@@ -140,10 +138,10 @@ export default function SettingsPopup({ onClose }: Properties) {
         let json = await response.json();
 
         if (!response.ok) {
-            setSaveButton(<Button classes="bg-red-500">{json.error}</Button>);
+            setSaveButton(<Button color="red">{json.error}</Button>);
             return;
         } else if (!json.success) {
-            setSaveButton(<Button classes="bg-red-500">Something went wrong</Button>);
+            setSaveButton(<Button color="red">Something went wrong</Button>);
             return;
         }
 
