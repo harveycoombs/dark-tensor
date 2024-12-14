@@ -72,6 +72,8 @@ export default function SettingsPopup({ onClose }: Properties) {
     }, []);
 
     async function updateUser() {
+        console.log("hello?");
+
         if (
             !firstNameField.current ||
             !lastNameField.current ||
@@ -85,6 +87,8 @@ export default function SettingsPopup({ onClose }: Properties) {
             !chatStyleField.current ||
             !summaryStyleField.current
         ) return;
+
+        console.log("hello.");
 
         setSaveButton(<Button disabled={true}>Saving</Button>);
 
@@ -153,8 +157,8 @@ export default function SettingsPopup({ onClose }: Properties) {
                 setSectionContent(<div>
                     <FieldContainer title="Preferred Model"><Menu choices={models} classes="w-full" defaultValue={settings.model} ref={modelField} /></FieldContainer>
                     <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" defaultValue={settings.theme} ref={themeField} /></FieldContainer>
-                    <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" defaultValue={settings.chat_style} ref={summaryStyleField} /></FieldContainer>
-                    <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" defaultValue={settings.summary_style} ref={chatStyleField} /></FieldContainer>
+                    <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" defaultValue={settings.summary_style} ref={summaryStyleField} /></FieldContainer>
+                    <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" defaultValue={settings.chat_style} ref={chatStyleField} /></FieldContainer>
                 </div>);
                 break;
         }
