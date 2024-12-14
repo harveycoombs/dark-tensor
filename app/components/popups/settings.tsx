@@ -57,7 +57,7 @@ export default function SettingsPopup({ onClose }: Properties) {
     let chatStyleField = useRef<HTMLSelectElement>(null);
     let summaryStyleField = useRef<HTMLSelectElement>(null);
 
-    let [saveButton, setSaveButton] = useState<React.JSX.Element>(<Button onClick={updateUser}>Save Changes</Button>);
+    let [saveButton, setSaveButton] = useState<React.JSX.Element>(<Button onClick={(currentSection == "general") ? updateUserSettings : updateUserDetails}>Save Changes</Button>);
 
     useEffect(() => {
         (async () => {
@@ -71,9 +71,7 @@ export default function SettingsPopup({ onClose }: Properties) {
         })();
     }, []);
 
-    async function updateUser() {
-        console.log("hello?");
-
+    async function updateUserDetails() {
         if (
             !firstNameField.current ||
             !lastNameField.current ||
@@ -81,14 +79,8 @@ export default function SettingsPopup({ onClose }: Properties) {
             !birthDateField.current ||
             !genderField.current ||
             !occupationField.current ||
-            !emailField.current ||
-            !modelField.current ||
-            !themeField.current ||
-            !chatStyleField.current ||
-            !summaryStyleField.current
+            !emailField.current
         ) return;
-
-        console.log("hello.");
 
         setSaveButton(<Button disabled={true}>Saving</Button>);
 
@@ -100,10 +92,6 @@ export default function SettingsPopup({ onClose }: Properties) {
             gender: genderField.current.value,
             email: emailField.current.value,
             occupation: occupationField.current.value,
-            model: modelField.current.value,
-            theme: themeField.current.value,
-            chatstyle: chatStyleField.current.value,
-            summarystyle: summaryStyleField.current.value
         });
 
         let response = await fetch("/api/users", {
@@ -122,7 +110,43 @@ export default function SettingsPopup({ onClose }: Properties) {
         }
 
         setSaveButton(<Button classes="bg-green-500">Saved</Button>);
-        setTimeout(() => setSaveButton(<Button onClick={updateUser}>Save Changes</Button>), 2250);
+        setTimeout(() => setSaveButton(<Button onClick={updateUserDetails}>Save Changes</Button>), 2250);
+    }
+
+    async function updateUserSettings() {
+        if (
+            !modelField.current ||
+            !themeField.current ||
+            !chatStyleField.current ||
+            !summaryStyleField.current
+        ) return;
+
+        setSaveButton(<Button disabled={true}>Saving</Button>);
+
+        let settings = new URLSearchParams({
+            model: modelField.current.value,
+            theme: themeField.current.value,
+            chatStyle: chatStyleField.current.value,
+            summaryStyle: summaryStyleField.current.value
+        });
+
+        let response = await fetch("/api/users/settings", {
+            method: "PATCH",
+            body: settings
+        });
+
+        let json = await response.json();
+
+        if (!response.ok) {
+            setSaveButton(<Button classes="bg-red-500">{json.error}</Button>);
+            return;
+        } else if (!json.success) {
+            setSaveButton(<Button classes="bg-red-500">Something went wrong</Button>);
+            return;
+        }
+
+        setSaveButton(<Button classes="bg-green-500">Saved</Button>);
+        setTimeout(() => setSaveButton(<Button onClick={updateUserSettings}>Save Changes</Button>), 2250);
     }
 
     async function logout() {

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import { emailExists, createUser, updateUser, updateSettings, getUserByID, getUserDetails, getUserSettings, deleteUser } from "@/data/users";
+import { emailExists, createUser, updateUser, getUserByID, getUserDetails, getUserSettings, deleteUser } from "@/data/users";
 import { createJWT, authenticate } from "@/data/jwt";
 
 export async function GET(): Promise<NextResponse> {
@@ -60,7 +60,7 @@ export async function PATCH(request: Request): Promise<NextResponse> {
 
     let data = await request.formData();
 
-    let detailsUpdated = await updateUser(
+    let success = await updateUser(
         currentSessionUser.user_id,
         data.get("firstname")?.toString() ?? "",
         data.get("lastname")?.toString() ?? "",
@@ -71,15 +71,7 @@ export async function PATCH(request: Request): Promise<NextResponse> {
         data.get("email")?.toString() ?? ""
     );
 
-    let settingsUpdated = await updateSettings(
-        currentSessionUser.user_id,
-        data.get("theme")?.toString() ?? "",
-        data.get("model")?.toString() ?? "",
-        data.get("summarystyle")?.toString() ?? "",
-        data.get("chatstyle")?.toString() ?? ""
-    );
-
-    return NextResponse.json({ success: detailsUpdated && settingsUpdated }, { status: 200 });
+    return NextResponse.json({ success }, { status: 200 });
 }
 
 export async function DELETE(request: Request): Promise<NextResponse> {
