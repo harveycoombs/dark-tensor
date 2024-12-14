@@ -72,6 +72,8 @@ export default function SettingsPopup({ onClose }: Properties) {
     }, []);
 
     async function updateUserDetails() {
+        console.log("user details", firstNameField.current, lastNameField.current, locationField.current, birthDateField.current, genderField.current, occupationField.current, emailField.current,);
+
         if (
             !firstNameField.current ||
             !lastNameField.current ||
@@ -91,7 +93,7 @@ export default function SettingsPopup({ onClose }: Properties) {
             birthdate: birthDateField.current.value,
             gender: genderField.current.value,
             email: emailField.current.value,
-            occupation: occupationField.current.value,
+            occupation: occupationField.current.value
         });
 
         let response = await fetch("/api/users", {
@@ -109,7 +111,7 @@ export default function SettingsPopup({ onClose }: Properties) {
             return;
         }
 
-        setSaveButton(<Button classes="bg-green-500">Saved</Button>);
+        setSaveButton(<Button color="green">Saved</Button>);
         setTimeout(() => setSaveButton(<Button onClick={updateUserDetails}>Save Changes</Button>), 2250);
     }
 
@@ -145,7 +147,7 @@ export default function SettingsPopup({ onClose }: Properties) {
             return;
         }
 
-        setSaveButton(<Button classes="bg-green-500">Saved</Button>);
+        setSaveButton(<Button color="green">Saved</Button>);
         setTimeout(() => setSaveButton(<Button onClick={updateUserSettings}>Save Changes</Button>), 2250);
     }
 
