@@ -41,7 +41,7 @@ export async function getUserSettings(userid: number): Promise<any> {
 }
 
 export async function getUserByEmailAddress(email: string): Promise<any> {
-    let [result]: any = await pool.query("SELECT user_id, first_name, last_name, birth_date FROM users WHERE email_address= ? AND deleted = 0", [email]);
+    let [result]: any = await pool.query("SELECT user_id, first_name, last_name, birth_date FROM users WHERE email_address = ? AND deleted = 0", [email]);
     return result[0];
 }
 
