@@ -7,12 +7,14 @@ import Field from "@/app/components/common/field";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faClockRotateLeft, faDownload, faEllipsis, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import { getModelCleanName } from "@/data/utils";
 
 interface Properties {
+    model?: string;
     onClose: any;
 }
 
-export default function ChatPopup({ onClose }: Properties) {
+export default function ChatPopup({ model, onClose }: Properties) {
     let [prompt, setPrompt] = useState<string>("");
     let [messages, setMessages] = useState<any[]>([]);
     let [conversationid, setConversationID] = useState<number>(0);
@@ -128,7 +130,7 @@ export default function ChatPopup({ onClose }: Properties) {
             <div className={`w-1300 flex${conversationHistoryIsVisible ? " gap-3" :""}`}>
                 <div className="w-full pt-2.5">
                     <div className="flex justify-between items-center text-sm relative z-10 pb-2.5 shadow-[0_0_6px_6px_white]">
-                        <div className="text-slate-400/60">Model: <strong className="font-bold text-slate-600">DeepSeek V2 Lite &#40;15.7B&#41;</strong></div>
+                        <div className="text-slate-400/60">Model: <strong className="font-bold text-slate-600">{getModelCleanName(model ?? "deepseek-v2:lite")}</strong></div>
                         <div>
                             <ChatOption icon={faPlus} title="New Conversation" onClick={startNewConversation} />
                             <ChatOption icon={faClockRotateLeft} title="View Conversation History" onClick={openConversationHistory} selected={conversationHistoryIsVisible} />
