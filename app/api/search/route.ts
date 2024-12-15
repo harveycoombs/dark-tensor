@@ -14,9 +14,13 @@ export async function GET(request: Request): Promise<NextResponse> {
         return NextResponse.json({ error: "Invalid prompt." }, { status: 400 });
     }
 
+    let cookieJar = await cookies();
+    let token = cookieJar.get("token")?.value;
+    let currentSessionUser = await authenticate(token ?? "");
+
     try {
         let summary = await generate({
-            model: "deepseek-v2:lite",
+            model: currentSessionUser?.model ?? "deepseek-v2:lite",
             prompt: query
         });
 
