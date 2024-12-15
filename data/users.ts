@@ -62,8 +62,11 @@ export async function verifyCredentials(email: string, password: string): Promis
 	return valid;
 }
 
-export async function emailExists(email: string): Promise<boolean> {
-	let [result]: any = await pool.query("SELECT COUNT(*) AS total FROM users WHERE email_address = ?", [email]);
+export async function emailExists(email: string, userid: number=0): Promise<boolean> {
+    let filter = userid ? " AND user_id <> ?" : "";
+    let params = userid ? [email, userid] : [email];
+
+	let [result]: any = await pool.query(`SELECT COUNT(*) AS total FROM users WHERE email_address = ?${filter}`, params);
 	return result[0].total;
 }
 
