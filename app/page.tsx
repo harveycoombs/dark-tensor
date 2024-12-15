@@ -23,24 +23,15 @@ export default function Home() {
             return;
         }
 
-        setRecentSearchesArea(<div className="mt-12">
-            <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
-            <div className="text-sm font-medium text-slate-400/60"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /> Loading</div>
-        </div>);
+        setRecentSearchesArea(<div className="text-sm font-medium text-slate-400/60"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /> Loading</div>);
 
         (async () => {
             let response = await fetch("/api/users/searches");
 
             if (response.status == 401) {
-                setRecentSearchesArea(<div className="mt-12">
-                    <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
-                    <div className="text-sm font-medium text-slate-400/60">You are not signed in. <Link href="/login" className="hover:underline">Click here</Link> to sign in and view your recent searches</div>
-                </div>);
+                setRecentSearchesArea(<div className="text-sm font-medium text-slate-400/60">You are not signed in. <Link href="/login" className="hover:underline">Click here</Link> to sign in and view your recent searches</div>);
             } else if (!response.ok) {
-                setRecentSearchesArea(<div className="mt-12">
-                    <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
-                    <div className="text-sm font-medium text-red-500">Something went wrong. Please try again later or report this issue if it persists</div>
-                </div>);
+                setRecentSearchesArea(<div className="text-sm font-medium text-red-500">Something went wrong. Please try again later or report this issue if it persists</div>);
                 return;
             }
 
@@ -48,13 +39,10 @@ export default function Home() {
 
             let json = await response.json();
             
-            setRecentSearchesArea(<div className="mt-12">
-                <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
-                {
-                    !json.searches.length ? <div className="text-sm font-medium text-slate-400/60">You have no recent searches</div>
-                    : <motion.div initial={{ height: 0, opacity: 0, overflow: "hidden" }} animate={{ height: "auto", opacity: 1, overflow: "visible" }} exit={{ height: 0, opacity: 0, overflow: "hidden" }} transition={{ duration: 0.5, ease: "easeInOut" }} className="grid grid-cols-4 gap-4">{json.searches.map((search: any, index: any) => <Tile key={index} icon={faMagnifyingGlass} classes="flex flex-col justify-between" onClick={performRecentSearch}><p>{(search.query.length >= 30) ? `${search.query.substring(0, 27).trim()}...` : search.query}</p><div className="text-xs font-medium text-slate-400/60 mt-1.5">{new Date(search.search_date).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "numeric" })}</div></Tile>)}</motion.div>
-                }
-            </div>);
+            setRecentSearchesArea(
+                !json.searches.length ? <div className="text-sm font-medium text-slate-400/60">You have no recent searches</div>
+                : <motion.div initial={{ height: 20, opacity: 0, overflow: "hidden" }} animate={{ height: "auto", opacity: 1, overflow: "visible" }} exit={{ height: 0, opacity: 0, overflow: "hidden" }} transition={{ duration: 0.5, ease: "easeInOut" }} className="grid grid-cols-4 gap-4">{json.searches.map((search: any, index: any) => <Tile key={index} icon={faMagnifyingGlass} classes="flex flex-col justify-between" onClick={performRecentSearch}><p>{(search.query.length >= 30) ? `${search.query.substring(0, 27).trim()}...` : search.query}</p><div className="text-xs font-medium text-slate-400/60 mt-1.5">{new Date(search.search_date).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "numeric" })}</div></Tile>)}</motion.div>
+            );
         })();
     }, [recentSearchesAreVisible]);
 
@@ -110,7 +98,10 @@ export default function Home() {
                         <SearchOption icon={faClockRotateLeft} selected={recentSearchesAreVisible} onClick={() => setRecentSearchesVisibility(!recentSearchesAreVisible)} title="Show Recent Searches" />
                         <SearchOption icon={faSliders} title="Show Filters" />
                     </div>
-                    {recentSearchesArea}              
+                    {recentSearchesAreVisible ? <div className="mt-12">
+                        <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
+                        {recentSearchesArea}
+                    </div> : null}
                     <div className="mt-12">
                         <h3 className="font-medium text-slate-400 mb-2">Suggestions</h3>
                         <div className="grid grid-cols-4 gap-4 max-[700px]:grid-cols-2 max-[700px]:gap-2">
