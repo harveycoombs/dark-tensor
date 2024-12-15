@@ -39,10 +39,12 @@ export default function Home() {
 
             let json = await response.json();
             
-            setRecentSearchesArea(
-                !json.searches.length ? <div className="text-sm font-medium text-slate-400/60">You have no recent searches</div>
-                : <motion.div initial={{ height: 20, opacity: 0, overflow: "hidden" }} animate={{ height: "auto", opacity: 1, overflow: "visible" }} exit={{ height: 0, opacity: 0, overflow: "hidden" }} transition={{ duration: 0.5, ease: "easeInOut" }} className="grid grid-cols-4 gap-4">{json.searches.map((search: any, index: any) => <Tile key={index} icon={faMagnifyingGlass} classes="flex flex-col justify-between" onClick={performRecentSearch}><p>{(search.query.length >= 30) ? `${search.query.substring(0, 27).trim()}...` : search.query}</p><div className="text-xs font-medium text-slate-400/60 mt-1.5">{new Date(search.search_date).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "numeric" })}</div></Tile>)}</motion.div>
-            );
+            if (!json.searches.length) {
+                setRecentSearchesArea(<div className="text-sm font-medium text-slate-400/60">You have no recent searches</div>);
+                return;
+            }
+
+            setRecentSearchesArea(<motion.div initial={{ height: 20, opacity: 0, overflow: "hidden" }} animate={{ height: "auto", opacity: 1, overflow: "visible" }} exit={{ height: 0, opacity: 0, overflow: "hidden" }} transition={{ duration: 0.5, ease: "easeInOut" }} className="grid grid-cols-4 gap-4">{json.searches.map((search: any, index: any) => <Tile key={index} icon={faMagnifyingGlass} classes="flex flex-col justify-between" onClick={performRecentSearch}><p>{(search.query.length >= 30) ? `${search.query.substring(0, 27).trim()}...` : search.query}</p><div className="text-xs font-medium text-slate-400/60 mt-1.5">{new Date(search.search_date).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "numeric" })}</div></Tile>)}</motion.div>);
         })();
     }, [recentSearchesAreVisible]);
 
