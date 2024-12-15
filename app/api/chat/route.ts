@@ -34,7 +34,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         let beginning = new Date().getTime();
 
         let text = await generateFromContext({
-            model: "deepseek-v2:lite",
+            model: currentSessionUser.model ?? "deepseek-v2:lite",
             messages: messages
         }) ?? "";
 
