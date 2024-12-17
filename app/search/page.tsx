@@ -92,13 +92,22 @@ export default function Home() {
                         <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." value={query} readOnly={true} />
                         <Button classes="invisible">Search</Button>
                     </div>
-                    <div className="mt-6 mb-3">
+                    <div className="w-650 mb-3 mt-6">
                         {isLoading ? null : <h1 className="text-lg font-semibold select-none">Results</h1>}
-                        {JSON.stringify(results)}
+                        {results.map((result: any, index: number) => <SearchResult key={index} data={result} />)}
                     </div>
                     {isLoading ? <div className="w-650 select-none text-center font-medium text-slate-400/60"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /><span className="pl-2">Generating Summary</span></div> : summary}
                 </section>
             </main>
         </>
+    );
+}
+
+function SearchResult({ data }: any) {
+    return (
+        <Link href={data.url} className="block p-3 bg-slate-50 text-slate-500 rounded-xl mt-2.5">
+            <strong className="block font-semibold">{data.title}</strong>
+            <div className="block text-sm mt-1 text-slate-400">{data.summary}</div>
+        </Link>
     );
 }

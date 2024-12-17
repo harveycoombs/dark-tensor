@@ -30,7 +30,7 @@ export async function GET(request: Request): Promise<NextResponse> {
         let results = await Promise.all(json.items.map(async (result: any) => {
             let summary = await generate({
                 model: currentSessionUser?.model ?? "deepseek-v2:lite",
-                prompt: `Generate a short summary based on the following three pieces of information. Title = '${result.title}', Link = '${result.link}' & Snippet = '${result.snippet}'.`
+                prompt: `Generate a short summary, with a maximum of 22 words, of this website: Title = '${result.title}', Link = '${result.link}' & Snippet = '${result.snippet}'. Dont prefix or suffix the summary with anything, just give me the summary.`
             });
 
             return { title: result.title, url: result.link, summary };
