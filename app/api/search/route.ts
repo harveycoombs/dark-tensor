@@ -24,7 +24,19 @@ export async function GET(request: Request): Promise<NextResponse> {
             prompt: query
         });
 
-        return NextResponse.json({ summary, results: [] }, { status: 200 });
+        let response = await fetch (`https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${process.env.GOOGLE_API_KEY}&cx=${process.env.GOOGLE_SEARCH_ENGINE_ID}`);
+        let json = await response.json();
+        
+        let results = Promise.all(json.map(async (result: any) => {
+            let summary = await generate({
+                model: currentSessionUser?.model ?? "deepseek-v2:lite",
+                prompt: `Generate a short summary based on the following three pieces of information. Title = '${result.title}', Link = '${result.link}' & Snippet = '${result.snippet}'.`
+            });
+
+            return { title: result.title, url: result.link, summary };
+        }));
+
+        return NextResponse.json({ summary, results }, { status: 200 });
     } catch (ex: any) {
         return NextResponse.json({ error: `Unable to generate text: ${ex.message}.` }, { status: 500 });
     }
