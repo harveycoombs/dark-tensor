@@ -94,6 +94,7 @@ export default function Home() {
                     </div>
                     <div className="mt-6 mb-3">
                         {isLoading ? null : <h1 className="text-lg font-semibold select-none">Results</h1>}
+                        {JSON.stringify(results)}
                     </div>
                     {isLoading ? <div className="w-650 select-none text-center font-medium text-slate-400/60"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /><span className="pl-2">Generating Summary</span></div> : summary}
                 </section>

@@ -26,8 +26,8 @@ export async function GET(request: Request): Promise<NextResponse> {
 
         let response = await fetch (`https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${process.env.GOOGLE_API_KEY}&cx=${process.env.GOOGLE_SEARCH_ENGINE_ID}`);
         let json = await response.json();
-        
-        let results = Promise.all(json.map(async (result: any) => {
+
+        let results = await Promise.all(json.items.map(async (result: any) => {
             let summary = await generate({
                 model: currentSessionUser?.model ?? "deepseek-v2:lite",
                 prompt: `Generate a short summary based on the following three pieces of information. Title = '${result.title}', Link = '${result.link}' & Snippet = '${result.snippet}'.`
