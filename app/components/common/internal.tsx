@@ -9,7 +9,7 @@ export default function InternalPage({ title, children }: Properties) {
     return (
         <>
             <Header />
-            <main className="h-[calc(100vh-110px)] py-4">
+            <main className="min-h-[calc(100vh-110px)] py-4">
                 <h1 className="block w-650 mx-auto mt-24 text-4xl text-center font-semibold select-none max-[700px]:w-full max-[700px]:px-3">{title}</h1>
                 {children}
             </main>

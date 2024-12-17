@@ -83,7 +83,7 @@ export default function Home() {
     return (
         <>
             <Header />
-            <main className="h-[calc(100vh-110px)] grid place-items-center">
+            <main className="min-h-[calc(100vh-110px)] grid place-items-center">
                 <section>
                     <div className="w-650 mb-3">
                         <Link href="/" className="group text-sm duration-100 font-medium hover:text-slate-500/75"><FontAwesomeIcon icon={faArrowLeft} className="pr-1 duration-100 group-hover:pr-2" />Back to Search</Link>
@@ -92,11 +92,20 @@ export default function Home() {
                         <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." value={query} readOnly={true} />
                         <Button classes="invisible">Search</Button>
                     </div>
+                    {isLoading ? <div className="w-650 select-none text-center font-medium text-slate-400/60"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /><span className="pl-2">Generating Summary</span></div> : summary}
                     <div className="w-650 mb-3 mt-6">
                         {isLoading ? null : <h1 className="text-lg font-semibold select-none">Results</h1>}
-                        {results.map((result: any, index: number) => <SearchResult key={index} data={result} />)}
-                    </div>
-                    {isLoading ? <div className="w-650 select-none text-center font-medium text-slate-400/60"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /><span className="pl-2">Generating Summary</span></div> : summary}
+                        {results.map((result: any, index: number) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                            >
+                                <SearchResult data={result} />
+                            </motion.div>
+                        ))}
+                    </div>                    
                 </section>
             </main>
         </>
@@ -105,7 +114,7 @@ export default function Home() {
 
 function SearchResult({ data }: any) {
     return (
-        <Link href={data.url} className="block p-3 bg-slate-50 text-slate-500 rounded-xl mt-2.5">
+        <Link href={data.url} className="block p-3 bg-slate-50 text-slate-500 rounded-xl mt-2.5 duration-100 hover:bg-slate-100">
             <strong className="block font-semibold">{data.title}</strong>
             <div className="block text-sm mt-1 text-slate-400">{data.summary}</div>
         </Link>

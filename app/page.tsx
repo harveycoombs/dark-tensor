@@ -87,7 +87,7 @@ export default function Home() {
     return (
         <>
             <Header />
-            <main className="h-[calc(100vh-110px)] grid place-items-center">
+            <main className="min-h-[calc(100vh-110px)] grid place-items-center">
                 <motion.div className="w-650 mx-auto max-[700px]:w-full max-[700px]:px-3" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeOut" }}>
                     <div className="w-fit mx-auto" title="Collate AI"><Logo width={300} height={68} /></div>
                     <h2 className="text-lg text-slate-400/60 font-medium my-4 text-center">Find &amp; summarise anything on the web with AI</h2>
