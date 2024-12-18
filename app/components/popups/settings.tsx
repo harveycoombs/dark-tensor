@@ -59,7 +59,7 @@ export default function SettingsPopup({ onClose }: Properties) {
     let chatStyleField = useRef<HTMLSelectElement>(null);
     let summaryStyleField = useRef<HTMLSelectElement>(null);
 
-    let [saveButton, setSaveButton] = useState<React.JSX.Element>(<Button onClick={(currentSection == "general") ? updateUserSettings : updateUserDetails}>Save Changes</Button>);
+    let [saveButton, setSaveButton] = useState<React.JSX.Element>(<Button onClick={updateUserSettings}>Save Changes</Button>);
 
     useEffect(() => {
         (async () => {
@@ -112,7 +112,7 @@ export default function SettingsPopup({ onClose }: Properties) {
         }
 
         setSaveButton(<Button color="green">Saved</Button>);
-        setTimeout(() => setSaveButton(<Button onClick={updateUserDetails}>Save Changes</Button>), 2250);
+        setTimeout(() => setSaveButton(<Button onClick={updateUserDetails}>Save Changes</Button>), 1800);
     }
 
     async function updateUserSettings() {
@@ -148,7 +148,7 @@ export default function SettingsPopup({ onClose }: Properties) {
         }
 
         setSaveButton(<Button color="green">Saved</Button>);
-        setTimeout(() => setSaveButton(<Button onClick={updateUserSettings}>Save Changes</Button>), 2250);
+        setTimeout(() => setSaveButton(<Button onClick={updateUserSettings}>Save Changes</Button>), 1800);
     }
 
     async function logout() {
@@ -165,6 +165,7 @@ export default function SettingsPopup({ onClose }: Properties) {
             case "security":
                 setSectionTitle("Security & Privacy");
                 setSectionContent(<div></div>);
+                setSaveButton(<Button>Save Changes</Button>);
                 break;
             case "account":
                 setSectionTitle("Account Details");
@@ -177,6 +178,7 @@ export default function SettingsPopup({ onClose }: Properties) {
                     <FieldContainer title="Occupation"><Field classes="w-full" defaultValue={user.occupation} ref={occupationField} /></FieldContainer>
                     <FieldContainer title="Email Address"><Field classes="w-full" defaultValue={user.email_address} ref={emailField} /></FieldContainer>
                 </div>);
+                setSaveButton(<Button onClick={updateUserDetails}>Save Changes</Button>);
                 break;
             default:
                 setSectionTitle("General Settings");
@@ -186,6 +188,7 @@ export default function SettingsPopup({ onClose }: Properties) {
                     <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" defaultValue={settings.summary_style} ref={summaryStyleField} /></FieldContainer>
                     <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" defaultValue={settings.chat_style} ref={chatStyleField} /></FieldContainer>
                 </div>);
+                setSaveButton(<Button onClick={updateUserSettings}>Save Changes</Button>);
                 break;
         }
     }, [currentSection]);

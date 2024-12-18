@@ -16,7 +16,7 @@ export async function updateUser(userid: number, firstName: string, lastName: st
 }
 
 export async function updateSettings(userid: number, theme: string, model: string, summaryStyle: string, chatStyle: string): Promise<boolean> {
-    let [result]: any = await pool.query("UPDATE settings theme = ?, model = ?, summary_style = ?, chat_style = ? WHERE user_id = ?", [theme, model, summaryStyle, chatStyle, userid]);
+    let [result]: any = await pool.query("UPDATE settings SET theme = ?, model = ?, summary_style = ?, chat_style = ? WHERE user_id = ?", [theme, model, summaryStyle, chatStyle, userid]);
     return result.affectedRows > 0;
 }
 
