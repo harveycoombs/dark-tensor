@@ -27,10 +27,13 @@ export async function GET(request: Request): Promise<NextResponse> {
         let response = await fetch (`https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${process.env.GOOGLE_API_KEY}&cx=${process.env.GOOGLE_SEARCH_ENGINE_ID}`);
         let json = await response.json();
 
+        let style = (currentSessionUser.search_style == "balanced") ? "" : currentSessionUser.search_style;
+        let length = (currentSessionUser.search_style == "concise") ? 20 : (currentSessionUser.search_style == "verbose") ? 60 : 40;
+
         let results = await Promise.all(json.items.map(async (result: any) => {
             let summary = await generate({
                 model: currentSessionUser?.search_model ?? "deepseek-v2:lite",
-                prompt: `Generate a concise summary of the following website in 22 words or less:
+                prompt: `Generate a ${style} summary of the following website in ${length} words or less:
                 Title: '${result.title}'
                 Link: '${result.link}'
                 Snippet: '${result.snippet}'`
