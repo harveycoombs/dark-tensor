@@ -33,7 +33,7 @@ export default function Header() {
             <Link href="/" className="duration-100 hover:opacity-85 active:opacity-70">
                 <Icon width={16} height={24} />
             </Link>
-            <nav className="text-sm leading-none font-medium max-[700px]:hidden">
+            <nav className="text-sm leading-none font-medium ml-[55px] max-[700px]:hidden">
                 <HeaderNavigationOption text="About" url="/about" />
                 <HeaderNavigationOption text="Privacy" url="/privacy" />
                 <HeaderNavigationOption text="Pricing" url="/pricing" />
