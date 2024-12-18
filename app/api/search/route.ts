@@ -21,7 +21,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     try {
         let summary = await generate({
             model: currentSessionUser?.model ?? "deepseek-v2:lite",
-            prompt: query
+            prompt: `${query}, do not hallucinate or speak in any other language than English.`
         });
 
         let response = await fetch (`https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${process.env.GOOGLE_API_KEY}&cx=${process.env.GOOGLE_SEARCH_ENGINE_ID}`);
