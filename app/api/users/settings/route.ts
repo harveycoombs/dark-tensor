@@ -16,7 +16,8 @@ export async function PATCH(request: Request): Promise<NextResponse> {
     let success = await updateSettings(
         currentSessionUser.user_id,
         data.get("theme")?.toString() ?? "",
-        data.get("model")?.toString() ?? "",
+        data.get("searchmodel")?.toString() ?? "",
+        data.get("chatmodel")?.toString() ?? "",
         data.get("summarystyle")?.toString() ?? "",
         data.get("chatstyle")?.toString() ?? ""
     );

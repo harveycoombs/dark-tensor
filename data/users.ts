@@ -15,8 +15,8 @@ export async function updateUser(userid: number, firstName: string, lastName: st
     return result.affectedRows > 0;
 }
 
-export async function updateSettings(userid: number, theme: string, model: string, summaryStyle: string, chatStyle: string): Promise<boolean> {
-    let [result]: any = await pool.query("UPDATE settings SET theme = ?, model = ?, summary_style = ?, chat_style = ? WHERE user_id = ?", [theme, model, summaryStyle, chatStyle, userid]);
+export async function updateSettings(userid: number, theme: string, searchModel: string, chatModel: string, summaryStyle: string, chatStyle: string): Promise<boolean> {
+    let [result]: any = await pool.query("UPDATE settings SET theme = ?, search_model = ?, chat_model = ?, summary_style = ?, chat_style = ? WHERE user_id = ?", [theme, searchModel, chatModel, summaryStyle, chatStyle, userid]);
     return result.affectedRows > 0;
 }
 
@@ -26,7 +26,7 @@ export async function deleteUser(userid: number): Promise<boolean> {
 }
 
 export async function getUserByID(userid: number): Promise<any> {
-	let [result]: any = await pool.query("SELECT users.user_id, creation_date, first_name, last_name, birth_date, settings.model FROM users INNER JOIN settings ON settings.user_id = users.user_id WHERE users.user_id = ? AND deleted = 0", [userid]);
+	let [result]: any = await pool.query("SELECT users.user_id, creation_date, first_name, last_name, birth_date, settings.search_model, settings.chat_model FROM users INNER JOIN settings ON settings.user_id = users.user_id WHERE users.user_id = ? AND deleted = 0", [userid]);
 	return result[0];
 }
 

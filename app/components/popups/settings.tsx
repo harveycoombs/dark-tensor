@@ -54,7 +54,8 @@ export default function SettingsPopup({ onClose }: Properties) {
     let occupationField = useRef<HTMLInputElement>(null);
     let emailField = useRef<HTMLInputElement>(null);
 
-    let modelField = useRef<HTMLSelectElement>(null);
+    let searchModelField = useRef<HTMLSelectElement>(null);
+    let chatModelField = useRef<HTMLSelectElement>(null);
     let themeField = useRef<HTMLSelectElement>(null);
     let chatStyleField = useRef<HTMLSelectElement>(null);
     let summaryStyleField = useRef<HTMLSelectElement>(null);
@@ -117,7 +118,8 @@ export default function SettingsPopup({ onClose }: Properties) {
 
     async function updateUserSettings() {
         if (
-            !modelField.current ||
+            !searchModelField.current ||
+            !chatModelField.current ||
             !themeField.current ||
             !chatStyleField.current ||
             !summaryStyleField.current
@@ -126,7 +128,8 @@ export default function SettingsPopup({ onClose }: Properties) {
         setSaveButton(<Button disabled={true}>Saving</Button>);
 
         let settings = new URLSearchParams({
-            model: modelField.current.value,
+            searchmodel: searchModelField.current.value,
+            chatmodel: chatModelField.current.value,
             theme: themeField.current.value,
             chatStyle: chatStyleField.current.value,
             summaryStyle: summaryStyleField.current.value
@@ -183,10 +186,11 @@ export default function SettingsPopup({ onClose }: Properties) {
             default:
                 setSectionTitle("General Settings");
                 setSectionContent(<div>
-                    <FieldContainer title="Preferred Model"><Menu choices={models} classes="w-full" defaultValue={settings.model} ref={modelField} /></FieldContainer>
-                    <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" defaultValue={settings.theme} ref={themeField} /></FieldContainer>
-                    <FieldContainer title="Response Style (Search Summaries)"><Menu type="select" choices={styles} classes="w-full" defaultValue={settings.summary_style} ref={summaryStyleField} /></FieldContainer>
+                    <FieldContainer title="Preferred Model (Search)"><Menu choices={models} classes="w-full" defaultValue={settings.search_model} ref={searchModelField} /></FieldContainer>
+                    <FieldContainer title="Preferred Model (Chat)"><Menu choices={models} classes="w-full" defaultValue={settings.chat_model} ref={chatModelField} /></FieldContainer>
+                    <FieldContainer title="Response Style (Search)"><Menu type="select" choices={styles} classes="w-full" defaultValue={settings.summary_style} ref={summaryStyleField} /></FieldContainer>
                     <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" defaultValue={settings.chat_style} ref={chatStyleField} /></FieldContainer>
+                    <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" defaultValue={settings.theme} ref={themeField} /></FieldContainer>
                 </div>);
                 setSaveButton(<Button onClick={updateUserSettings}>Save Changes</Button>);
                 break;

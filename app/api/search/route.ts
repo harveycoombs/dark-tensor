@@ -20,7 +20,7 @@ export async function GET(request: Request): Promise<NextResponse> {
 
     try {
         let summary = await generate({
-            model: currentSessionUser?.model ?? "deepseek-v2:lite",
+            model: currentSessionUser?.search_model ?? "deepseek-v2:lite",
             prompt: `${query}, do not hallucinate or speak in any other language than English.`
         });
 
@@ -29,7 +29,7 @@ export async function GET(request: Request): Promise<NextResponse> {
 
         let results = await Promise.all(json.items.map(async (result: any) => {
             let summary = await generate({
-                model: currentSessionUser?.model ?? "deepseek-v2:lite",
+                model: currentSessionUser?.search_model ?? "deepseek-v2:lite",
                 prompt: `Generate a concise summary of the following website in 22 words or less:
                 Title: '${result.title}'
                 Link: '${result.link}'
