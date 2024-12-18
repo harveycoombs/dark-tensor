@@ -21,7 +21,7 @@ export async function generate({ model, prompt }: ModelOptions): Promise<any> {
 export async function generateFromContext({ model, messages, style }: ModelOptions) {
     if (!model?.length || !messages?.length) return null;
 
-    let responseStyle = (style == "balanced") ? "" : `${style};y`;
+    let responseStyle = (style == "balanced") ? "" : `${style}ly`;
     let responseLength = (style == "concise") ? 20 : (style == "verbose") ? 60 : 40;
 
     let response = await ollama.chat({
