@@ -53,7 +53,7 @@ export default function Home() {
         (async () => {
             let response = await fetch("/api/search", {
                 method: "POST",
-                body: new URLSearchParams({ query: query })
+                body: new URLSearchParams({ query })
             });
 
             if (!response.ok) {
