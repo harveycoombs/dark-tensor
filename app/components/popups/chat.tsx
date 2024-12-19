@@ -71,7 +71,7 @@ export default function ChatPopup({ model, onClose }: Properties) {
                     return;
                 }
 
-                setConversationHistory(json.history.map((conversation: any, index: number) => <Conversation key={index} data={conversation} />));
+                setConversationHistory(json.history.map((conversation: any, index: number) => <Conversation key={index} data={conversation} onClick={() => setMessages(JSON.parse(conversation.messages ?? "[]"))} />));
             } catch {
                 setHistoryLoading(false);
                 setConversationHistory(<div className="mt-1.5 text-sm text-red-500">Something went wrong</div>);
@@ -178,7 +178,7 @@ function ChatOption({ icon, selected, ...rest }: any) {
 
 function Conversation({ data, ...rest }: any) {
     return (
-        <div className="px-2 py-1 rounded-md mt-1 cursor-pointer duration-100 hover:bg-slate-50">
+        <div className="px-2 py-1 rounded-md mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/85" {...rest}>
             <div className="text-sm leading-snug font-semibold">{data.summary}</div>
             <div className="text-xs mt-1 text-slate-400/60">{new Date(data.start_date).toLocaleString(undefined, { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}</div>
         </div>
