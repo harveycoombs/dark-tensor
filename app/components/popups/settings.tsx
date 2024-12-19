@@ -131,8 +131,8 @@ export default function SettingsPopup({ onClose }: Properties) {
             searchmodel: searchModelField.current.value,
             chatmodel: chatModelField.current.value,
             theme: themeField.current.value,
-            chatStyle: chatStyleField.current.value,
-            summaryStyle: summaryStyleField.current.value
+            chatstyle: chatStyleField.current.value,
+            summarystyle: summaryStyleField.current.value
         });
 
         let response = await fetch("/api/users/settings", {

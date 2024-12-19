@@ -39,7 +39,7 @@ export default function Home() {
 
             let formatted = formatSummary(data.summary);
 
-            setSummary(<motion.div className="w-650 rounded-xl px-4 py-3 bg-sky-50 text-sky-400 mx-auto max-[700px]:w-full max-[700px]:px-3" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} transition={{ duration: 1, ease: "easeInOut" }} style={{ overflow: "hidden", transformOrigin: "top center" }}>
+            setSummary(<motion.div className="w-650 rounded-xl px-4 py-3 bg-sky-50 text-sky-400 mx-auto relative max-[700px]:w-full max-[700px]:px-3" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} transition={{ duration: 1, ease: "easeInOut" }} style={{ overflow: "hidden", transformOrigin: "top center" }}>
                 <h2 className="block mb-2 text-sky-500 font-semibold select-none">Summary</h2>
                 <p className="text-sm leading-relaxed">{formatted}</p>
             </motion.div>);

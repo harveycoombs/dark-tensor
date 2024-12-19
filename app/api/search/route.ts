@@ -19,29 +19,30 @@ export async function GET(request: Request): Promise<NextResponse> {
     let currentSessionUser = await authenticate(token ?? "");
 
     try {
-        let summary = await generate({
-            model: currentSessionUser?.search_model ?? "deepseek-v2:lite",
-            prompt: `${query}, do not hallucinate or speak in any other language than English.`
-        });
-
         let response = await fetch (`https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${process.env.GOOGLE_API_KEY}&cx=${process.env.GOOGLE_SEARCH_ENGINE_ID}`);
         let json = await response.json();
 
         let style = (currentSessionUser.search_style == "balanced") ? "" : currentSessionUser.search_style;
-        let length = (currentSessionUser.search_style == "concise") ? 20 : (currentSessionUser.search_style == "verbose") ? 60 : 40;
+        let resultSummaryLength = (currentSessionUser.search_style == "concise") ? 20 : (currentSessionUser.search_style == "verbose") ? 60 : 40;
+        let overallSummaryLength = (currentSessionUser.search_style == "concise") ? 100 : (currentSessionUser.search_style == "verbose") ? 300 : 200;
 
         let results = await Promise.all(json.items.map(async (result: any) => {
             let summary = await generate({
                 model: currentSessionUser?.search_model ?? "deepseek-v2:lite",
-                prompt: `Generate a ${style} summary of the following website in ${length} words or less:
+                prompt: `Generate a ${style} summary of the following website in ${resultSummaryLength} words or less:
                 Title: '${result.title}'
                 Link: '${result.link}'
                 Snippet: '${result.snippet}'.
-                Make sure you do not prefix or suffix the summary with anything. I just want the summary.`
+                Make sure you do not prefix or suffix the summary with anything. I just want the summary. Do not hallucinate or speak in any other language than English. You must not exceed the length provided, under any circumstance.`
             });
             
             return { title: result.title, url: result.link, icon: `https://www.google.com/s2/favicons?domain=${new URL(result.link).hostname}`, summary };
         }));
+
+        let summary = await generate({
+            model: currentSessionUser?.search_model ?? "deepseek-v2:lite",
+            prompt: `Using the following JSON search results, and your own knowledge, generate an overall ${style} consensus in ${overallSummaryLength} words or less: ${JSON.stringify(results)}. Do not hallucinate or speak in any other language than English. You must not exceed the length provided, under any circumstance.`
+        });
 
         return NextResponse.json({ summary, results }, { status: 200 });
     } catch (ex: any) {
