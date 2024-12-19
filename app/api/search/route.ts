@@ -40,7 +40,7 @@ export async function GET(request: Request): Promise<NextResponse> {
                 Make sure you do not prefix or suffix the summary with anything. I just want the summary.`
             });
             
-            return { title: result.title, url: result.link, summary };
+            return { title: result.title, url: result.link, icon: `https://www.google.com/s2/favicons?domain=${new URL(result.link).hostname}`, summary };
         }));
 
         return NextResponse.json({ summary, results }, { status: 200 });
