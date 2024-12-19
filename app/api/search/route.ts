@@ -36,7 +36,8 @@ export async function GET(request: Request): Promise<NextResponse> {
                 prompt: `Generate a ${style} summary of the following website in ${length} words or less:
                 Title: '${result.title}'
                 Link: '${result.link}'
-                Snippet: '${result.snippet}'`
+                Snippet: '${result.snippet}'.
+                Make sure you do not prefix or suffix the summary with anything. I just want the summary.`
             });
             
             return { title: result.title, url: result.link, summary };
