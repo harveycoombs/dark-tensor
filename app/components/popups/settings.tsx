@@ -21,6 +21,10 @@ export default function SettingsPopup({ onClose }: Properties) {
         { value: "qwq", label: "QwQ (32B)" }
     ];
 
+    let visionModels = [
+        { value: "llama3.2-vision", label: "Llama 3.2 Vision (11B)" }
+    ];
+
     let themes = [
         { value: "light", label: "Light" },
         { value: "dark", label: "Dark" },
@@ -56,6 +60,7 @@ export default function SettingsPopup({ onClose }: Properties) {
 
     let searchModelField = useRef<HTMLSelectElement>(null);
     let chatModelField = useRef<HTMLSelectElement>(null);
+    let visionModelField = useRef<HTMLSelectElement>(null);
     let themeField = useRef<HTMLSelectElement>(null);
     let chatStyleField = useRef<HTMLSelectElement>(null);
     let summaryStyleField = useRef<HTMLSelectElement>(null);
@@ -120,6 +125,7 @@ export default function SettingsPopup({ onClose }: Properties) {
         if (
             !searchModelField.current ||
             !chatModelField.current ||
+            !visionModelField.current ||
             !themeField.current ||
             !chatStyleField.current ||
             !summaryStyleField.current
@@ -130,6 +136,7 @@ export default function SettingsPopup({ onClose }: Properties) {
         let settings = new URLSearchParams({
             searchmodel: searchModelField.current.value,
             chatmodel: chatModelField.current.value,
+            visionmodel: visionModelField.current.value,
             theme: themeField.current.value,
             chatstyle: chatStyleField.current.value,
             summarystyle: summaryStyleField.current.value
@@ -187,6 +194,7 @@ export default function SettingsPopup({ onClose }: Properties) {
                 setSectionTitle("General Settings");
                 setSectionContent(<div>
                     <FieldContainer title="Preferred Model (Search)"><Menu choices={models} classes="w-full" defaultValue={settings.search_model} ref={searchModelField} /></FieldContainer>
+                    <FieldContainer title="Preferred Model (Image Search)"><Menu choices={visionModels} classes="w-full" defaultValue={settings.vision_model} ref={visionModelField} /></FieldContainer>
                     <FieldContainer title="Preferred Model (Chat)"><Menu choices={models} classes="w-full" defaultValue={settings.chat_model} ref={chatModelField} /></FieldContainer>
                     <FieldContainer title="Response Style (Search)"><Menu type="select" choices={styles} classes="w-full" defaultValue={settings.summary_style} ref={summaryStyleField} /></FieldContainer>
                     <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" defaultValue={settings.chat_style} ref={chatStyleField} /></FieldContainer>

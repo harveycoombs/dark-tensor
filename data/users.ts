@@ -15,8 +15,8 @@ export async function updateUser(userid: number, firstName: string, lastName: st
     return result.affectedRows > 0;
 }
 
-export async function updateSettings(userid: number, theme: string, searchModel: string, chatModel: string, summaryStyle: string, chatStyle: string): Promise<boolean> {
-    let [result]: any = await pool.query("UPDATE settings SET theme = ?, search_model = ?, chat_model = ?, summary_style = ?, chat_style = ? WHERE user_id = ?", [theme, searchModel, chatModel, summaryStyle, chatStyle, userid]);
+export async function updateSettings(userid: number, theme: string, searchModel: string, chatModel: string, visionModel: string, summaryStyle: string, chatStyle: string): Promise<boolean> {
+    let [result]: any = await pool.query("UPDATE settings SET theme = ?, search_model = ?, chat_model = ?, vision_model = ?, summary_style = ?, chat_style = ? WHERE user_id = ?", [theme, searchModel, chatModel, visionModel, summaryStyle, chatStyle, userid]);
     return result.affectedRows > 0;
 }
 

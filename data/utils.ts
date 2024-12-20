@@ -8,6 +8,7 @@ export function getModelCleanName(name: string) {
             return "Llama 3.1";
         case "llama3.2:1b":
         case "llama3.2:3b":
+        case "llama3.2-vision":
             return "Llama 3.2";
         default:
             return name;

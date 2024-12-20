@@ -18,6 +18,7 @@ export async function PATCH(request: Request): Promise<NextResponse> {
         data.get("theme")?.toString() ?? "",
         data.get("searchmodel")?.toString() ?? "",
         data.get("chatmodel")?.toString() ?? "",
+        data.get("visionmodel")?.toString() ?? "",
         data.get("summarystyle")?.toString() ?? "",
         data.get("chatstyle")?.toString() ?? ""
     );
