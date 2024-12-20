@@ -7,8 +7,7 @@ import Header from "@/app/components/header";
 import Button from "@/app/components/common/button";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
-import { faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faCircleNotch, faGlobe } from "@fortawesome/free-solid-svg-icons";
 
 export default function Search() {
     let [query, setQuery] = useState<string>("");
