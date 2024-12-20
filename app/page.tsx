@@ -13,6 +13,7 @@ import Tile from "@/app/components/common/tile";
 export default function Home() {
     let searchField = useRef<HTMLInputElement>(null);
     let searchButton = useRef<HTMLButtonElement>(null);
+    let imageUploader = useRef<HTMLInputElement>(null);
 
     let [recentSearchesAreVisible, setRecentSearchesVisibility] = useState<boolean>(false);
     let [recentSearchesArea, setRecentSearchesArea] = useState<React.JSX.Element|null>(null);
@@ -96,7 +97,7 @@ export default function Home() {
                             <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} onInput={updateButtonAvailability} />
                             <Button ref={searchButton} disabled>Search</Button>
                         </div>
-                        <SearchOption icon={faCamera} title="Search with Image" />
+                        <SearchOption icon={faCamera} title="Search with Image" onClick={() => imageUploader?.current?.click()} />
                         <SearchOption icon={faClockRotateLeft} selected={recentSearchesAreVisible} onClick={() => setRecentSearchesVisibility(!recentSearchesAreVisible)} title="Show Recent Searches" />
                         <SearchOption icon={faSliders} title="Show Filters" />
                     </div>
@@ -115,6 +116,7 @@ export default function Home() {
                     </div>
                 </motion.div>
             </main>
+            <input type="file" ref={imageUploader} className="hidden" accept="image/*" />
         </>
     );
 }

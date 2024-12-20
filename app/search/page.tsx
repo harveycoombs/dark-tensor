@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 
-export default function Home() {
+export default function Search() {
     let [query, setQuery] = useState<string>("");
     let [summary, setSummary] = useState<React.JSX.Element|null>(null);
     let [results, setResults] = useState<any[]>([]);
