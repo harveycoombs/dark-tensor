@@ -97,12 +97,7 @@ export default function Search() {
                     <div className="w-650 mx-auto mb-3 mt-6 max-[700px]:w-full">
                         {isLoading ? null : <h1 className="text-lg font-semibold select-none">Results</h1>}
                         {results.map((result: any, index: number) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                            >
+                            <motion.div key={index} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }}>
                                 <Result data={result} />
                             </motion.div>
                         ))}
