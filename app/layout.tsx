@@ -11,11 +11,29 @@ const inter = Inter({
     subsets: ["latin"]
 });
 
+const description = "Find & summarise anything on the web with AI";
+
 export const metadata: Metadata = {
     title: `Collate AI · ${process.env.APP_VERSION}`,
-    description: "Find & summarise anything on the web with AI",
-    icons: {
-        icon: "/images/icon.png"
+    description: description,
+    icons: { icon: "/images/icon.png" },
+    openGraph: {
+        title: "Collate AI",
+        description: description,
+        url: "https://collate.run",
+        images: [{
+            url: "https://collate.run/images/splash.jpg",
+            width: 1200,
+            height: 630,
+            alt: "Collate AI splash image"
+        }],
+        type: "website"
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Collate AI",
+        description: description,
+        creator: "@harveycoombs23"
     }
 };
 
@@ -26,6 +44,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <head>
+                <link rel="apple-touch-icon" sizes="180x180" href="/images/icon.png" />
+                <link rel="canonical" href="https://collate.run" />
+            </head>
             <body className={`h-screen ${inter.className} bg-white text-slate-600`}>
                 {children}
                 <Footer />
