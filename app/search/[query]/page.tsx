@@ -9,6 +9,7 @@ import Result from "@/app/components/common/result";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import Error from "@/app/components/common/error";
 
 export default function Search(e: any) {
     let [query, setQuery] = useState<string>("");
@@ -29,16 +30,16 @@ export default function Search(e: any) {
         setLoading(true);
 
         (async () => {
-            let response = await fetch(`/api/search?query=${query}`);
-            let data = await response.json();
+            let response = await fetch(`1/api/search?query=${query}`);
 
             setLoading(false);
 
             if (!response.ok) {
-                setSummary(<div className="w-650 select-none text-center font-medium text-red-500 max-[700px]:w-full max-[700px]:px-3">Something went wrong</div>);
+                setSummary(<Error />);
                 return;
             }
 
+            let data = await response.json();
             let formatted = formatSummary(data.summary);
 
             setSummary(<motion.div className="w-650 rounded-xl px-4 py-3 bg-sky-50 text-sky-400 mx-auto relative max-[700px]:w-full max-[700px]:px-3" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} transition={{ duration: 1, ease: "easeInOut" }} style={{ overflow: "hidden", transformOrigin: "top center" }}>
