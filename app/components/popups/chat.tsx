@@ -19,8 +19,8 @@ export default function ChatPopup({ model, onClose }: Properties) {
     let [messages, setMessages] = useState<any[]>([]);
     let [conversationid, setConversationID] = useState<number>(0);
 
-    let [isLoading, setLoading] = useState<boolean>(false);
-    let [historyIsLoading, setHistoryLoading] = useState<boolean>(false);
+    let [loading, setLoading] = useState<boolean>(false);
+    let [historyloading, setHistoryLoading] = useState<boolean>(false);
 
     let [conversationHistory, setConversationHistory] = useState<React.JSX.Element|null>(null);
     let [conversationHistoryIsVisible, setConversationHistoryVisibility] = useState<boolean>(false);
@@ -29,7 +29,7 @@ export default function ChatPopup({ model, onClose }: Properties) {
     let promptField = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (!isLoading) return;
+        if (!loading) return;
 
         (async () => {
             let response = await fetch("/api/chat", {
@@ -54,10 +54,10 @@ export default function ChatPopup({ model, onClose }: Properties) {
 
             setLoading(false);
         })();
-    }, [isLoading]);
+    }, [loading]);
 
     useEffect(() => {
-        if (!historyIsLoading) return;
+        if (!historyloading) return;
 
         (async () => {
             try {
@@ -78,7 +78,7 @@ export default function ChatPopup({ model, onClose }: Properties) {
             }
 
         })();
-    }, [historyIsLoading]);
+    }, [historyloading]);
 
     function startNewConversation() {
         setPrompt("");
@@ -141,17 +141,17 @@ export default function ChatPopup({ model, onClose }: Properties) {
                         messages.length ? messages.map((message, index) => <ChatMessage key={index} message={message} />)
                         : <div className="text-center"><strong className="text-xl text-slate-400/60 font-semibold">Welcome to Chat</strong><div className="text-xs text-slate-400 mt-1.5">Start a conversation by typing a message below</div></div>
                     }
-                    {isLoading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-sky-400 text-white w-fit mb-5"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
+                    {loading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-sky-400 text-white w-fit mb-5"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
                     </div>
                     <div className="flex gap-3 py-3 shadow-[0_0_6px_6px_white]">
                         <Field classes="w-full" onInput={(e: any) => setPrompt(e.target.value)} value={prompt} onKeyUp={sendMessage} ref={promptField} />
-                        <Button onClick={sendMessage} disabled={isLoading}>Send</Button>
+                        <Button onClick={sendMessage} disabled={loading}>Send</Button>
                     </div>
                 </div>
                 <motion.div className="w-56 shrink-0 overflow-hidden" initial={{ width: conversationHistoryIsVisible ? "0px" : "256px" }} animate={{ width: conversationHistoryIsVisible ? "256px" : "0px" }} transition={{ duration: 0.25, ease: "easeInOut" }}>
                     <div className="w-full h-full pl-3 pt-2.5 border-l border-l-slate-300">
                         <strong className="block text-sm font-semibold">History</strong>
-                        {historyIsLoading ? <div className="text-slate-400/60 mt-1.5">
+                        {historyloading ? <div className="text-slate-400/60 mt-1.5">
                             <FontAwesomeIcon icon={faCircleNotch} className="animate-spin leading-none inline-block align-middle" />
                             <span className="text-sm leading-none inline-block align-middle font-medium ml-1.5">Loading</span>
                         </div> : conversationHistory}

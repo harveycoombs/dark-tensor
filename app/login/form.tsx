@@ -11,10 +11,8 @@ export default function LoginForm() {
 
     let [errorExists, setErrorExistence] = useState<boolean>(false);
     let [warningExists, setWarningExistence] = useState<boolean>(false);
-
+    let [loading, setLoading] = useState<boolean>(false);
     let [disabled, setDisability] = useState<boolean>(false);
-
-    let [button, setButton] = useState<React.JSX.Element>(<Button classes="block w-full mt-2.5">Continue</Button>);
 
     let [feedback, setFeedback] = useState<React.JSX.Element|null>(null);
 
@@ -22,7 +20,6 @@ export default function LoginForm() {
         e.preventDefault();
 
         setErrorExistence(false);
-        setButton(<Button classes="block w-full mt-2.5 opacity-65 pointer-events-none">&nbsp; Loading &nbsp;</Button>);
         setDisability(true);
 
         let credentials = new URLSearchParams({ email, password });
@@ -40,7 +37,6 @@ export default function LoginForm() {
                 setWarningExistence(true);
                 setDisability(false);
 
-                setButton(<Button classes="block w-full mt-2.5">Continue</Button>);
                 setFeedback(<div className="text-sm font-medium text-center text-amber-400">Invalid credentials</div>);
 
                 return;
@@ -50,7 +46,6 @@ export default function LoginForm() {
         } catch {
             setWarningExistence(false);
             setErrorExistence(true);
-            setButton(<Button classes="block w-full mt-2.5">Continue</Button>);
             setFeedback(<div className="text-sm font-medium text-center text-red-500">Something went wrong</div>);
         }
     }
@@ -73,14 +68,11 @@ export default function LoginForm() {
     return (
         <form onSubmit={login} className="w-60">
             {feedback}
-            
             <Label error={errorExists} warning={warningExists} classes="mt-6">Email Address</Label>
             <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="email" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("email", e.target.value)} />
-
             <Label error={errorExists} warning={warningExists} classes="mt-2.5">Password</Label>
             <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="password" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("password", e.target.value)} />
-                
-            {button}
+            <Button classes="block w-full mt-2.5">Continue</Button>
             <Button classes={`block w-full mt-2.5${disabled ? " pointer-events-none" : ""}`} disabled={disabled} transparent={true} url="/register">Register</Button>
         </form>
     );

@@ -14,7 +14,7 @@ export default function Search(e: any) {
     let [query, setQuery] = useState<string>("");
     let [summary, setSummary] = useState<React.JSX.Element|null>(null);
     let [results, setResults] = useState<any[]>([]);
-    let [isLoading, setLoading] = useState<boolean>(true);
+    let [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         (async () => {
@@ -93,9 +93,9 @@ export default function Search(e: any) {
                         <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." value={query} readOnly={true} />
                         <Button classes="invisible">Search</Button>
                     </div>
-                    {isLoading ? <div className="w-650 mx-auto select-none text-center font-medium text-slate-400/60 max-[700px]:w-full"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /><span className="pl-2">Generating Summary</span></div> : summary}
+                    {loading ? <div className="w-650 mx-auto select-none text-center font-medium text-slate-400/60 max-[700px]:w-full"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /><span className="pl-2">Generating Summary</span></div> : summary}
                     <div className="w-650 mx-auto mb-3 mt-6 max-[700px]:w-full">
-                        {(isLoading || results.length) ? null : <h1 className="text-lg font-semibold select-none">Results</h1>}
+                        {(loading || results.length) ? null : <h1 className="text-lg font-semibold select-none">Results</h1>}
                         {results.map((result: any, index: number) => (
                             <motion.div key={index} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }}>
                                 <Result data={result} />

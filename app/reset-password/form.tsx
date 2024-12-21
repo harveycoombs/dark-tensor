@@ -9,7 +9,7 @@ import { Error, Warning } from "@/app/components/common/notices";
 export default function PasswordResetForm() {
     let [email, setEmail] = useState<string>("");
 
-    let [isLoading, setLoading] = useState<boolean>(false);
+    let [loading, setLoading] = useState<boolean>(false);
     let [errorExists, setErrorExistence] = useState<boolean>(false);
     let [warningExists, setWarningExistence] = useState<boolean>(false);
     let [disabled, setDisability] = useState<boolean>(false);
@@ -46,7 +46,7 @@ export default function PasswordResetForm() {
             {feedback}
             <Label error={errorExists} warning={warningExists} classes="mt-6">Email Address</Label>
             <Field classes="block w-full" type="email" error={errorExists} onInput={(e: any) => setEmail(e.target.value)} />
-            <Button classes="block w-full mt-2.5" disabled={disabled} loading={isLoading}>Continue</Button>
+            <Button classes="block w-full mt-2.5" disabled={disabled} loading={loading}>Continue</Button>
         </form>
     );
 }
