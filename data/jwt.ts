@@ -5,6 +5,7 @@ export async function authenticate(token: string): Promise<any> {
 	return new Promise((resolve, reject) => {
 		if (!token) {
 			resolve(null);
+            return;
 		}
 
 		jwt.verify(token, process.env.JWT_SECRET as string, async (ex: any, user: any) => {
