@@ -85,6 +85,13 @@ export default function Home() {
         }
     }
 
+    function handleUpload(e: any) {
+        if (!e.target.files.length) return;
+
+        let data = new FormData();
+        data.append("file", e.target.files[0]);
+    }
+
     return (
         <>
             <Header />
@@ -116,7 +123,7 @@ export default function Home() {
                     </div>
                 </motion.div>
             </main>
-            <input type="file" ref={imageUploader} className="hidden" accept="image/*" />
+            <input type="file" ref={imageUploader} className="hidden" accept="image/*" onChange={handleUpload} />
         </>
     );
 }

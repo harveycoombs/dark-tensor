@@ -1,23 +1,28 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import fs from "fs/promises";
 
 import { authenticate } from "@/data/jwt";
-import { generateFromImage } from "@/data/model";
+import { insertImageSearchHistory } from "@/data/users";
 
 export async function POST(request: Request): Promise<NextResponse> {
     let data = await request.formData();
     let file = data.get("file");
-    
+
     if (!file || !(file instanceof File)) return NextResponse.json({ error: "No file was uploaded." }, { status: 400 });
-    
+
     let cookieJar = await cookies();
     let token = cookieJar.get("token")?.value;
     let currentSessionUser = await authenticate(token ?? "");
 
-    let summary = await generateFromImage({
-        model: currentSessionUser?.vision_model ?? "llama3.2-vision",
-        image: file
-    }) ?? "";
+    if (!currentSessionUser) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
-    return NextResponse.json({ summary }, { status: 200 });
+    let id = await insertImageSearchHistory(currentSessionUser.user_id);
+
+    if (!id) return NextResponse.json({ error: "Failed to insert image search history." }, { status: 500 });
+
+    let buffer = Buffer.from(await file.arrayBuffer());
+    await fs.writeFile(`./uploads/${id}-${file.name}`, new Uint8Array(buffer));
+
+    return NextResponse.json({ id }, { status: 200 });
 }

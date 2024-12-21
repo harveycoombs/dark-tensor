@@ -58,7 +58,7 @@ export default function ImageSearch(e: any) {
             let formData = new FormData();
             formData.append("file", image);
 
-            let response = await fetch("/api/search/image", {
+            let response = await fetch(`/api/search/image/${id}`, {
                 method: "POST",
                 body: formData
             });
