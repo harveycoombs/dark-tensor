@@ -22,6 +22,7 @@ export default function LoginForm() {
         setErrorExistence(false);
         setWarningExistence(false);
         setLoading(true);
+        setFeedback(null);
 
         let response = await fetch("/api/users/sessions", {
             method: "POST",
