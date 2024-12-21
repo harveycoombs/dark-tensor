@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 interface Properties {
     children: React.ReactNode;
@@ -6,10 +8,11 @@ interface Properties {
     url?: string;
     color?: "red" | "green" | "blue";
     transparent?: boolean;
+    loading?: boolean;
     [key: string]: any;
 }
 
-export default function Button({ children, classes, url, color, transparent, ...rest }: Properties) {
+export default function Button({ children, classes, url, color, transparent, loading, ...rest }: Properties) {
     let bgColor;
 
     switch (color) {
@@ -29,6 +32,6 @@ export default function Button({ children, classes, url, color, transparent, ...
     let classList = `px-3.5 py-2.5 rounded-md text-[0.8rem] text-center cursor-pointer font-medium leading-none duration-100 select-none ${appearance}${classes?.length ? " " + classes : ""}`;
 
     return (
-        url?.length ? <Link href={url} className={classList} draggable={false} {...rest}>{children}</Link> : <button className={classList} draggable={false} {...rest}>{children}</button>
+        url?.length ? <Link href={url} className={classList} draggable={false} {...rest}>{children}</Link> : <button className={classList} draggable={false} {...rest}>{loading ? <FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /> : children}</button>
     );
 }

@@ -12,7 +12,7 @@ export default function PasswordResetForm() {
     let [disabled, setDisability] = useState<boolean>(false);
 
     let [feedback, setFeedback] = useState<React.JSX.Element|null>(null);
-    let [button, setButton] = useState<React.JSX.Element>(<Button classes="block w-full mt-2.5" disabled={disabled}>Continue</Button>);
+    let [button, setButton] = useState<React.JSX.Element>(<Button classes="block w-full mt-2.5" disabled={disabled} loading={true}>Continue</Button>);
 
     async function send(e: any) {
         e.preventDefault();
