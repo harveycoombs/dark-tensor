@@ -6,5 +6,7 @@ interface Properties {
 }
 
 export default function Label({ children, classes, error, warning, ...rest }: Properties) {
-    return <label className={`text-[0.78rem] font-medium select-none text-slate-400 text-left block mb-0.5${classes?.length ? " " + classes : ""}`} {...rest}>{children}</label>;
+    let color = error ? "text-red-500" : warning ? "text-amber-500" : "text-slate-400";
+
+    return <label className={`text-[0.78rem] font-medium select-none ${color} text-left block mb-0.5${classes?.length ? " " + classes : ""}`} {...rest}>{children}</label>;
 }
