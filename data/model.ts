@@ -12,7 +12,7 @@ interface VisionModelOptions {
     image?: File;
 }
 
-export async function generate({ model, prompt }: ModelOptions): Promise<any> {
+export async function generate({ model, prompt }: ModelOptions): Promise<string|null> {
     if (!model?.length || !prompt?.length) return null;
 
     let response = await ollama.chat({
@@ -23,7 +23,7 @@ export async function generate({ model, prompt }: ModelOptions): Promise<any> {
     return response?.message?.content;
 }
 
-export async function generateFromContext({ model, messages, style }: ModelOptions) {
+export async function generateFromContext({ model, messages, style }: ModelOptions): Promise<string|null> {
     if (!model?.length || !messages?.length) return null;
 
     let responseStyle = (style == "balanced") ? "" : `${style}ly`;
@@ -37,7 +37,7 @@ export async function generateFromContext({ model, messages, style }: ModelOptio
     return response?.message?.content;
 }
 
-export async function generateFromImage({ model, image }: VisionModelOptions) {
+export async function generateFromImage({ model, image }: VisionModelOptions): Promise<string|null> {
     if (!model?.length || !image || !(image instanceof File)) return null;
 
     let buffer = await image.arrayBuffer();
