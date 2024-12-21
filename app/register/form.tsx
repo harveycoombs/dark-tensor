@@ -109,7 +109,7 @@ export default function RegistrationForm() {
                     <Field classes="block w-full" type="password" disabled={loading} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("passwordconfirmation", e.target.value)} />
                 </div>
             </div>
-            <Button classes="block w-60 mx-auto mt-6" disabled={loading} loading={loading || !firstName.length || !lastName.length || !email.length || !password.length || !passwordConfirmation.length}>Continue</Button>
+            <Button classes="block w-60 mx-auto mt-6" disabled={loading || !firstName.length || !lastName.length || !email.length || !password.length || !passwordConfirmation.length} loading={loading}>Continue</Button>
             <Button classes="block w-60 mx-auto mt-2.5" disabled={loading} transparent={true} url="/login">I Already Have an Account</Button>
         </form>
     );
