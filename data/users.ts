@@ -80,6 +80,11 @@ export async function insertSearchHistory(userid: number, query: string): Promis
     return result.affectedRows > 0;
 }
 
+export async function insertImageSearchHistory(userid: number): Promise<number> {
+    let [result]: any = await pool.query("INSERT INTO image_searches (user_id, search_date) VALUES (?, NOW())", [userid]);
+    return result.insertId ?? 0;
+}
+
 export async function recordConversation(userid: number, messages: any): Promise<number> {
     try {
         let summary = await generate({
