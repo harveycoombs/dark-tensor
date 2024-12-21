@@ -29,7 +29,7 @@ export default function Search(e: any) {
         setLoading(true);
 
         (async () => {
-            let response = await fetch(`/api/search/${query}`);
+            let response = await fetch(`/api/search?query=${query}`);
             let data = await response.json();
 
             setLoading(false);
