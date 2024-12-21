@@ -66,7 +66,7 @@ export default function LoginForm() {
             <Field classes="block w-full" disabled={loading} type="email" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("email", e.target.value)} />
             <Label error={errorExists} warning={warningExists} classes="mt-2.5">Password</Label>
             <Field classes="block w-full" disabled={loading} type="password" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("password", e.target.value)} />
-            <Button classes="block w-full mt-2.5" disabled={loading || !email.length} loading={loading}>Continue</Button>
+            <Button classes="block w-full mt-2.5" disabled={loading || !email.length || !password.length} loading={loading}>Continue</Button>
             <Button classes="block w-full mt-2.5" disabled={loading} transparent={true} url="/register">Register</Button>
         </form>
     );
