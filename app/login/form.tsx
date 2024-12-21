@@ -25,7 +25,7 @@ export default function LoginForm() {
         setButton(<Button classes="block w-full mt-2.5 opacity-65 pointer-events-none">&nbsp; Loading &nbsp;</Button>);
         setDisability(true);
 
-        let credentials = new URLSearchParams({ email: email, password: password });
+        let credentials = new URLSearchParams({ email, password });
 
         try {  
             let response = await fetch("/api/users/sessions", {

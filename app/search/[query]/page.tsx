@@ -8,7 +8,7 @@ import { faArrowLeft, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import Header from "@/app/components/header";
 import Button from "@/app/components/common/button";
 import Result from "@/app/components/common/result";
-import Error from "@/app/components/common/error";
+import { Error } from "@/app/components/common/notices";
 
 export default function Search(e: any) {
     let [query, setQuery] = useState<string>("");
