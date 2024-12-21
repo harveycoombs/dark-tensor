@@ -7,7 +7,7 @@ interface Properties {
     title: string;
     children: React.ReactNode;
     classes?: string;
-    onClose: any;
+    onClose: () => void;
     [key: string]: any;
 }
 

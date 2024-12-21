@@ -11,7 +11,7 @@ import { getModelCleanName } from "@/data/utils";
 
 interface Properties {
     model?: string;
-    onClose: any;
+    onClose: () => void;
 }
 
 export default function ChatPopup({ model, onClose }: Properties) {
@@ -165,7 +165,7 @@ export default function ChatPopup({ model, onClose }: Properties) {
 function ChatMessage({ message, ...rest }: any) {
     return (
         <div className={`w-5/12 mt-4 ${message.you ? "ml-auto" : "mr-auto"}`}>
-            <div className={`px-3 py-2 text-sm max-w-23/50 rounded-lg ${message.you ? "bg-slate-100 text-slate-400" : "bg-sky-400 text-white"}`} {...rest}>{message.content.split("\n").map((line: any, index: number) => <span key={index}>{line}<br/></span>)}</div>
+            <div className={`px-3 py-2 text-sm max-w-23/50 rounded-lg ${message.you ? "bg-slate-100 text-slate-400" : "bg-sky-400 text-white"}`} {...rest}>{message.content.split("\n").map((line: string, index: number) => <span key={index}>{line}<br/></span>)}</div>
             <div className="text-xs text-slate-400 mt-1" title={message.timestamp.toLocaleString()}>{message.timestamp.toLocaleString(undefined, { hour: "2-digit", minute: "2-digit" })}{!message.you ? <> &middot; Thought for {Math.round(message.interval / 1000
             )} seconds</> : null}</div>
         </div>

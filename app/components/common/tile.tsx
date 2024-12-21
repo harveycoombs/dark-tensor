@@ -1,7 +1,8 @@
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Properties {
-    icon: any;
+    icon: IconProp;
     classes?: string;
     children: React.ReactNode;
     [key: string]: any;

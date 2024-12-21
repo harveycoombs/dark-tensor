@@ -9,7 +9,7 @@ import Menu from "@/app/components/common/menu";
 import Field from "@/app/components/common/field";
 
 interface Properties {
-    onClose: any;
+    onClose: () => void;
 }
 
 export default function SettingsPopup({ onClose }: Properties) {

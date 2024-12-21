@@ -1,9 +1,10 @@
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faCircleExclamation, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Properties {
     text?: string;
-    icon?: any;
+    icon?: IconProp;
     small?: boolean;
     classes?: string;
 }
