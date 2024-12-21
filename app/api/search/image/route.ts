@@ -1,9 +1,27 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import * as fs from "fs/promises";
+import fs from "fs/promises";
+import mime from "mime";
 
 import { insertImageSearchHistory } from "@/data/users";
 import { authenticate } from "@/data/jwt";
+
+export async function GET(_: Request, { params }: any): Promise<NextResponse> {
+    let { id } = await params;
+    let searchid = parseInt(id?.trim() ?? "0");
+
+    if (!searchid || isNaN(searchid)) return NextResponse.json({ error: "Invalid ID." }, { status: 400 });
+
+    let files = await fs.readdir("./uploads/");
+    let file = files.find(file => file.startsWith(`${searchid}-`));
+
+    if (!file?.length) return NextResponse.json({ error: "Image not found." }, { status: 404 });
+
+    let content = await fs.readFile(`./uploads/${file}`);
+    let type = mime.getType(`./uploads/${file}`) ?? "application/octet-stream";
+
+    return new NextResponse(content, { headers: { "Content-Type": type } });
+}
 
 export async function POST(request: Request): Promise<NextResponse> {
     let data = await request.formData();
