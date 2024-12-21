@@ -12,7 +12,7 @@ export default function RegistrationForm() {
     let [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
     let [firstName, setFirstName] = useState<string>("");
     let [lastName, setLastName] = useState<string>("");
-    let [birthdate, setBirthdate] = useState<string>("");
+    let [birthDate, setBirthDate] = useState<string>("");
 
     let [errorExists, setErrorExistence] = useState<boolean>(false);
     let [warningExists, setWarningExistence] = useState<boolean>(false);
@@ -23,19 +23,26 @@ export default function RegistrationForm() {
 
     async function register(e: any) {
         e.preventDefault();
-    }
-
-    async function login(e: any) {
-        e.preventDefault();
 
         setErrorExistence(false);
-        setWarningExistence(false);
+        setWarningExistence(password != passwordConfirmation);
         setLoading(true);
         setFeedback(null);
 
-        let response = await fetch("/api/users/sessions", {
+        if (password != passwordConfirmation) {
+            setFeedback(<Warning text="Passwords do not match" small={true} classes="mt-6" />);
+            return;
+        }
+
+        let response = await fetch("/api/users", {
             method: "POST",
-            body: new URLSearchParams({ email, password })
+            body: new URLSearchParams({
+                firstname: firstName,
+                lastname: lastName,
+                birthdate: birthDate,
+                email: email,
+                password: password
+            })
         });
 
         let json = await response.json();
@@ -49,8 +56,6 @@ export default function RegistrationForm() {
 
             return;
         }
-
-        window.location.href = "/";
     }
 
     function updateField(name: string, value: string) {
@@ -62,7 +67,7 @@ export default function RegistrationForm() {
                 setLastName(value);
                 break;
             case "birthdate":
-                setBirthdate(value);
+                setBirthDate(value);
                 break;
             case "email":
                 setEmail(value);
@@ -85,18 +90,25 @@ export default function RegistrationForm() {
             {feedback}
             <div className="mt-6 max-[350px]:w-full">
                 <div className="inline-block align-middle w-60 max-[530px]:block max-[530px]:w-full">
-                    <Label error={errorExists} warning={warningExists}>First Name</Label>
+                    <Label error={errorExists} warning={warningExists} required={true}>First Name</Label>
                     <Field classes="block w-full" disabled={loading} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("firstname", e.target.value)} />
-                    <Label error={errorExists} warning={warningExists}>Last Name</Label>
+                    <Label classes="mt-2.5" error={errorExists} warning={warningExists} required={true}>Last Name</Label>
                     <Field classes="block w-full" disabled={loading} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("lastname", e.target.value)} />
+                    <Label classes="mt-2.5" error={errorExists} warning={warningExists}>Date of Birth</Label>
+                    <Field classes="block w-full" type="date" disabled={loading} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("birthdate", e.target.value)} />
                 </div>
 
                 <div className="inline-block align-middle w-60 ml-5 max-[530px]:block max-[530px]:w-full max-[530px]:ml-0 max-[530px]:mt-3">
-
+                    <Label error={errorExists} warning={warningExists} required={true}>Email Address</Label>
+                    <Field classes="block w-full" type="email" disabled={loading} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("email", e.target.value)} />
+                    <Label classes="mt-2.5" error={errorExists} warning={warningExists} required={true}>Password</Label>
+                    <Field classes="block w-full" type="password" disabled={loading} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("password", e.target.value)} />
+                    <Label classes="mt-2.5" error={errorExists} warning={warningExists} required={true}>Confirm Password</Label>
+                    <Field classes="block w-full" type="password" disabled={loading} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("passwordconfirmation", e.target.value)} />
                 </div>
             </div>
-            <Button classes="block w-full mt-2.5" disabled={loading || !email.length || !password.length} loading={loading}>Continue</Button>
-            <Button classes="block w-full mt-2.5" disabled={loading} transparent={true} url="/register">Register</Button>
+            <Button classes="block w-60 mx-auto mt-6" disabled={loading} loading={loading || !firstName.length || !lastName.length || !email.length || !password.length || !passwordConfirmation.length}>Continue</Button>
+            <Button classes="block w-60 mx-auto mt-2.5" disabled={loading} transparent={true} url="/login">I Already Have an Account</Button>
         </form>
     );
 }
