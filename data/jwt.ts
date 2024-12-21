@@ -25,7 +25,3 @@ export function createJWT(user: any) {
 		timestamp: now.getTime(),
 	};
 }
-
-export function destroy() {
-	//to-do
-}
