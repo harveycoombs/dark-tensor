@@ -7,6 +7,11 @@ interface ModelOptions {
     style?: "verbose" | "concise" | "balanced" | null;
 }
 
+interface VisionModelOptions {
+    model?: string;
+    image?: File;
+}
+
 export async function generate({ model, prompt }: ModelOptions): Promise<any> {
     if (!model?.length || !prompt?.length) return null;
 
@@ -27,6 +32,19 @@ export async function generateFromContext({ model, messages, style }: ModelOptio
     let response = await ollama.chat({
         model: model,
         messages: messages.map(message => ({ role: message.you ? "user" : "assistant", content: `Respond ${responseStyle} to the following message: ${message.content.trim()}, in ${responseLength} words or less. Do not hallucinate or speak in any other language than English.` }))
+    });
+
+    return response?.message?.content;
+}
+
+export async function generateFromImage({ model, image }: VisionModelOptions) {
+    if (!model?.length || !image || !(image instanceof File)) return null;
+
+    let buffer = await image.arrayBuffer();
+
+    let response = await ollama.chat({
+        model: model,
+        messages: [{ role: "user", content: `Analyze the attached image: ${image.name}`, images: [new Uint8Array(buffer)] }]
     });
 
     return response?.message?.content;

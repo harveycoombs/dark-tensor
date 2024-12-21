@@ -26,7 +26,7 @@ export async function deleteUser(userid: number): Promise<boolean> {
 }
 
 export async function getUserByID(userid: number): Promise<any> {
-	let [result]: any = await pool.query("SELECT users.user_id, creation_date, first_name, last_name, birth_date, settings.search_model, settings.chat_model FROM users INNER JOIN settings ON settings.user_id = users.user_id WHERE users.user_id = ? AND deleted = 0", [userid]);
+	let [result]: any = await pool.query("SELECT users.user_id, creation_date, first_name, last_name, birth_date, settings.search_model, settings.chat_model, settings.vision_model FROM users INNER JOIN settings ON settings.user_id = users.user_id WHERE users.user_id = ? AND deleted = 0", [userid]);
 	return result[0];
 }
 
