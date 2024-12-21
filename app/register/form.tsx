@@ -56,6 +56,8 @@ export default function RegistrationForm() {
 
             return;
         }
+
+        window.location.href = "/";
     }
 
     function updateField(name: string, value: string) {
