@@ -35,7 +35,7 @@ export default function Search(e: any) {
             setLoading(false);
 
             if (!response.ok) {
-                setSummary(<Error />);
+                setSummary(<Error classes="w-fit mx-auto" />);
                 return;
             }
 
