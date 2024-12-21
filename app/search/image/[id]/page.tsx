@@ -9,6 +9,7 @@ import { faArrowLeft, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import Header from "@/app/components/header";
 import Button from "@/app/components/common/button";
 import Result from "@/app/components/common/result";
+import Popup from "@/app/components/common/popup";
 
 export default function ImageSearch(e: any) {
     let [id, setID] = useState<number>(0);
@@ -18,6 +19,8 @@ export default function ImageSearch(e: any) {
 
     let [image, setImage] = useState<File|null>(null);
     let [b64, setB64] = useState<string>("");
+
+    let [imageIsEnlarged, setImageEnlargement] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
@@ -83,7 +86,7 @@ export default function ImageSearch(e: any) {
                         <Link href="/" className="group text-sm duration-100 font-medium hover:text-slate-500/75"><FontAwesomeIcon icon={faArrowLeft} className="pr-1 duration-100 group-hover:pr-2" />Back to Search</Link>
                     </div>
                     <div className="w-650 mx-auto py-2 pl-3.5 pr-2 mb-6 rounded-xl border border-slate-300 flex items-center duration-100 justify-between gap-2 has-[input:focus]:border-sky-500 has-[input:focus]:shadow-md max-[700px]:w-full">
-                        {image && b64.length ? <Image src={b64} alt={image.name} width={26} height={26} className="rounded" /> : null}
+                        {image && b64.length ? <Image src={b64} alt={image.name} width={26} height={26} className="rounded object-cover" onClick={() => setImageEnlargement(true)} /> : null}
                         <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." defaultValue={image?.name ?? ""} readOnly={true} />
                         <Button classes="invisible">Search</Button>
                     </div>
@@ -98,6 +101,11 @@ export default function ImageSearch(e: any) {
                     </div>
                 </section>
             </main>
+            {imageIsEnlarged && image && b64 ? <Popup title={image.name} onClose={() => setImageEnlargement(false)}>
+                <div className="py-3">
+                    <img src={b64} alt={image.name} className="block rounded w-auto max-h-3/4-screen" draggable={false} />
+                </div>
+            </Popup> : null}
         </>
     );
 }
