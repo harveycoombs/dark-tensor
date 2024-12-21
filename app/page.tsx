@@ -71,7 +71,7 @@ export default function Home() {
         if (!searchField?.current?.value?.length) return;
 
         let query = searchField.current.value;
-        window.location.href = `/search?q=${query}`;
+        window.location.href = `/search/${query}`;
     }
 
     function updateButtonAvailability(e: any) {

@@ -10,15 +10,17 @@ import Result from "@/app/components/common/result";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
-export default function Search() {
+export default function Search(e: any) {
     let [query, setQuery] = useState<string>("");
     let [summary, setSummary] = useState<React.JSX.Element|null>(null);
     let [results, setResults] = useState<any[]>([]);
     let [isLoading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        let parameter = new URLSearchParams(window.location.search)?.get("q") ?? "";
-        setQuery(parameter);
+        (async () => {
+            let { query } = await e.params;
+            setQuery(decodeURI(query).trim());
+        })();
     }, []);
 
     useEffect(() => {
@@ -27,7 +29,7 @@ export default function Search() {
         setLoading(true);
 
         (async () => {
-            let response = await fetch(`/api/search?query=${query}`);
+            let response = await fetch(`/api/search/${query}`);
             let data = await response.json();
 
             setLoading(false);
