@@ -85,11 +85,25 @@ export default function Home() {
         }
     }
 
-    function handleUpload(e: any) {
+    async function handleUpload(e: any) {
         if (!e.target.files.length) return;
 
         let data = new FormData();
         data.append("file", e.target.files[0]);
+
+        let response = await fetch("/api/search/image", {
+            method: "POST",
+            body: data
+        });
+        
+        let json = await response.json();
+
+        if (!response.ok) {
+            alert(json.error);
+            return;
+        }
+
+        window.location.href = `/search/image/${json.id}`;
     }
 
     return (
