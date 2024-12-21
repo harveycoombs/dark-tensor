@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 import { generateFromContext } from "@/data/model";
 import { getConversationHistory, recordConversation, updateConversation } from "@/data/users";
 
 import { authenticate } from "@/data/jwt";
-import { cookies } from "next/headers";
 
 export async function GET(): Promise<NextResponse> {
     let cookieJar = await cookies();
