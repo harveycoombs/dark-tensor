@@ -22,6 +22,22 @@ export default function ImageSearch(e: any) {
         })();
     }, []);
 
+    useEffect(() => {
+        if (!id) return;
+
+        (async () => {
+            let response = await fetch(`/api/search/image/${id}`);
+            let buffer = await response.arrayBuffer();
+
+            if (!response.ok) {
+                // error
+                return;
+            }
+
+            console.log("buffer", buffer);
+        })();
+    }, [id]);
+
     return (
         <>
             <Header />
