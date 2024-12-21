@@ -48,23 +48,21 @@ export default function Search(e: any) {
             </motion.div>);
 
             setResults(data.results);
+
+            await insertSearchHistory();
         })();
     }, [query]);
 
-    useEffect(() => {
-        if (!query?.length) return;
+    async function insertSearchHistory() {
+        let response = await fetch("/api/search", {
+            method: "POST",
+            body: new URLSearchParams({ query })
+        });
 
-        (async () => {
-            let response = await fetch("/api/search", {
-                method: "POST",
-                body: new URLSearchParams({ query })
-            });
-
-            if (!response.ok) {
-                console.error("Failed to insert search history.");
-            }
-        })();
-    }, [query]);
+        if (!response.ok) {
+            console.error("Failed to insert search history.");
+        }
+    }
 
     function formatSummary(text: string): React.JSX.Element[] {
         let formatted = [];
