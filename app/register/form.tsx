@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 import Field from "@/app/components/common/field";
 import Label from "@/app/components/common/label";
 import Button from "@/app/components/common/button";
+import { Error, Warning } from "@/app/components/common/notices";
 
 export default function RegistrationForm() {
     let [email, setEmail] = useState<string>("");
@@ -15,76 +16,41 @@ export default function RegistrationForm() {
 
     let [errorExists, setErrorExistence] = useState<boolean>(false);
     let [warningExists, setWarningExistence] = useState<boolean>(false);
-
-    let [disabled, setDisability] = useState<boolean>(false);
-
-    let continueButton = useRef<HTMLButtonElement>(null);
-    let [button, setButton] = useState<React.JSX.Element>(<Button classes="block w-60 mt-6 mx-auto max-[530px]:w-full" ref={continueButton}>Continue</Button>);
+    let [loading, setLoading] = useState<boolean>(false);
 
     let [feedback, setFeedback] = useState<React.JSX.Element|null>(null);
 
-    useEffect(() => {
-        if (continueButton?.current) {
-            continueButton.current.disabled = (!email.length || !password.length || !firstName.length || !lastName.length);
-        }
-    }, [email, password, passwordConfirmation, firstName, lastName]);
 
     async function register(e: any) {
         e.preventDefault();
+    }
 
-        if (!email.length || !password.length || !firstName.length || !lastName.length) {
-            setErrorExistence(false);
-            setWarningExistence(true);
-            setFeedback(<div className="text-sm font-medium text-center text-amber-400">One or more fields were not provided</div>);
-
-            return;
-        }
-
-        if (password != passwordConfirmation) {
-            setErrorExistence(false);
-            setWarningExistence(true);
-            setFeedback(<div className="text-sm font-medium text-center text-amber-400">Passwords do not match</div>);
-
-            return;
-        }
+    async function login(e: any) {
+        e.preventDefault();
 
         setErrorExistence(false);
-        setButton(<Button classes="block w-60 mt-6 mx-auto opacity-65 pointer-events-none max-[530px]:w-full">&nbsp; Loading &nbsp;</Button>);
-        setDisability(true);
+        setWarningExistence(false);
+        setLoading(true);
+        setFeedback(null);
 
-        let credentials = new URLSearchParams({
-            firstname: firstName,
-            lastname: lastName,
-            birthdate: birthdate,
-            email: email,
-            password: password
+        let response = await fetch("/api/users/sessions", {
+            method: "POST",
+            body: new URLSearchParams({ email, password })
         });
 
-        try {  
-            let response = await fetch("/api/users", {
-                method: "POST",
-                body: credentials
-            });
+        let json = await response.json();
 
-            let json = await response.json();
+        if (!response.ok || json.error) {
+            setErrorExistence(response.status != 400);
+            setWarningExistence(response.status == 400);
+            setLoading(false);
 
-            if (!json.success) {
-                setErrorExistence(false);
-                setWarningExistence(true);
-                setDisability(false);
+            setFeedback((response.status == 400) ? <Warning text="Invalid credentials" small={true} classes="mt-6" /> : <Error small={true} classes="mt-6" />);
 
-                setButton(<Button classes="block w-60 mt-6 mx-auto max-[530px]:w-full">Continue</Button>);
-                setFeedback(<div className="text-sm font-medium text-center text-amber-400">Invalid credentials</div>);
-
-                return;
-            }
-
-            window.location.href = "/";
-        } catch {
-            setWarningExistence(false);
-            setErrorExistence(true);
-            setFeedback(<div className="text-sm font-medium text-center text-red-500">Something went wrong</div>);
+            return;
         }
+
+        window.location.href = "/";
     }
 
     function updateField(name: string, value: string) {
@@ -117,33 +83,20 @@ export default function RegistrationForm() {
     return (
         <form onSubmit={register}>
             {feedback}
-
             <div className="mt-6 max-[350px]:w-full">
                 <div className="inline-block align-middle w-60 max-[530px]:block max-[530px]:w-full">
                     <Label error={errorExists} warning={warningExists}>First Name</Label>
-                    <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("firstname", e.target.value)} />
-
-                    <Label error={errorExists} warning={warningExists} classes="mt-2.5">Last Name</Label>
-                    <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("lastname", e.target.value)} />
-
-                    <Label error={errorExists} warning={warningExists} classes="mt-2.5">Date of Birth</Label>
-                    <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="date" onInput={(e: any) => updateField("birthdate", e.target.value)} />
+                    <Field classes="block w-full" disabled={loading} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("firstname", e.target.value)} />
+                    <Label error={errorExists} warning={warningExists}>Last Name</Label>
+                    <Field classes="block w-full" disabled={loading} error={errorExists} warning={warningExists} onInput={(e: any) => updateField("lastname", e.target.value)} />
                 </div>
 
-                <div className="inline-block align-middle w-60 ml-5 max-[530px]:block max-[530px]:w-full max-[530px]:ml-0  max-[530px]:mt-3">
-                    <Label error={errorExists} warning={warningExists}>Email Address</Label>
-                    <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="email" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("email", e.target.value)} />
+                <div className="inline-block align-middle w-60 ml-5 max-[530px]:block max-[530px]:w-full max-[530px]:ml-0 max-[530px]:mt-3">
 
-                    <Label error={errorExists} warning={warningExists} classes="mt-2.5">Password</Label>
-                    <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="password" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("password", e.target.value)} />
-
-                    <Label error={errorExists} warning={warningExists} classes="mt-2.5">Confirm Password</Label>
-                    <Field classes={`block w-full${disabled ? " pointer-events-none" : ""}`} disabled={disabled} type="password" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("passwordconfirmation", e.target.value)} />                
                 </div>
             </div>
-
-            {button}
-            <Button classes={`block w-60 mt-2.5 mx-auto${disabled ? " pointer-events-none" : ""} max-[530px]:w-full`} disabled={disabled} transparent={true} url="/login">I Already Have an Account</Button>
+            <Button classes="block w-full mt-2.5" disabled={loading || !email.length || !password.length} loading={loading}>Continue</Button>
+            <Button classes="block w-full mt-2.5" disabled={loading} transparent={true} url="/register">Register</Button>
         </form>
     );
 }
