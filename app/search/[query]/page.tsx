@@ -30,7 +30,7 @@ export default function Search(e: any) {
         setLoading(true);
 
         (async () => {
-            let response = await fetch(`1/api/search?query=${query}`);
+            let response = await fetch(`/api/search?query=${query}`);
 
             setLoading(false);
 
