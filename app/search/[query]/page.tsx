@@ -84,7 +84,7 @@ export default function Search(e: any) {
     return (
         <>
             <Header />
-            <main className="min-h-[calc(100vh-110px)] grid place-items-center">
+            <main className="min-h-[calc(100vh-111px)] grid place-items-center">
                 <section className="py-6 w-full max-[700px]:px-3">
                     <div className="w-650 mx-auto mb-3 max-[700px]:w-full">
                         <Link href="/" className="group text-sm duration-100 font-medium hover:text-slate-500/75"><FontAwesomeIcon icon={faArrowLeft} className="pr-1 duration-100 group-hover:pr-2" />Back to Search</Link>

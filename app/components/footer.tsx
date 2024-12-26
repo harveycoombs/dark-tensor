@@ -1,5 +1,19 @@
+import { faDiscord, faReddit } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
 export default function Footer() {
-    return <footer className="p-4 text-sm text-slate-400/60 font-medium select-none text-center">&copy; {new Date().getFullYear()} Collate AI &middot; <Link href="https://harveycoombs.com/" target="_blank" rel="noopener" className="hover:underline">Harvey Coombs</Link></footer>;
+    return (
+        <footer className="p-4 flex justify-between items-center border-t border-t-slate-300 text-sm font-medium select-none">
+            <div>&copy; {new Date().getFullYear()} Collate AI &middot; <Link href="https://harveycoombs.com/" target="_blank" rel="noopener" className="hover:underline">Harvey Coombs</Link></div>
+            <div>
+                <FooterIcon icon={faReddit} title="Reddit" url="https://www.reddit.com/r/collateai/" />
+                <FooterIcon icon={faDiscord} title="Discord" url="/" />
+            </div>
+        </footer>
+    );
+}
+
+function FooterIcon({ icon, title, url }: any) {
+    return <Link href={url} title={title} className="inline-block align-middle text-lg leading-none text-slate-400/60 duration-100 ml-4 hover:text-slate-400 active:text-slate-500"><FontAwesomeIcon icon={icon} /></Link>;
 }
