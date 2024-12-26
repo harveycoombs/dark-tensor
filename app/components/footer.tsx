@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Footer() {
     return (
         <footer className="p-4 flex justify-between items-center border-t border-t-slate-300 text-sm font-medium select-none">
-            <div>&copy; {new Date().getFullYear()} Collate AI &middot; <Link href="https://harveycoombs.com/" target="_blank" rel="noopener" className="hover:underline">Harvey Coombs</Link></div>
+            <div>&copy; {new Date().getFullYear()} Collate AI {process.env.APP_VERSION} &middot; <Link href="https://harveycoombs.com/" target="_blank" rel="noopener" className="hover:underline">Harvey Coombs</Link></div>
             <div>
                 <FooterIcon icon={faReddit} title="Reddit" url="https://www.reddit.com/r/collateai/" />
                 <FooterIcon icon={faDiscord} title="Discord" url="/" />
