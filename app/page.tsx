@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch, faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch, faCamera, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "@/app/components/header";
 import Logo from "@/app/components/common/logo";
@@ -17,6 +17,7 @@ export default function Home() {
 
     let [recentSearchesAreVisible, setRecentSearchesVisibility] = useState<boolean>(false);
     let [recentSearchesArea, setRecentSearchesArea] = useState<React.JSX.Element|null>(null);
+    let [image, setImage] = useState<File|null>(null);
 
     useEffect(() => {
         if (!recentSearchesAreVisible) {
@@ -71,25 +72,20 @@ export default function Home() {
         if (!searchField?.current?.value?.length) return;
 
         let query = searchField.current.value;
+
+        if (image) {
+            imageSearch(query);
+            return;
+        }
+        
         window.location.href = `/search/${query}`;
     }
 
-    function updateButtonAvailability(e: any) {
-        if (!searchButton?.current) return;
-        searchButton.current.disabled = !e.target.value.length;
-
-        if (e.target.value.length) {
-            searchButton.current.addEventListener("click", search);
-        } else {
-            searchButton.current.removeEventListener("click", search);
-        }
-    }
-
-    async function handleUpload(e: any) {
-        if (!e.target.files.length) return;
+    async function imageSearch(query: string) {
+        if (!image) return;
 
         let data = new FormData();
-        data.append("file", e.target.files[0]);
+        data.append("file", image);
 
         let response = await fetch("/api/search/image", {
             method: "POST",
@@ -103,7 +99,28 @@ export default function Home() {
             return;
         }
 
-        window.location.href = `/search/image/${json.id}`;
+        window.location.href = `/search/image/${json.id}/${query}`;
+    }
+
+    function updateButtonAvailability(e: any) {
+        if (!searchButton?.current) return;
+        searchButton.current.disabled = !e.target.value.length;
+
+        if (e.target.value.length) {
+            searchButton.current.addEventListener("click", search);
+        } else {
+            searchButton.current.removeEventListener("click", search);
+        }
+    }
+
+    function handleUpload(e: any) {
+        if (!e.target.files.length) return;
+        setImage(e.target.files[0]);
+    }
+
+    function deleteUpload(e: any) {
+        e.stopPropagation();
+        setImage(null);
     }
 
     return (
@@ -116,16 +133,16 @@ export default function Home() {
                     <div className="flex items-center gap-5 mt-12">
                         <div className="py-2 pl-3.5 pr-2 rounded-xl border border-slate-300 flex items-center duration-100 justify-between gap-2 w-full has-[input:focus]:border-sky-500 has-[input:focus]:shadow-md" onKeyUp={(e: any) => (e.key == "Enter") && search()}>
                             <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} onInput={updateButtonAvailability} />
-                            <Button ref={searchButton} disabled>Search</Button>
+                            <Button ref={searchButton} classes="shrink-0" disabled>{image ? "Image " : ""}Search</Button>
                         </div>
-                        <SearchOption icon={faCamera} title="Search with Image" onClick={() => imageUploader?.current?.click()} />
+                        <div className="relative">
+                            <SearchOption icon={faCamera} title="Search with Image" selected={image} classes={image ? "pointer-events-none cursor-default" : ""} onClick={() => imageUploader?.current?.click()} />
+                            {image && <div className="absolute bottom-[-4px] right-[-4px] aspect-square p-0.5 text-[10px] leading-none rounded-sm text-white bg-red-500 cursor-pointer duration-100" title="Delete Image" onClick={deleteUpload}><FontAwesomeIcon icon={faTrashAlt} /></div>}
+                        </div>
                         <SearchOption icon={faClockRotateLeft} selected={recentSearchesAreVisible} onClick={() => setRecentSearchesVisibility(!recentSearchesAreVisible)} title="Show Recent Searches" />
                         <SearchOption icon={faSliders} title="Show Filters" />
                     </div>
-                    {recentSearchesAreVisible ? <div className="mt-12">
-                        <h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>
-                        {recentSearchesArea}
-                    </div> : null}
+                    {recentSearchesAreVisible && <div className="mt-12"><h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>{recentSearchesArea}</div>}
                     <div className="mt-12">
                         <h3 className="font-medium text-slate-400 mb-2">Suggestions</h3>
                         <div className="grid grid-cols-4 gap-4 max-[700px]:grid-cols-2 max-[700px]:gap-2">
@@ -142,6 +159,6 @@ export default function Home() {
     );
 }
 
-function SearchOption({ icon, selected, ...rest }: any) {
-    return <div className={`text-xl leading-none ${selected ? "text-slate-400" : "text-slate-400/60"} cursor-pointer duration-100 hover:text-slate-400/80 active:text-slate-400`} {...rest}><FontAwesomeIcon icon={icon} /></div>;
+function SearchOption({ icon, selected, classes, ...rest }: any) {
+    return <div className={`text-xl leading-none ${selected ? "text-slate-400" : "text-slate-400/60"} cursor-pointer duration-100${classes?.length ? " " + classes : ""} hover:text-slate-400/80 active:text-slate-400`} {...rest}><FontAwesomeIcon icon={icon} /></div>;
 }

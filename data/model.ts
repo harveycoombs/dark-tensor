@@ -10,6 +10,7 @@ interface ModelOptions {
 interface VisionModelOptions {
     model?: string;
     image?: File;
+    prompt?: string;
 }
 
 export async function generate({ model, prompt }: ModelOptions): Promise<string|null> {
@@ -37,14 +38,14 @@ export async function generateFromContext({ model, messages, style }: ModelOptio
     return response?.message?.content;
 }
 
-export async function generateFromImage({ model, image }: VisionModelOptions): Promise<string|null> {
+export async function generateFromImage({ model, image, prompt }: VisionModelOptions): Promise<string|null> {
     if (!model?.length || !image || !(image instanceof File)) return null;
 
     let buffer = await image.arrayBuffer();
 
     let response = await ollama.chat({
         model: model,
-        messages: [{ role: "user", content: `Analyze the attached image: ${image.name}`, images: [new Uint8Array(buffer)] }]
+        messages: [{ role: "user", content: prompt ?? `Analyze the attached image: ${image.name}`, images: [new Uint8Array(buffer)] }]
     });
 
     return response?.message?.content;

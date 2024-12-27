@@ -13,6 +13,8 @@ import Popup from "@/app/components/common/popup";
 
 export default function ImageSearch(e: any) {
     let [id, setID] = useState<number>(0);
+    let [query, setQuery] = useState<string>("");
+
     let [summary, setSummary] = useState<React.JSX.Element|null>(null);
     let [results, setResults] = useState<any[]>([]);
     let [loading, setLoading] = useState<boolean>(true);
@@ -24,8 +26,10 @@ export default function ImageSearch(e: any) {
 
     useEffect(() => {
         (async () => {
-            let { id } = await e.params;
-            setID(parseInt(id.trim()));
+            let { id, query } = await e.params;
+
+            setID(parseInt(id?.trim() ?? "0"));
+            setQuery(query?.trim() ?? "");
         })();
     }, []);
 
@@ -36,10 +40,7 @@ export default function ImageSearch(e: any) {
             let response = await fetch(`/api/search/image/${id}`);
             let buffer = await response.arrayBuffer();
 
-            if (!response.ok) {
-                // error
-                return;
-            }
+            if (!response.ok) return;
 
             let filename = response.headers.get("Content-Disposition")?.split("filename=")[1].replace(/"/g, "") ?? "unknown";
             setImage(new File([new Uint8Array(buffer)], filename, { type: response.headers.get("Content-Type") ?? "application/octet-stream" }));
@@ -56,17 +57,16 @@ export default function ImageSearch(e: any) {
 
         (async () => {
             let formData = new FormData();
+
             formData.append("file", image);
+            formData.append("query", query);
 
             let response = await fetch(`/api/search/image/${id}`, {
                 method: "POST",
                 body: formData
             });
 
-            if (!response.ok) {
-                // error
-                return;
-            }
+            if (!response.ok) return;
 
             let data = await response.json();
             setSummary(<motion.div className="w-650 rounded-xl px-4 py-3 bg-sky-50 text-sky-400 mx-auto relative max-[700px]:w-full max-[700px]:px-3" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} transition={{ duration: 1, ease: "easeInOut" }} style={{ overflow: "hidden", transformOrigin: "top center" }}>
@@ -87,7 +87,7 @@ export default function ImageSearch(e: any) {
                     </div>
                     <div className="w-650 mx-auto py-2 pl-3.5 pr-2 mb-6 rounded-xl border border-slate-300 flex items-center duration-100 justify-between gap-2 has-[input:focus]:border-sky-500 has-[input:focus]:shadow-md max-[700px]:w-full">
                         {image && b64.length ? <Image src={b64} alt={image.name} width={26} height={26} className="rounded aspect-square object-cover cursor-pointer duration-100 hover:opacity-80 active:opacity-70" onClick={() => setImageEnlargement(true)} /> : null}
-                        <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." defaultValue={image?.name ?? ""} readOnly={true} />
+                        <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." defaultValue={decodeURI(query)} readOnly={true} />
                         <Button classes="invisible">Search</Button>
                     </div>
                     {loading ? <div className="w-650 mx-auto select-none text-center font-medium text-slate-400/60 max-[700px]:w-full"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /><span className="pl-2">Generating Summary</span></div> : summary}
