@@ -20,7 +20,7 @@ export async function authenticate(token: string): Promise<any> {
 }
 
 export function createJWT(user: any) {
-	let now = new Date();
+	const now = new Date();
 	return {
 		token: jwt.sign(JSON.stringify(user), process.env.JWT_SECRET as string),
 		timestamp: now.getTime(),

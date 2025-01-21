@@ -5,15 +5,15 @@ import { updateSettings } from "@/data/users";
 import { authenticate } from "@/data/jwt";
 
 export async function PATCH(request: Request): Promise<NextResponse> {
-    let cookieJar = await cookies();
-    let token = cookieJar.get("token")?.value;
-    let currentSessionUser = await authenticate(token ?? "");
+    const cookieJar = await cookies();
+    const token = cookieJar.get("token")?.value;
+    const currentSessionUser = await authenticate(token ?? "");
 
     if (!currentSessionUser?.user_id) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
-    let data = await request.formData();
+    const data = await request.formData();
 
-    let success = await updateSettings(
+    const success = await updateSettings(
         currentSessionUser.user_id,
         data.get("theme")?.toString() ?? "",
         data.get("searchmodel")?.toString() ?? "",

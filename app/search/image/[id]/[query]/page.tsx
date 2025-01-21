@@ -12,21 +12,21 @@ import Result from "@/app/components/common/result";
 import Popup from "@/app/components/common/popup";
 
 export default function ImageSearch(e: any) {
-    let [id, setID] = useState<number>(0);
-    let [query, setQuery] = useState<string>("");
+    const [id, setID] = useState<number>(0);
+    const [query, setQuery] = useState<string>("");
 
-    let [summary, setSummary] = useState<React.JSX.Element|null>(null);
-    let [results, setResults] = useState<any[]>([]);
-    let [loading, setLoading] = useState<boolean>(true);
+    const [summary, setSummary] = useState<React.JSX.Element|null>(null);
+    const [results, setResults] = useState<any[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    let [image, setImage] = useState<File|null>(null);
-    let [b64, setB64] = useState<string>("");
+    const [image, setImage] = useState<File|null>(null);
+    const [b64, setB64] = useState<string>("");
 
-    let [imageIsEnlarged, setImageEnlargement] = useState<boolean>(false);
+    const [imageIsEnlarged, setImageEnlargement] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
-            let { id, query } = await e.params;
+            const { id, query } = await e.params;
 
             setID(parseInt(id?.trim() ?? "0"));
             setQuery(query?.trim() ?? "");
@@ -37,15 +37,15 @@ export default function ImageSearch(e: any) {
         if (!id) return;
 
         (async () => {
-            let response = await fetch(`/api/search/image/${id}`);
-            let buffer = await response.arrayBuffer();
+            const response = await fetch(`/api/search/image/${id}`);
+            const buffer = await response.arrayBuffer();
 
             if (!response.ok) return;
 
-            let filename = response.headers.get("Content-Disposition")?.split("filename=")[1].replace(/"/g, "") ?? "unknown";
+            const filename = response.headers.get("Content-Disposition")?.split("filename=")[1].replace(/"/g, "") ?? "unknown";
             setImage(new File([new Uint8Array(buffer)], filename, { type: response.headers.get("Content-Type") ?? "application/octet-stream" }));
 
-            let reader = new FileReader();
+            const reader = new FileReader();
 
             reader.addEventListener("load", () => setB64(reader.result as string));
             reader.readAsDataURL(new Blob([new Uint8Array(buffer)]));
@@ -56,19 +56,19 @@ export default function ImageSearch(e: any) {
         if (!image) return;
 
         (async () => {
-            let formData = new FormData();
+            const formData = new FormData();
 
             formData.append("file", image);
             formData.append("query", query);
 
-            let response = await fetch(`/api/search/image/${id}`, {
+            const response = await fetch(`/api/search/image/${id}`, {
                 method: "POST",
                 body: formData
             });
 
             if (!response.ok) return;
 
-            let data = await response.json();
+            const data = await response.json();
             setSummary(<motion.div className="w-650 rounded-xl px-4 py-3 bg-sky-50 text-sky-400 mx-auto relative max-[700px]:w-full max-[700px]:px-3" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} transition={{ duration: 1, ease: "easeInOut" }} style={{ overflow: "hidden", transformOrigin: "top center" }}>
                 <h2 className="block mb-2 text-sky-500 font-semibold select-none">Summary</h2>
                 <p className="text-sm leading-relaxed">{data.summary}</p>

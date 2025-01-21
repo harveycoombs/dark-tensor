@@ -15,29 +15,29 @@ interface Properties {
 }
 
 export default function ChatPopup({ model, onClose }: Properties) {
-    let [prompt, setPrompt] = useState<string>("");
-    let [messages, setMessages] = useState<any[]>([]);
-    let [conversationid, setConversationID] = useState<number>(0);
+    const [prompt, setPrompt] = useState<string>("");
+    const [messages, setMessages] = useState<any[]>([]);
+    const [conversationid, setConversationID] = useState<number>(0);
 
-    let [loading, setLoading] = useState<boolean>(false);
-    let [historyloading, setHistoryLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [historyloading, setHistoryLoading] = useState<boolean>(false);
 
-    let [conversationHistory, setConversationHistory] = useState<React.JSX.Element|null>(null);
-    let [conversationHistoryIsVisible, setConversationHistoryVisibility] = useState<boolean>(false);
+    const [conversationHistory, setConversationHistory] = useState<React.JSX.Element|null>(null);
+    const [conversationHistoryIsVisible, setConversationHistoryVisibility] = useState<boolean>(false);
 
-    let chatArea = useRef<HTMLDivElement>(null);
-    let promptField = useRef<HTMLInputElement>(null);
+    const chatArea = useRef<HTMLDivElement>(null);
+    const promptField = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (!loading) return;
 
         (async () => {
-            let response = await fetch("/api/chat", {
+            const response = await fetch("/api/chat", {
                 method: "POST",
                 body: new URLSearchParams({ messages: JSON.stringify(messages) })
             });
 
-            let data = await response.json();
+            const data = await response.json();
 
             if (!response.ok) return;
 
@@ -61,8 +61,8 @@ export default function ChatPopup({ model, onClose }: Properties) {
 
         (async () => {
             try {
-                let response = await fetch("/api/chat");
-                let json = await response.json();
+                const response = await fetch("/api/chat");
+                const json = await response.json();
 
                 setHistoryLoading(false);
 
@@ -89,12 +89,12 @@ export default function ChatPopup({ model, onClose }: Properties) {
     async function updateConversation() {
         setLoading(true);
 
-        let response = await fetch("/api/chat", {
+        const response = await fetch("/api/chat", {
             method: "PATCH",
             body: new URLSearchParams({ messages: JSON.stringify(messages), conversationid: conversationid.toString() })
         });
 
-        let data = await response.json();
+        const data = await response.json();
 
         if (!response.ok) return;
 

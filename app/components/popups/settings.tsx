@@ -13,7 +13,7 @@ interface Properties {
 }
 
 export default function SettingsPopup({ onClose }: Properties) {
-    let models = [
+    const models = [
         { value: "deepseek-v2:lite", label: "DeepSeek-V2-Lite (15.7B)" },
         { value: "llama3.1", label: "Llama 3.1 (8B)" },
         { value: "llama3.2:1b", label: "Llama 3.2 (1B)" },
@@ -21,56 +21,56 @@ export default function SettingsPopup({ onClose }: Properties) {
         { value: "qwq", label: "QwQ (32B)" }
     ];
 
-    let visionModels = [
+    const visionModels = [
         { value: "llama3.2-vision", label: "Llama 3.2 Vision (11B)" }
     ];
 
-    let themes = [
+    const themes = [
         { value: "light", label: "Light" },
         { value: "dark", label: "Dark" },
         { value: "system", label: "System" }
     ];
     
-    let styles = [
+    const styles = [
         { value: "verbose", label: "Verbose" },
         { value: "concise", label: "Concise" },
         { value: "balanced", label: "Balanced" }
     ];
 
-    let genders = [
+    const genders = [
         { value: "m", label: "Male" },
         { value: "f", label: "Female" },
         { value: "", label: "Prefer not to say" }
     ];
 
-    let [user, setUser] = useState<any>();
-    let [settings, setSettings] = useState<any>();
+    const [user, setUser] = useState<any>();
+    const [settings, setSettings] = useState<any>();
 
-    let [currentSection, setCurrentSection] = useState<string>();
-    let [sectionTitle, setSectionTitle] = useState<string>();
-    let [sectionContent, setSectionContent] = useState<React.JSX.Element>();
+    const [currentSection, setCurrentSection] = useState<string>();
+    const [sectionTitle, setSectionTitle] = useState<string>();
+    const [sectionContent, setSectionContent] = useState<React.JSX.Element>();
 
-    let firstNameField = useRef<HTMLInputElement>(null);
-    let lastNameField = useRef<HTMLInputElement>(null);
-    let locationField = useRef<HTMLInputElement>(null);
-    let birthDateField = useRef<HTMLInputElement>(null);
-    let genderField = useRef<HTMLSelectElement>(null);
-    let occupationField = useRef<HTMLInputElement>(null);
-    let emailField = useRef<HTMLInputElement>(null);
+    const firstNameField = useRef<HTMLInputElement>(null);
+    const lastNameField = useRef<HTMLInputElement>(null);
+    const locationField = useRef<HTMLInputElement>(null);
+    const birthDateField = useRef<HTMLInputElement>(null);
+    const genderField = useRef<HTMLSelectElement>(null);
+    const occupationField = useRef<HTMLInputElement>(null);
+    const emailField = useRef<HTMLInputElement>(null);
 
-    let searchModelField = useRef<HTMLSelectElement>(null);
-    let chatModelField = useRef<HTMLSelectElement>(null);
-    let visionModelField = useRef<HTMLSelectElement>(null);
-    let themeField = useRef<HTMLSelectElement>(null);
-    let chatStyleField = useRef<HTMLSelectElement>(null);
-    let summaryStyleField = useRef<HTMLSelectElement>(null);
+    const searchModelField = useRef<HTMLSelectElement>(null);
+    const chatModelField = useRef<HTMLSelectElement>(null);
+    const visionModelField = useRef<HTMLSelectElement>(null);
+    const themeField = useRef<HTMLSelectElement>(null);
+    const chatStyleField = useRef<HTMLSelectElement>(null);
+    const summaryStyleField = useRef<HTMLSelectElement>(null);
 
-    let [saveButton, setSaveButton] = useState<React.JSX.Element>(<Button onClick={updateUserSettings}>Save Changes</Button>);
+    const [saveButton, setSaveButton] = useState<React.JSX.Element>(<Button onClick={updateUserSettings}>Save Changes</Button>);
 
     useEffect(() => {
         (async () => {
-            let response = await fetch("/api/users");
-            let json = await response.json();
+            const response = await fetch("/api/users");
+            const json = await response.json();
             
             setUser(json.details);
             setSettings(json.settings);
@@ -92,7 +92,7 @@ export default function SettingsPopup({ onClose }: Properties) {
 
         setSaveButton(<Button disabled={true}>Saving</Button>);
 
-        let details = new URLSearchParams({
+        const details = new URLSearchParams({
             firstname: firstNameField.current.value,
             lastname: lastNameField.current.value,
             location: locationField.current.value,
@@ -102,12 +102,12 @@ export default function SettingsPopup({ onClose }: Properties) {
             occupation: occupationField.current.value
         });
 
-        let response = await fetch("/api/users", {
+        const response = await fetch("/api/users", {
             method: "PATCH",
             body: details
         });
 
-        let json = await response.json();
+        const json = await response.json();
 
         if (!response.ok) {
             setSaveButton(<Button color="red">{json.error}</Button>);
@@ -133,7 +133,7 @@ export default function SettingsPopup({ onClose }: Properties) {
 
         setSaveButton(<Button disabled={true}>Saving</Button>);
 
-        let settings = new URLSearchParams({
+        const settings = new URLSearchParams({
             searchmodel: searchModelField.current.value,
             chatmodel: chatModelField.current.value,
             visionmodel: visionModelField.current.value,
@@ -142,12 +142,12 @@ export default function SettingsPopup({ onClose }: Properties) {
             summarystyle: summaryStyleField.current.value
         });
 
-        let response = await fetch("/api/users/settings", {
+        const response = await fetch("/api/users/settings", {
             method: "PATCH",
             body: settings
         });
 
-        let json = await response.json();
+        const json = await response.json();
 
         if (!response.ok) {
             setSaveButton(<Button color="red">{json.error}</Button>);
@@ -162,7 +162,7 @@ export default function SettingsPopup({ onClose }: Properties) {
     }
 
     async function logout() {
-        let response = await fetch("/api/users/sessions", { method: "DELETE" });
+        const response = await fetch("/api/users/sessions", { method: "DELETE" });
         if (!response.ok) return;
     
         window.location.reload();

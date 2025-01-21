@@ -11,13 +11,13 @@ import Button from "@/app/components/common/button";
 import Tile from "@/app/components/common/tile";
 
 export default function Home() {
-    let searchField = useRef<HTMLInputElement>(null);
-    let searchButton = useRef<HTMLButtonElement>(null);
-    let imageUploader = useRef<HTMLInputElement>(null);
+    const searchField = useRef<HTMLInputElement>(null);
+    const searchButton = useRef<HTMLButtonElement>(null);
+    const imageUploader = useRef<HTMLInputElement>(null);
 
-    let [recentSearchesAreVisible, setRecentSearchesVisibility] = useState<boolean>(false);
-    let [recentSearchesArea, setRecentSearchesArea] = useState<React.JSX.Element|null>(null);
-    let [image, setImage] = useState<File|null>(null);
+    const [recentSearchesAreVisible, setRecentSearchesVisibility] = useState<boolean>(false);
+    const [recentSearchesArea, setRecentSearchesArea] = useState<React.JSX.Element|null>(null);
+    const [image, setImage] = useState<File|null>(null);
 
     useEffect(() => {
         if (!recentSearchesAreVisible) {
@@ -28,7 +28,7 @@ export default function Home() {
         setRecentSearchesArea(<div className="text-sm font-medium text-slate-400/60"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /> Loading</div>);
 
         (async () => {
-            let response = await fetch("/api/users/searches");
+            const response = await fetch("/api/users/searches");
 
             if (response.status == 401) {
                 setRecentSearchesArea(<div className="text-sm font-medium text-slate-400/60">You are not signed in. <Link href="/login" className="hover:underline">Click here</Link> to sign in and view your recent searches</div>);
@@ -39,7 +39,7 @@ export default function Home() {
 
             if (!response.ok) return;
 
-            let json = await response.json();
+            const json = await response.json();
             
             if (!json.searches.length) {
                 setRecentSearchesArea(<div className="text-sm font-medium text-slate-400/60">You have no recent searches</div>);
@@ -71,7 +71,7 @@ export default function Home() {
     function search() {
         if (!searchField?.current?.value?.length) return;
 
-        let query = searchField.current.value;
+        const query = searchField.current.value;
 
         if (image) {
             imageSearch(query);
@@ -84,15 +84,15 @@ export default function Home() {
     async function imageSearch(query: string) {
         if (!image) return;
 
-        let data = new FormData();
+        const data = new FormData();
         data.append("file", image);
 
-        let response = await fetch("/api/search/image", {
+        const response = await fetch("/api/search/image", {
             method: "POST",
             body: data
         });
         
-        let json = await response.json();
+        const json = await response.json();
 
         if (!response.ok) {
             alert(json.error);

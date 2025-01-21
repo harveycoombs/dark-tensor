@@ -5,31 +5,31 @@ import { getUserByEmailAddress, verifyCredentials } from "@/data/users";
 import { createJWT, authenticate } from "@/data/jwt";
 
 export async function GET(): Promise<NextResponse> {
-    let cookieJar = await cookies();
-    let token = cookieJar.get("token")?.value;
-    let user = await authenticate(token ?? "");
+    const cookieJar = await cookies();
+    const token = cookieJar.get("token")?.value;
+    const user = await authenticate(token ?? "");
 
     return NextResponse.json({ user }, { status: 200 });
 }
 
 export async function POST(request: Request): Promise<NextResponse> {
-    let data = await request.formData();
+    const data = await request.formData();
 
-    let email = data.get("email")?.toString();
-    let password = data.get("password")?.toString();
+    const email = data.get("email")?.toString();
+    const password = data.get("password")?.toString();
 
     if (!email?.length) return NextResponse.json({ error: "Email address was not provided." }, { status: 400 });
     if (!password?.length) return NextResponse.json({ error: "Password was not provided." }, { status: 400 });
 
-    let valid = await verifyCredentials(email, password);
+    const valid = await verifyCredentials(email, password);
     if (!valid) return NextResponse.json({ error: "Invalid credentials." }, { status: 400 });
 
-    let user = await getUserByEmailAddress(email);
+    const user = await getUserByEmailAddress(email);
     if (!user) return NextResponse.json({ success: false }, { status: 500 });
 
-    let credentials = createJWT(user);
+    const credentials = createJWT(user);
 
-    let response = NextResponse.json({ success: true }, { status: 200 });
+    const response = NextResponse.json({ success: true }, { status: 200 });
 
     response.cookies.set("token", credentials.token, {
         httpOnly: true,
@@ -41,7 +41,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 }
 
 export async function DELETE(): Promise<NextResponse> {
-    let response = NextResponse.json({ success: true }, { status: 200 });
+    const response = NextResponse.json({ success: true }, { status: 200 });
     response.cookies.delete("token");
 
     return response;

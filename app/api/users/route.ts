@@ -5,42 +5,42 @@ import { emailExists, createUser, updateUser, getUserByID, getUserDetails, getUs
 import { createJWT, authenticate } from "@/data/jwt";
 
 export async function GET(): Promise<NextResponse> {
-    let cookieJar = await cookies();
-    let token = cookieJar.get("token")?.value;
-    let currentSessionUser = await authenticate(token ?? "");
+    const cookieJar = await cookies();
+    const token = cookieJar.get("token")?.value;
+    const currentSessionUser = await authenticate(token ?? "");
 
     if (!currentSessionUser?.user_id) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
-    let details = await getUserDetails(currentSessionUser.user_id);
-    let settings = await getUserSettings(currentSessionUser.user_id);
+    const details = await getUserDetails(currentSessionUser.user_id);
+    const settings = await getUserSettings(currentSessionUser.user_id);
 
     return NextResponse.json({ details, settings }, { status: 200 });
 }
 
 export async function POST(request: Request): Promise<NextResponse> {
-    let data = await request.formData();
+    const data = await request.formData();
 
-    let email = data.get("email")?.toString();
-    let password = data.get("password")?.toString();
-    let firstName = data.get("firstname")?.toString();
-    let lastName = data.get("lastname")?.toString();
-    let birthdate = data.get("birthdate")?.toString();
+    const email = data.get("email")?.toString();
+    const password = data.get("password")?.toString();
+    const firstName = data.get("firstname")?.toString();
+    const lastName = data.get("lastname")?.toString();
+    const birthdate = data.get("birthdate")?.toString();
 
     if (!email?.length || !password?.length || !firstName?.length || !lastName?.length || !birthdate?.length) {
         return NextResponse.json({ error: "One or more fields were not provided." }, { status: 400 });
     }
 
-    let emailAlreadyExists = await emailExists(email);
+    const emailAlreadyExists = await emailExists(email);
     if (emailAlreadyExists) return NextResponse.json({ error: "Provided email address already exists." }, { status: 409 });
 
-    let userid = await createUser(email, password, firstName, lastName, birthdate);
+    const userid = await createUser(email, password, firstName, lastName, birthdate);
 
     if (!userid) return NextResponse.json({ error: "Unable to create user." }, { status: 500 });
 
-    let user = await getUserByID(userid);
-    let credentials = createJWT(user);
+    const user = await getUserByID(userid);
+    const credentials = createJWT(user);
 
-    let response = NextResponse.json({ success: true }, { status: 200 });
+    const response = NextResponse.json({ success: true }, { status: 200 });
 
     response.cookies.set("token", credentials.token, {
         httpOnly: true,
@@ -52,15 +52,15 @@ export async function POST(request: Request): Promise<NextResponse> {
 }
 
 export async function PATCH(request: Request): Promise<NextResponse> {
-    let cookieJar = await cookies();
-    let token = cookieJar.get("token")?.value;
-    let currentSessionUser = await authenticate(token ?? "");
+    const cookieJar = await cookies();
+    const token = cookieJar.get("token")?.value;
+    const currentSessionUser = await authenticate(token ?? "");
 
     if (!currentSessionUser?.user_id) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
-    let data = await request.formData();
+    const data = await request.formData();
 
-    let success = await updateUser(
+    const success = await updateUser(
         currentSessionUser.user_id,
         data.get("firstname")?.toString() ?? "",
         data.get("lastname")?.toString() ?? "",
@@ -75,12 +75,12 @@ export async function PATCH(request: Request): Promise<NextResponse> {
 }
 
 export async function DELETE(request: Request): Promise<NextResponse> {
-    let data = await request.formData();
-    let userid = parseInt(data.get("userid")?.toString() ?? "0");
+    const data = await request.formData();
+    const userid = parseInt(data.get("userid")?.toString() ?? "0");
 
-    let success = await deleteUser(userid);
+    const success = await deleteUser(userid);
 
-    let response = NextResponse.json({ success }, { status: 200 });
+    const response = NextResponse.json({ success }, { status: 200 });
     response.cookies.delete("token");
 
     return response;

@@ -16,7 +16,7 @@ interface VisionModelOptions {
 export async function generate({ model, prompt }: ModelOptions): Promise<string|null> {
     if (!model?.length || !prompt?.length) return null;
 
-    let response = await ollama.chat({
+    const response = await ollama.chat({
         model: model,
         messages: [{ role: "user", content: prompt.trim() }]
     });
@@ -27,10 +27,10 @@ export async function generate({ model, prompt }: ModelOptions): Promise<string|
 export async function generateFromContext({ model, messages, style }: ModelOptions): Promise<string|null> {
     if (!model?.length || !messages?.length) return null;
 
-    let responseStyle = (style == "balanced") ? "" : `${style}ly`;
-    let responseLength = (style == "concise") ? 20 : (style == "verbose") ? 60 : 40;
+    const responseStyle = (style == "balanced") ? "" : `${style}ly`;
+    const responseLength = (style == "concise") ? 20 : (style == "verbose") ? 60 : 40;
 
-    let response = await ollama.chat({
+    const response = await ollama.chat({
         model: model,
         messages: messages.map(message => ({ role: message.you ? "user" : "assistant", content: `Respond ${responseStyle} to the following message: ${message.content.trim()}, in ${responseLength} words or less. Do not hallucinate or speak in any other language than English.` }))
     });
@@ -41,9 +41,9 @@ export async function generateFromContext({ model, messages, style }: ModelOptio
 export async function generateFromImage({ model, image, prompt }: VisionModelOptions): Promise<string|null> {
     if (!model?.length || !image || !(image instanceof File)) return null;
 
-    let buffer = await image.arrayBuffer();
+    const buffer = await image.arrayBuffer();
 
-    let response = await ollama.chat({
+    const response = await ollama.chat({
         model: model,
         messages: [{ role: "user", content: prompt ?? `Analyze the attached image: ${image.name}`, images: [new Uint8Array(buffer)] }]
     });

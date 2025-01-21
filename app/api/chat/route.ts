@@ -7,39 +7,39 @@ import { getConversationHistory, recordConversation, updateConversation } from "
 import { authenticate } from "@/data/jwt";
 
 export async function GET(): Promise<NextResponse> {
-    let cookieJar = await cookies();
-    let token = cookieJar.get("token")?.value;
-    let currentSessionUser = await authenticate(token ?? "");
+    const cookieJar = await cookies();
+    const token = cookieJar.get("token")?.value;
+    const currentSessionUser = await authenticate(token ?? "");
 
     if (!currentSessionUser) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
-    let history = await getConversationHistory(currentSessionUser.user_id);
+    const history = await getConversationHistory(currentSessionUser.user_id);
     return NextResponse.json({ history }, { status: 200 });
 }
 
 export async function POST(request: Request): Promise<NextResponse> {
-    let data = await request.formData();
+    const data = await request.formData();
 
-    let messages = JSON.parse(data.get("messages")?.toString() ?? "[]");
+    const messages = JSON.parse(data.get("messages")?.toString() ?? "[]");
 
     if (!messages?.length) return NextResponse.json({ error: "Invalid messages." }, { status: 400 });
 
-    let cookieJar = await cookies();
-    let token = cookieJar.get("token")?.value;
-    let currentSessionUser = await authenticate(token ?? "");
+    const cookieJar = await cookies();
+    const token = cookieJar.get("token")?.value;
+    const currentSessionUser = await authenticate(token ?? "");
 
     if (!currentSessionUser) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
     try {
-        let beginning = new Date().getTime();
+        const beginning = new Date().getTime();
 
-        let text = await generateFromContext({
+        const text = await generateFromContext({
             model: currentSessionUser.chat_model ?? "deepseek-v2:lite",
             messages: messages,
             style: currentSessionUser.chat_style ?? "balanced"
         }) ?? "";
 
-        let end = new Date().getTime();
+        const end = new Date().getTime();
 
         return NextResponse.json({ text, interval: (end - beginning) }, { status: 200 });
     } catch (ex: any) {
@@ -48,16 +48,16 @@ export async function POST(request: Request): Promise<NextResponse> {
 }
 
 export async function PATCH(request: Request): Promise<NextResponse> {
-    let data = await request.formData();
+    const data = await request.formData();
 
-    let messages = JSON.parse(data.get("messages")?.toString() ?? "[]");
+    const messages = JSON.parse(data.get("messages")?.toString() ?? "[]");
     let conversationid = parseInt(data.get("conversationid")?.toString() ?? "0");
 
     if (!messages?.length) return NextResponse.json({ error: "Invalid messages." }, { status: 400 });
 
-    let cookieJar = await cookies();
-    let token = cookieJar.get("token")?.value;
-    let currentSessionUser = await authenticate(token ?? "");
+    const cookieJar = await cookies();
+    const token = cookieJar.get("token")?.value;
+    const currentSessionUser = await authenticate(token ?? "");
 
     if (!currentSessionUser) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 

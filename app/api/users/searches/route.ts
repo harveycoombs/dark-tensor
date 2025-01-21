@@ -5,13 +5,13 @@ import { getSearchHistory } from "@/data/users";
 import { authenticate } from "@/data/jwt";
 
 export async function GET(): Promise<NextResponse> {
-    let cookieJar = await cookies();
-    let token = cookieJar.get("token")?.value;
-    let currentSessionUser = await authenticate(token ?? "");
+    const cookieJar = await cookies();
+    const token = cookieJar.get("token")?.value;
+    const currentSessionUser = await authenticate(token ?? "");
 
     if (!currentSessionUser) return NextResponse.json({ error: "Invalid session." }, { status: 401 });
 
-    let searches = await getSearchHistory(currentSessionUser.user_id, 4);
+    const searches = await getSearchHistory(currentSessionUser.user_id, 4);
 
     return NextResponse.json({ searches }, { status: 200 });
 }

@@ -12,18 +12,18 @@ import SettingsPopup from "@/app/components/popups/settings";
 import ChatPopup from "@/app/components/popups/chat";
 
 export default function Header() {
-    let [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<any>(null);
 
-    let [settingsPopupIsVisible, setSettingsPopupVisibility] = useState<boolean>(false);
-    let [chatPopupIsVisible, setChatPopupVisibility] = useState<boolean>(false);
+    const [settingsPopupIsVisible, setSettingsPopupVisibility] = useState<boolean>(false);
+    const [chatPopupIsVisible, setChatPopupVisibility] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
-            let response = await fetch("/api/users/sessions");
+            const response = await fetch("/api/users/sessions");
 
             if (!response.ok) return;
 
-            let data = await response.json();
+            const data = await response.json();
             setUser(data.user);
         })();
     }, []);

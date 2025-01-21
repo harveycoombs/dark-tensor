@@ -7,14 +7,14 @@ import Button from "@/app/components/common/button";
 import { Error, Warning } from "@/app/components/common/notices";
 
 export default function LoginForm() {
-    let [email, setEmail] = useState<string>("");
-    let [password, setPassword] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
 
-    let [errorExists, setErrorExistence] = useState<boolean>(false);
-    let [warningExists, setWarningExistence] = useState<boolean>(false);
-    let [loading, setLoading] = useState<boolean>(false);
+    const [errorExists, setErrorExistence] = useState<boolean>(false);
+    const [warningExists, setWarningExistence] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    let [feedback, setFeedback] = useState<React.JSX.Element|null>(null);
+    const [feedback, setFeedback] = useState<React.JSX.Element|null>(null);
 
     async function login(e: any) {
         e.preventDefault();
@@ -24,12 +24,12 @@ export default function LoginForm() {
         setLoading(true);
         setFeedback(null);
 
-        let response = await fetch("/api/users/sessions", {
+        const response = await fetch("/api/users/sessions", {
             method: "POST",
             body: new URLSearchParams({ email, password })
         });
 
-        let json = await response.json();
+        const json = await response.json();
 
         if (!response.ok || json.error) {
             setErrorExistence(response.status != 400);

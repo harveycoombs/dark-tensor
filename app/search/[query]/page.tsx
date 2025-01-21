@@ -11,14 +11,14 @@ import Result from "@/app/components/common/result";
 import { Error } from "@/app/components/common/notices";
 
 export default function Search(e: any) {
-    let [query, setQuery] = useState<string>("");
-    let [summary, setSummary] = useState<React.JSX.Element|null>(null);
-    let [results, setResults] = useState<any[]>([]);
-    let [loading, setLoading] = useState<boolean>(true);
+    const [query, setQuery] = useState<string>("");
+    const [summary, setSummary] = useState<React.JSX.Element|null>(null);
+    const [results, setResults] = useState<any[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         (async () => {
-            let { query } = await e.params;
+            const { query } = await e.params;
             setQuery(decodeURI(query).trim());
         })();
     }, []);
@@ -29,7 +29,7 @@ export default function Search(e: any) {
         setLoading(true);
 
         (async () => {
-            let response = await fetch(`/api/search?query=${query}`);
+            const response = await fetch(`/api/search?query=${query}`);
 
             setLoading(false);
 
@@ -38,8 +38,8 @@ export default function Search(e: any) {
                 return;
             }
 
-            let data = await response.json();
-            let formatted = formatSummary(data.summary);
+            const data = await response.json();
+            const formatted = formatSummary(data.summary);
 
             setSummary(<motion.div className="w-650 rounded-xl px-4 py-3 bg-sky-50 text-sky-400 mx-auto relative max-[700px]:w-full max-[700px]:px-3" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} transition={{ duration: 1, ease: "easeInOut" }} style={{ overflow: "hidden", transformOrigin: "top center" }}>
                 <h2 className="block mb-2 text-sky-500 font-semibold select-none">Summary</h2>
@@ -53,7 +53,7 @@ export default function Search(e: any) {
     }, [query]);
 
     async function insertSearchHistory() {
-        let response = await fetch("/api/search", {
+        const response = await fetch("/api/search", {
             method: "POST",
             body: new URLSearchParams({ query })
         });
@@ -64,13 +64,13 @@ export default function Search(e: any) {
     }
 
     function formatSummary(text: string): React.JSX.Element[] {
-        let formatted = [];
+        const formatted = [];
         
-        let parts = text.split(/```([^```]+)```/g);
+        const parts = text.split(/```([^```]+)```/g);
     
-        for (let i = 0; i < parts.length; i++) {
+        for (const i = 0; i < parts.length; i++) {
             if (i % 2 === 0) {
-                let lines = parts[i].split("\n").map((line, index) => <span key={`${i}-${index}`}>{line}<br/></span>);
+                const lines = parts[i].split("\n").map((line, index) => <span key={`${i}-${index}`}>{line}<br/></span>);
                 formatted.push(...lines);
                 continue;
             }

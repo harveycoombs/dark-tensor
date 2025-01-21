@@ -7,18 +7,18 @@ import Button from "@/app/components/common/button";
 import { Error, Warning } from "@/app/components/common/notices";
 
 export default function RegistrationForm() {
-    let [email, setEmail] = useState<string>("");
-    let [password, setPassword] = useState<string>("");
-    let [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
-    let [firstName, setFirstName] = useState<string>("");
-    let [lastName, setLastName] = useState<string>("");
-    let [birthDate, setBirthDate] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
+    const [firstName, setFirstName] = useState<string>("");
+    const [lastName, setLastName] = useState<string>("");
+    const [birthDate, setBirthDate] = useState<string>("");
 
-    let [errorExists, setErrorExistence] = useState<boolean>(false);
-    let [warningExists, setWarningExistence] = useState<boolean>(false);
-    let [loading, setLoading] = useState<boolean>(false);
+    const [errorExists, setErrorExistence] = useState<boolean>(false);
+    const [warningExists, setWarningExistence] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    let [feedback, setFeedback] = useState<React.JSX.Element|null>(null);
+    const [feedback, setFeedback] = useState<React.JSX.Element|null>(null);
 
 
     async function register(e: any) {
@@ -34,7 +34,7 @@ export default function RegistrationForm() {
             return;
         }
 
-        let response = await fetch("/api/users", {
+        const response = await fetch("/api/users", {
             method: "POST",
             body: new URLSearchParams({
                 firstname: firstName,
@@ -45,7 +45,7 @@ export default function RegistrationForm() {
             })
         });
 
-        let json = await response.json();
+        const json = await response.json();
 
         if (!response.ok || json.error) {
             setErrorExistence(response.status != 400);
