@@ -64,11 +64,11 @@ export default function Search(e: any) {
     }
 
     function formatSummary(text: string): React.JSX.Element[] {
-        const formatted = [];
+        let formatted = [];
         
         const parts = text.split(/```([^```]+)```/g);
     
-        for (const i = 0; i < parts.length; i++) {
+        for (let i = 0; i < parts.length; i++) {
             if (i % 2 === 0) {
                 const lines = parts[i].split("\n").map((line, index) => <span key={`${i}-${index}`}>{line}<br/></span>);
                 formatted.push(...lines);
