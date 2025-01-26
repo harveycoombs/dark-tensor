@@ -18,7 +18,8 @@ export default function SettingsPopup({ onClose }: Properties) {
         { value: "llama3.1", label: "Llama 3.1 (8B)" },
         { value: "llama3.2:1b", label: "Llama 3.2 (1B)" },
         { value: "llama3.2:3b", label: "Llama 3.2 (3B)" },
-        { value: "qwq", label: "QwQ (32B)" }
+        { value: "qwq", label: "QwQ (32B)" },
+        { value: "mistral", label: "Mistral (7B)" }
     ];
 
     const visionModels = [
