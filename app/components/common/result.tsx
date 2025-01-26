@@ -4,9 +4,11 @@ import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 
 interface Properties {
     data: any;
+    framed?: boolean;
+    [key: string]: any;
 }
 
-export default function SearchResult({ data }: Properties) {
+export default function SearchResult({ data, framed, ...rest }: Properties) {
     return (
         <Link href={data.url} className="block p-3 bg-slate-50 text-slate-500 rounded-xl mt-2.5 duration-100 hover:bg-slate-100">
             <div className="flex items-center gap-2">
