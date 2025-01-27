@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import { generate } from "@/data/model";
+import { generate, parseHTML } from "@/data/model";
 import { insertSearchHistory } from "@/data/users";
 import { authenticate } from "@/data/jwt";
 
@@ -19,20 +19,25 @@ export async function GET(request: Request): Promise<NextResponse> {
     const currentSessionUser = await authenticate(token ?? "");
 
     try {
-        const response = await fetch (`https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${process.env.GOOGLE_API_KEY}&cx=${process.env.GOOGLE_SEARCH_ENGINE_ID}`);
+        const response = await fetch(`https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${process.env.GOOGLE_API_KEY}&cx=${process.env.GOOGLE_SEARCH_ENGINE_ID}`);
         const json = await response.json();
 
         const style = (currentSessionUser.search_style == "balanced") ? "" : currentSessionUser.search_style;
         const resultSummaryLength = (currentSessionUser.search_style == "concise") ? 20 : (currentSessionUser.search_style == "verbose") ? 60 : 40;
         const overallSummaryLength = (currentSessionUser.search_style == "concise") ? 100 : (currentSessionUser.search_style == "verbose") ? 300 : 200;
 
-        const results = await Promise.all(json.items.map(async (result: any) => {
+        const results = await Promise.allSettled(json.items.map(async (result: any) => {
+            /*const response = await fetch(result.link);
+            const html = await response.text();
+
+            const parsed = response.ok ? parseHTML(html) : result.snippet;*/
+
             const summary = await generate({
                 model: currentSessionUser?.search_model ?? "deepseek-v2:lite",
                 prompt: `Generate a ${style} summary of the following website in ${resultSummaryLength} words or less:
                 Title: '${result.title}'
                 Link: '${result.link}'
-                Snippet: '${result.snippet}'.
+                Content: '${result.snippet}'
                 Make sure you do not prefix or suffix the summary with anything. I just want the summary. Do not hallucinate or speak in any other language than English. You must not exceed the length provided, under any circumstance.`
             });
             
