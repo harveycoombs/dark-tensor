@@ -7,6 +7,7 @@ import Popup from "@/app/components/common/popup";
 import Button from "@/app/components/common/button";
 import Menu from "@/app/components/common/menu";
 import Field from "@/app/components/common/field";
+import Switch from "@/app/components/common/switch";
 
 interface Properties {
     onClose: () => void;
@@ -200,6 +201,7 @@ export default function SettingsPopup({ onClose }: Properties) {
                     <FieldContainer title="Response Style (Search)"><Menu type="select" choices={styles} classes="w-full" defaultValue={settings.summary_style} ref={summaryStyleField} /></FieldContainer>
                     <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" defaultValue={settings.chat_style} ref={chatStyleField} /></FieldContainer>
                     <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" defaultValue={settings.theme} ref={themeField} /></FieldContainer>
+                    <FieldContainer title="Open Search Results in New Tab"><Switch checked={settings.new_tab} /></FieldContainer>
                 </div>);
                 setSaveButton(<Button onClick={updateUserSettings}>Save Changes</Button>);
                 break;
