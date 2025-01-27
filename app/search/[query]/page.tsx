@@ -100,7 +100,7 @@ export default function Search(e: any) {
                         {(loading || results.length) ? null : <h1 className="text-lg font-semibold select-none">Results</h1>}
                         {results.map((result: any, index: number) => (
                             <motion.div key={index} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }}>
-                                <Result data={result} framed={true} onClick={() => setOpenPage(result.url)} />
+                                <Result data={result} />
                             </motion.div>
                         ))}
                     </div>
