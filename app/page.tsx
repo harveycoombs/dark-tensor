@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch, faCamera, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch, faCamera, faTrashAlt, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "@/app/components/header";
 import Logo from "@/app/components/common/logo";
@@ -129,22 +129,36 @@ export default function Home() {
             <main className="min-h-[calc(100vh-111px)] grid place-items-center">
                 <motion.div className="w-650 mx-auto max-[700px]:w-full max-[700px]:px-3" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeOut" }}>
                     <div className="w-fit mx-auto" title="Collate AI"><Logo width={300} height={68} /></div>
+
                     <h2 className="text-lg text-slate-400/60 font-medium my-4 text-center">Find &amp; summarise anything on the web with AI</h2>
+
                     <div className="flex items-center gap-5 mt-12">
                         <div className="py-2 pl-3.5 pr-2 rounded-xl border border-slate-300 flex items-center duration-100 justify-between gap-2 w-full has-[input:focus]:border-sky-500 has-[input:focus]:shadow-md" onKeyUp={(e: any) => (e.key == "Enter") && search()}>
                             <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} onInput={updateButtonAvailability} />
                             <Button ref={searchButton} classes="shrink-0" disabled>{image ? "Image " : ""}Search</Button>
                         </div>
+
                         <div className="relative">
                             <SearchOption icon={faCamera} title="Search with Image" selected={image} classes={image ? "pointer-events-none cursor-default" : ""} onClick={() => imageUploader?.current?.click()} />
                             {image && <div className="absolute bottom-[-4px] right-[-4px] aspect-square p-0.5 text-[10px] leading-none rounded-sm text-white bg-red-500 cursor-pointer duration-100" title="Delete Image" onClick={deleteUpload}><FontAwesomeIcon icon={faTrashAlt} /></div>}
                         </div>
+
                         <SearchOption icon={faClockRotateLeft} selected={recentSearchesAreVisible} onClick={() => setRecentSearchesVisibility(!recentSearchesAreVisible)} title="Show Recent Searches" />
                         <SearchOption icon={faSliders} title="Show Filters" />
                     </div>
-                    {recentSearchesAreVisible && <div className="mt-12"><h3 className="font-medium text-slate-400 mb-2">Recent Searches</h3>{recentSearchesArea}</div>}
+
+                    {recentSearchesAreVisible && <div className="mt-12">
+                        <div className="flex items-center justify-between mb-2">
+                            <h3 className="font-medium text-slate-400">Recent Searches</h3>
+                            <SearchOption icon={faArrowRight} small={true} title="View All Searches" />
+                        </div>
+
+                        {recentSearchesArea}
+                    </div>}
+
                     <div className="mt-12">
                         <h3 className="font-medium text-slate-400 mb-2">Suggestions</h3>
+
                         <div className="grid grid-cols-4 gap-4 max-[700px]:grid-cols-2 max-[700px]:gap-2">
                             <Tile icon={faNewspaper} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>What&apos;s going on in the news today?</Tile>
                             <Tile icon={faCode} onClick={(e: any) => performSuggestedSearch(e.target.innerText)}>How do I generate bcrypt hashes in Python?</Tile>
@@ -159,6 +173,6 @@ export default function Home() {
     );
 }
 
-function SearchOption({ icon, selected, classes, ...rest }: any) {
-    return <div className={`text-xl leading-none ${selected ? "text-slate-400" : "text-slate-400/60"} cursor-pointer duration-100${classes?.length ? " " + classes : ""} hover:text-slate-400/80 active:text-slate-400`} {...rest}><FontAwesomeIcon icon={icon} /></div>;
+function SearchOption({ icon, selected, classes, small, ...rest }: any) {
+    return <div className={`${small ? "text-lg" : "text-xl"} leading-none ${selected ? "text-slate-400" : "text-slate-400/60"} cursor-pointer duration-100${classes?.length ? " " + classes : ""} hover:text-slate-400/80 active:text-slate-400`} {...rest}><FontAwesomeIcon icon={icon} /></div>;
 }
