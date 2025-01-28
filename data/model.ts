@@ -50,7 +50,3 @@ export async function generateFromImage({ model, image, prompt }: VisionModelOpt
 
     return response?.message?.content;
 }
-
-export function parseHTML(html: string): string {
-    return ""; // to-do
-}
