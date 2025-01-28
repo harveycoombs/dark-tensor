@@ -16,8 +16,6 @@ export default function Search(e: any) {
     const [results, setResults] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const [openPage, setOpenPage] = useState<string>("");
-
     useEffect(() => {
         (async () => {
             const { query } = await e.params;
@@ -86,8 +84,8 @@ export default function Search(e: any) {
     return (
         <>
             <Header />
-            <main className={`min-h-[calc(100vh-111px)] ${openPage.length ? "" : "grid place-items-center"}`}>
-                {openPage.length ? <iframe src={openPage} className="w-full h-full border-0" /> : <section className="py-6 w-full max-[700px]:px-3">
+            <main className="min-h-[calc(100vh-111px)] grid place-items-center">
+                <section className="py-6 w-full max-[700px]:px-3">
                     <div className="w-650 mx-auto mb-3 max-[700px]:w-full">
                         <Link href="/" className="group text-sm duration-100 font-medium hover:text-slate-500/75"><FontAwesomeIcon icon={faArrowLeft} className="pr-1 duration-100 group-hover:pr-2" />Back to Search</Link>
                     </div>
@@ -104,7 +102,7 @@ export default function Search(e: any) {
                             </motion.div>
                         ))}
                     </div>
-                </section>}
+                </section>
             </main>
         </>
     );

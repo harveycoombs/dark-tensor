@@ -26,12 +26,7 @@ export async function GET(request: Request): Promise<NextResponse> {
         const resultSummaryLength = (currentSessionUser.search_style == "concise") ? 20 : (currentSessionUser.search_style == "verbose") ? 60 : 40;
         const overallSummaryLength = (currentSessionUser.search_style == "concise") ? 100 : (currentSessionUser.search_style == "verbose") ? 300 : 200;
 
-        const results = await Promise.allSettled(json.items.map(async (result: any) => {
-            /*const response = await fetch(result.link);
-            const html = await response.text();
-
-            const parsed = response.ok ? parseHTML(html) : result.snippet;*/
-
+        const results = await Promise.all(json.items.map(async (result: any) => {
             const summary = await generate({
                 model: currentSessionUser?.search_model ?? "deepseek-v2:lite",
                 prompt: `Generate a ${style} summary of the following website in ${resultSummaryLength} words or less:
@@ -40,7 +35,7 @@ export async function GET(request: Request): Promise<NextResponse> {
                 Content: '${result.snippet}'
                 Make sure you do not prefix or suffix the summary with anything. I just want the summary. Do not hallucinate or speak in any other language than English. You must not exceed the length provided, under any circumstance.`
             });
-            
+
             return { title: result.title, url: result.link, icon: `https://www.google.com/s2/favicons?domain=${new URL(result.link).hostname}`, summary };
         }));
 

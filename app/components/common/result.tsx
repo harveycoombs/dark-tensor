@@ -8,6 +8,8 @@ interface Properties {
 }
 
 export default function SearchResult({ data, ...rest }: Properties) {
+    if (!data.url) return null;
+
     return (
         <Link href={data.url} className="block p-3 bg-slate-50 text-slate-500 rounded-xl mt-2.5 duration-100 hover:bg-slate-100" target="_blank" rel="noopener" {...rest}>
             <div className="flex items-center gap-2">
