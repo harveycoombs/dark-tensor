@@ -24,7 +24,7 @@ export default function Privacy() {
 
                 <p> Usage Data: We automatically collect data about how you interact with our service, including IP addresses, device types, browser types, language preferences, and the time you spend using the service.</p>
 
-                <p>Cookies and Tracking Technologies: We use cookies, web beacons, and similar technologies to enhance your experience, track usage patterns, and remember your preferences. You can adjust your browser settings to block or delete cookies, but this may impact certain features of the service.</p>
+                <p>Cookies and Tracking Technologies: We use cookies and similar technologies to enhance your experience and remember your preferences. You can adjust your browser settings to block or delete cookies, but this may impact certain features of the service.</p>
 
                 <p>c. Data from Third Parties: We may receive data from third-party partners, such as advertisers or analytics services, to improve the relevance of search results and understand usage trends.</p>
 
