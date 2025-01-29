@@ -66,6 +66,7 @@ export default function SettingsPopup({ onClose }: Properties) {
     const themeField = useRef<HTMLSelectElement>(null);
     const chatStyleField = useRef<HTMLSelectElement>(null);
     const summaryStyleField = useRef<HTMLSelectElement>(null);
+    const newTabField = useRef<HTMLInputElement>(null);
 
     const [saveButton, setSaveButton] = useState<React.JSX.Element>(<Button onClick={updateUserSettings}>Save Changes</Button>);
 
@@ -130,7 +131,8 @@ export default function SettingsPopup({ onClose }: Properties) {
             !visionModelField.current ||
             !themeField.current ||
             !chatStyleField.current ||
-            !summaryStyleField.current
+            !summaryStyleField.current ||
+            !newTabField.current
         ) return;
 
         setSaveButton(<Button disabled={true}>Saving</Button>);
@@ -141,7 +143,8 @@ export default function SettingsPopup({ onClose }: Properties) {
             visionmodel: visionModelField.current.value,
             theme: themeField.current.value,
             chatstyle: chatStyleField.current.value,
-            summarystyle: summaryStyleField.current.value
+            summarystyle: summaryStyleField.current.value,
+            newtab: newTabField.current.checked ? "true" : "false"
         });
 
         const response = await fetch("/api/users/settings", {
@@ -201,7 +204,7 @@ export default function SettingsPopup({ onClose }: Properties) {
                     <FieldContainer title="Response Style (Search)"><Menu type="select" choices={styles} classes="w-full" defaultValue={settings.summary_style} ref={summaryStyleField} /></FieldContainer>
                     <FieldContainer title="Response Style (Chat)"><Menu choices={styles} classes="w-full" defaultValue={settings.chat_style} ref={chatStyleField} /></FieldContainer>
                     <FieldContainer title="Theme"><Menu choices={themes} classes="w-full" defaultValue={settings.theme} ref={themeField} /></FieldContainer>
-                    <FieldContainer title="Open Search Results in New Tab"><Switch checked={settings.new_tab} /></FieldContainer>
+                    <FieldContainer title="Open Search Results in New Tab"><Switch checked={settings.new_tab} reference={newTabField} /></FieldContainer>
                 </div>);
                 setSaveButton(<Button onClick={updateUserSettings}>Save Changes</Button>);
                 break;
