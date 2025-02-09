@@ -32,8 +32,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         title: "Collate AI",
-        description: description,
-        creator: "@harveycoombs23"
+        description: description
     }
 };
 
