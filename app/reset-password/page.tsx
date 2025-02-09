@@ -11,7 +11,7 @@ export default function ResetPassword() {
                 <strong className="block text-sm font-medium select-none text-slate-400/60">Reset Password</strong>
                 <PasswordResetForm />
                 <div className="text-[0.825rem] font-medium text-slate-400 mt-3 text-center select-none">
-                    <Link href="mailto:issues@collate.run" className="hover:underline">Report An Issue</Link>
+                    <Link href="mailto:issues@collate.harveycoombs.com" className="hover:underline">Report An Issue</Link>
                 </div>
             </section>
         </main>

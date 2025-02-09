@@ -77,7 +77,7 @@ export default function Privacy() {
                 <h2 className="text-xl font-semibold text-slate-600 mt-4 mb-1">10. Contact Us</h2>
                 <p>If you have any questions or concerns about this Privacy Policy or how we handle your data, please contact us at:</p>
 
-                <Link href="mailto:contact@collate.run">contact@collate.run</Link>
+                <Link href="mailto:contact@collate.harveycoombs.com">contact@collate.harveycoombs.com</Link>
 
             </PageSection>
         </InternalPage>

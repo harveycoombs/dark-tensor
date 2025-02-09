@@ -3,4 +3,4 @@ Disallow: /api/
 Disallow: /admin/
 Allow: /
 
-Sitemap: https://collate.run/sitemap.xml
+Sitemap: https://collate.harveycoombs.com/sitemap.xml

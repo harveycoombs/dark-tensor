@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Collate AI",
         description: description,
-        url: "https://collate.run",
+        url: "https://collate.harveycoombs.com",
         images: [{
-            url: "https://collate.run/images/splash.jpg",
+            url: "https://collate.harveycoombs.com/images/splash.jpg",
             width: 1200,
             height: 630,
             alt: "Collate AI splash image"
@@ -45,7 +45,7 @@ export default function RootLayout({
         <html lang="en">
             <head>
                 <link rel="apple-touch-icon" sizes="180x180" href="/images/icon.png" />
-                <link rel="canonical" href="https://collate.run" />
+                <link rel="canonical" href="https://collate.harveycoombs.com" />
             </head>
             <body className={`h-screen ${inter.className} bg-white text-slate-600`}>
                 {children}
