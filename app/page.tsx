@@ -134,13 +134,13 @@ export default function Home() {
 
                     <div className="flex items-center gap-5 mt-12">
                         <div className="py-2 pl-3.5 pr-2 rounded-xl border border-slate-300 flex items-center duration-100 justify-between gap-2 w-full has-[input:focus]:border-sky-500 has-[input:focus]:shadow-md" onKeyUp={(e: any) => (e.key == "Enter") && search()}>
-                            <input type="text" className="w-full focus:outline-none text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} onInput={updateButtonAvailability} />
+                            <input type="text" className="w-full focus:outline-hidden text-sm placeholder:text-slate-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} onInput={updateButtonAvailability} />
                             <Button ref={searchButton} classes="shrink-0" disabled>{image ? "Image " : ""}Search</Button>
                         </div>
 
                         <div className="relative">
                             <SearchOption icon={faCamera} title="Search with Image" selected={image} classes={image ? "pointer-events-none cursor-default" : ""} onClick={() => imageUploader?.current?.click()} />
-                            {image && <div className="absolute bottom-[-4px] right-[-4px] aspect-square p-0.5 text-[10px] leading-none rounded-sm text-white bg-red-500 cursor-pointer duration-100" title="Delete Image" onClick={deleteUpload}><FontAwesomeIcon icon={faTrashAlt} /></div>}
+                            {image && <div className="absolute bottom-[-4px] right-[-4px] aspect-square p-0.5 text-[10px] leading-none rounded-xs text-white bg-red-500 cursor-pointer duration-100" title="Delete Image" onClick={deleteUpload}><FontAwesomeIcon icon={faTrashAlt} /></div>}
                         </div>
 
                         <SearchOption icon={faClockRotateLeft} selected={recentSearchesAreVisible} onClick={() => setRecentSearchesVisibility(!recentSearchesAreVisible)} title="Show Recent Searches" />
