@@ -1,4 +1,4 @@
-import Header from "@/app/components/header";
+import Header from "@/app/components/Header";
 
 interface Properties {
     title?: string;

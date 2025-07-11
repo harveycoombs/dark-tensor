@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClockRotateLeft, faSliders, faMagnifyingGlass, faCompass, faCode, faNewspaper, faDollarSign, faCircleNotch, faCamera, faTrashAlt, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "@/app/components/header";
+import Header from "@/app/components/Header";
 import Logo from "@/app/components/common/logo";
 import Button from "@/app/components/common/button";
 import Tile from "@/app/components/common/tile";

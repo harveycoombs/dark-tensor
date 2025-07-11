@@ -4,7 +4,8 @@ import { Inter } from "next/font/google";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "./globals.css";
 
-import Footer from "./components/footer";
+import Footer from "@/app/components/Footer";
+import packageJson from "@/package.json";
 
 const inter = Inter({
     weight: ["400", "500", "600", "700", "900"],
@@ -14,7 +15,7 @@ const inter = Inter({
 const description = "Find & summarise anything on the web with AI";
 
 export const metadata: Metadata = {
-    title: `Collate AI · ${process.env.APP_VERSION}`,
+    title: `Collate AI · ${packageJson.version}`,
     description: description,
     icons: { icon: "/images/icon.png" },
     openGraph: {
