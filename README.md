@@ -1,3 +1,3 @@
-# Collate
+# Dark Tensor
 
-Collate is an AI-powered search and summarisation tool.
+Dark Tensor is an AI-powered search, research and summarisation tool.
