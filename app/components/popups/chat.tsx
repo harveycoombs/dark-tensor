@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 
-import Popup from "@/app/components/common/popup";
-import Button from "@/app/components/common/button";
-import Field from "@/app/components/common/field";
+import Popup from "@/app/components/common/Popup";
+import Button from "@/app/components/common/Button";
+import Field from "@/app/components/common/Field";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faClockRotateLeft, faDownload, faEllipsis, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
@@ -130,7 +130,7 @@ export default function ChatPopup({ model, onClose }: Properties) {
             <div className={`w-1300 flex${conversationHistoryIsVisible ? " gap-3" :""}`}>
                 <div className="w-full pt-2.5">
                     <div className="flex justify-between items-center text-sm relative z-10 pb-2.5 shadow-[0_0_6px_6px_white]">
-                        <div className="text-slate-400/60">Model: <strong className="font-bold text-slate-600">{getModelCleanName(model ?? "deepseek-v2:lite")}</strong></div>
+                        <div className="text-gray-400/60">Model: <strong className="font-bold text-gray-600">{getModelCleanName(model ?? "deepseek-v2:lite")}</strong></div>
                         <div>
                             <ChatOption icon={faPlus} title="New Conversation" onClick={startNewConversation} />
                             <ChatOption icon={faClockRotateLeft} title="View Conversation History" onClick={openConversationHistory} selected={conversationHistoryIsVisible} />
@@ -139,7 +139,7 @@ export default function ChatPopup({ model, onClose }: Properties) {
                     </div>
                     <div className={`h-1/2-screen overflow-auto ${messages.length ? "" : "grid place-items-center pointer-events-none"}`} ref={chatArea}>{
                         messages.length ? messages.map((message, index) => <ChatMessage key={index} message={message} />)
-                        : <div className="text-center"><strong className="text-xl text-slate-400/60 font-semibold">Welcome to Chat</strong><div className="text-xs text-slate-400 mt-1.5">Start a conversation by typing a message below</div></div>
+                        : <div className="text-center"><strong className="text-xl text-gray-400/60 font-semibold">Welcome to Chat</strong><div className="text-xs text-gray-400 mt-1.5">Start a conversation by typing a message below</div></div>
                     }
                     {loading ? <div className="px-3 py-0.5 mt-4 text-lg max-w-23/50 rounded-lg bg-sky-400 text-white w-fit mb-5"><FontAwesomeIcon icon={faEllipsis} className="animate-pulse" /></div> : null}
                     </div>
@@ -149,9 +149,9 @@ export default function ChatPopup({ model, onClose }: Properties) {
                     </div>
                 </div>
                 <motion.div className="w-56 shrink-0 overflow-hidden" initial={{ width: conversationHistoryIsVisible ? "0px" : "256px" }} animate={{ width: conversationHistoryIsVisible ? "256px" : "0px" }} transition={{ duration: 0.25, ease: "easeInOut" }}>
-                    <div className="w-full h-full pl-3 pt-2.5 border-l border-l-slate-300">
+                    <div className="w-full h-full pl-3 pt-2.5 border-l border-l-gray-300">
                         <strong className="block text-sm font-semibold">History</strong>
-                        {historyloading ? <div className="text-slate-400/60 mt-1.5">
+                        {historyloading ? <div className="text-gray-400/60 mt-1.5">
                             <FontAwesomeIcon icon={faCircleNotch} className="animate-spin leading-none inline-block align-middle" />
                             <span className="text-sm leading-none inline-block align-middle font-medium ml-1.5">Loading</span>
                         </div> : conversationHistory}
@@ -165,22 +165,22 @@ export default function ChatPopup({ model, onClose }: Properties) {
 function ChatMessage({ message, ...rest }: any) {
     return (
         <div className={`w-5/12 mt-4 ${message.you ? "ml-auto" : "mr-auto"}`}>
-            <div className={`px-3 py-2 text-sm max-w-23/50 rounded-lg ${message.you ? "bg-slate-100 text-slate-400" : "bg-sky-400 text-white"}`} {...rest}>{message.content.split("\n").map((line: string, index: number) => <span key={index}>{line}<br/></span>)}</div>
-            <div className="text-xs text-slate-400 mt-1" title={message.timestamp.toLocaleString()}>{message.timestamp.toLocaleString(undefined, { hour: "2-digit", minute: "2-digit" })}{!message.you ? <> &middot; Thought for {Math.round(message.interval / 1000
+            <div className={`px-3 py-2 text-sm max-w-23/50 rounded-lg ${message.you ? "bg-gray-100 text-gray-400" : "bg-sky-400 text-white"}`} {...rest}>{message.content.split("\n").map((line: string, index: number) => <span key={index}>{line}<br/></span>)}</div>
+            <div className="text-xs text-gray-400 mt-1" title={message.timestamp.toLocaleString()}>{message.timestamp.toLocaleString(undefined, { hour: "2-digit", minute: "2-digit" })}{!message.you ? <> &middot; Thought for {Math.round(message.interval / 1000
             )} seconds</> : null}</div>
         </div>
     );
 }
 
 function ChatOption({ icon, selected, ...rest }: any) {
-    return <div className={`inline-block align-middle ml-3.5 text-base cursor-pointer duration-100 ${selected ? "text-slate-400" : "text-slate-400/60"} hover:text-slate-400 active:text-slate-500`} {...rest}><FontAwesomeIcon icon={icon} /></div>
+    return <div className={`inline-block align-middle ml-3.5 text-base cursor-pointer duration-200 ${selected ? "text-gray-400" : "text-gray-400/60"} hover:text-gray-400 active:text-gray-500`} {...rest}><FontAwesomeIcon icon={icon} /></div>
 }
 
 function Conversation({ data, ...rest }: any) {
     return (
-        <div className="px-2 py-1 rounded-md mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/85" {...rest}>
+        <div className="px-2 py-1 rounded-md mt-1 cursor-pointer duration-200 hover:bg-gray-50 active:bg-gray-100/85" {...rest}>
             <div className="text-sm leading-snug font-semibold">{data.summary}</div>
-            <div className="text-xs mt-1 text-slate-400/60">{new Date(data.start_date).toLocaleString(undefined, { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}</div>
+            <div className="text-xs mt-1 text-gray-400/60">{new Date(data.start_date).toLocaleString(undefined, { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}</div>
         </div>
     );
 }

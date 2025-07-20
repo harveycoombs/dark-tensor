@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 
-import Field from "@/app/components/common/field";
-import Label from "@/app/components/common/label";
-import Button from "@/app/components/common/button";
-import { Error, Warning } from "@/app/components/common/notices";
+import Field from "@/app/components/common/Field";
+import Label from "@/app/components/common/Label";
+import Button from "@/app/components/common/Button";
+import { Error, Warning } from "@/app/components/common/Notices";
 
 export default function LoginForm() {
     const [email, setEmail] = useState<string>("");
@@ -67,7 +67,7 @@ export default function LoginForm() {
             <Label error={errorExists} warning={warningExists} classes="mt-2.5">Password</Label>
             <Field classes="block w-full" disabled={loading} type="password" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("password", e.target.value)} />
             <Button classes="block w-full mt-2.5" disabled={loading || !email.length || !password.length} loading={loading}>Continue</Button>
-            <Button classes="block w-full mt-2.5" disabled={loading} transparent={true} url="/register">Register</Button>
+            <Button classes="block w-full mt-2.5" disabled={loading} url="/register">Register</Button>
         </form>
     );
 }

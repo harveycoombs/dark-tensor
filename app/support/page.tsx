@@ -1,4 +1,4 @@
-import InternalPage, { PageSection } from "@/app/components/common/internal";
+import InternalPage, { PageSection } from "@/app/components/common/Internal";
 
 export default function Support() {
     return (

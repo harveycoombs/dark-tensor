@@ -3,11 +3,11 @@ import { useEffect, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
-import Popup from "@/app/components/common/popup";
-import Button from "@/app/components/common/button";
-import Menu from "@/app/components/common/menu";
-import Field from "@/app/components/common/field";
-import Switch from "@/app/components/common/switch";
+import Popup from "@/app/components/common/Popup";
+import Button from "@/app/components/common/Button";
+import Menu from "@/app/components/common/Menu";
+import Field from "@/app/components/common/Field";
+import Switch from "@/app/components/common/Switch";
 
 interface Properties {
     onClose: () => void;
@@ -214,18 +214,18 @@ export default function SettingsPopup({ onClose }: Properties) {
     return (
         <Popup title="Settings" onClose={onClose}>
             {settings && user ? <div className="w-650 flex gap-3">
-                <div className="w-44 py-3 pr-3 border-r border-r-slate-300 shrink-0">
+                <div className="w-44 py-3 pr-3 border-r border-r-gray-300 shrink-0">
                     <div>
                         <div className="inline-grid align-middle place-items-center bg-sky-100 text-sky-500 text-sm leading-none select-none font-medium w-9 h-9 rounded-full">{(user.first_name.charAt(0).toUpperCase() + user.last_name.charAt(0)).toUpperCase()}</div>
                         <div className="inline-block align-middle mx-2">
                             <strong className="text-sm font-bold">{user.first_name} {user.last_name}</strong>
-                            <div className="text-xs font-medium text-slate-400/80">Joined {new Date(user.creation_date).toLocaleString(undefined, { year: "numeric", month: "short" })}</div>
+                            <div className="text-xs font-medium text-gray-400/80">Joined {new Date(user.creation_date).toLocaleString(undefined, { year: "numeric", month: "short" })}</div>
                         </div>
                         <div className="mt-2">
                             <SettingsMenuItem title="General" selected={currentSection == "general"} onClick={() => setCurrentSection("general")} />
                             <SettingsMenuItem title="Account" selected={currentSection == "account"} onClick={() => setCurrentSection("account")} />
                             <SettingsMenuItem title="Privacy & Security" selected={currentSection == "security"} onClick={() => setCurrentSection("security")} />
-                            <div className= "p-2 rounded-md leading-none text-[0.81rem] text-red-500 font-medium mt-1 cursor-pointer duration-100 hover:bg-red-50 active:bg-red-100/80" onClick={logout}>Log Out</div>
+                            <div className= "p-2 rounded-md leading-none text-[0.81rem] text-red-500 font-medium mt-1 cursor-pointer duration-200 hover:bg-red-50 active:bg-red-100/80" onClick={logout}>Log Out</div>
                         </div>
                     </div>
                 </div>
@@ -236,19 +236,19 @@ export default function SettingsPopup({ onClose }: Properties) {
                     </div>
                     <div>{sectionContent}</div>
                 </div>
-            </div> : <div className="w-650 h-96 grid place-items-center text-2xl text-slate-400/60 leading-none"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /></div>}
+            </div> : <div className="w-650 h-96 grid place-items-center text-2xl text-gray-400/60 leading-none"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /></div>}
         </Popup>
     );
 }
 
 function SettingsMenuItem({ title, selected, ...rest }: any) {
-    return <div className={`p-2 rounded-md leading-none text-[0.81rem] text-slate-400/60 font-medium${selected ? " bg-slate-100/80" : ""} mt-1 cursor-pointer duration-100 hover:bg-slate-50 active:bg-slate-100/80`} {...rest}>{title}</div>;
+    return <div className={`p-2 rounded-md leading-none text-[0.81rem] text-gray-400/60 font-medium${selected ? " bg-gray-100/80" : ""} mt-1 cursor-pointer duration-200 hover:bg-gray-50 active:bg-gray-100/80`} {...rest}>{title}</div>;
 }
 
 function FieldContainer({ title, children }: any) {
     return (
         <div className="flex items-center gap-3 w-full mt-2.5">
-            <div className="text-[0.81rem] text-slate-400/80 w-1/2">{title}</div>
+            <div className="text-[0.81rem] text-gray-400/80 w-1/2">{title}</div>
             <div className="w-1/2">{children}</div>
         </div>
     );

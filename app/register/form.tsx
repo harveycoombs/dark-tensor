@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 
-import Field from "@/app/components/common/field";
-import Label from "@/app/components/common/label";
-import Button from "@/app/components/common/button";
-import { Error, Warning } from "@/app/components/common/notices";
+import Field from "@/app/components/common/Field";
+import Label from "@/app/components/common/Label";
+import Button from "@/app/components/common/Button";
+import { Error, Warning } from "@/app/components/common/Notices";
 
 export default function RegistrationForm() {
     const [email, setEmail] = useState<string>("");
@@ -110,7 +110,7 @@ export default function RegistrationForm() {
                 </div>
             </div>
             <Button classes="block w-60 mx-auto mt-6" disabled={loading || !firstName.length || !lastName.length || !email.length || !password.length || !passwordConfirmation.length} loading={loading}>Continue</Button>
-            <Button classes="block w-60 mx-auto mt-2.5" disabled={loading} transparent={true} url="/login">I Already Have an Account</Button>
+            <Button classes="block w-60 mx-auto mt-2.5" disabled={loading} url="/login">I Already Have an Account</Button>
         </form>
     );
 }

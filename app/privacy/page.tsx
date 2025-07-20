@@ -1,4 +1,4 @@
-import InternalPage, { PageSection } from "@/app/components/common/internal";
+import InternalPage, { PageSection } from "@/app/components/common/Internal";
 import Link from "next/link";
 
 export default function Privacy() {
@@ -9,7 +9,7 @@ export default function Privacy() {
 
                 <p>By using our service, you agree to the practices described in this Privacy Policy. Please read it carefully to understand how your information is handled.</p>
 
-                <h2 className="text-xl font-semibold text-slate-600 mt-4 mb-1">1. Information We Collect</h2>
+                <h2 className="text-xl font-semibold text-gray-600 mt-4 mb-1">1. Information We Collect</h2>
                 <p>We collect various types of information to provide and improve our services, including:</p>
 
                 <h3>a. Information You Provide:</h3>
@@ -28,7 +28,7 @@ export default function Privacy() {
 
                 <p>c. Data from Third Parties: We may receive data from third-party partners, such as advertisers or analytics services, to improve the relevance of search results and understand usage trends.</p>
 
-                <h2 className="text-xl font-semibold text-slate-600 mt-4 mb-1">2. How We Use Your Information</h2>
+                <h2 className="text-xl font-semibold text-gray-600 mt-4 mb-1">2. How We Use Your Information</h2>
                 <p>We use the information we collect for various purposes, including:</p>
 
                 <p>To Provide and Improve Services: Deliver accurate search results and personalize your experience.</p>
@@ -39,7 +39,7 @@ export default function Privacy() {
 
                 <p>To Protect and Secure: Detect and prevent fraudulent activities and ensure the security of our systems.</p>
 
-                <h2 className="text-xl font-semibold text-slate-600 mt-4 mb-1">3. Data Sharing and Disclosure</h2>
+                <h2 className="text-xl font-semibold text-gray-600 mt-4 mb-1">3. Data Sharing and Disclosure</h2>
                 <p>We do not sell, trade, or rent your personal information to third parties. However, we may share information in the following circumstances:</p>
 
                 <p>Service Providers: We may share data with trusted third-party vendors who assist in operating our service, such as hosting providers and analytics partners.</p>
@@ -48,13 +48,13 @@ export default function Privacy() {
 
                 <p>Business Transfers: In the event of a merger, acquisition, or sale of assets, your data may be transferred as part of the transaction.</p>
 
-                <h2 className="text-xl font-semibold text-slate-600 mt-4 mb-1">4. Data Retention</h2>
+                <h2 className="text-xl font-semibold text-gray-600 mt-4 mb-1">4. Data Retention</h2>
                 <p>We retain your information for as long as necessary to fulfill the purposes outlined in this Privacy Policy or as required by law. If you delete your account, we will make reasonable efforts to remove your personal information from our records, subject to legal obligations.</p>
 
-                <h2 className="text-xl font-semibold text-slate-600 mt-4 mb-1">5. Data Security</h2>
+                <h2 className="text-xl font-semibold text-gray-600 mt-4 mb-1">5. Data Security</h2>
                 <p>We take reasonable precautions to protect your information from unauthorized access, alteration, or disclosure. However, no system is entirely secure, and we cannot guarantee absolute security.</p>
 
-                <h2 className="text-xl font-semibold text-slate-600 mt-4 mb-1">6. Your Rights and Choices</h2>
+                <h2 className="text-xl font-semibold text-gray-600 mt-4 mb-1">6. Your Rights and Choices</h2>
                 <p>You have the following rights regarding your personal data:</p>
 
                 <p>Access and Correction: You can access and update your personal information in your account settings or by contacting us.</p>
@@ -65,19 +65,19 @@ export default function Privacy() {
 
                 <p>Opt-Out of Marketing: If you receive marketing communications, you can opt out by following the instructions in the email or by contacting us directly.</p>
 
-                <h2 className="text-xl font-semibold text-slate-600 mt-4 mb-1">7. International Data Transfers</h2>
+                <h2 className="text-xl font-semibold text-gray-600 mt-4 mb-1">7. International Data Transfers</h2>
                 <p>If you are located outside of the United States, please note that your data may be transferred to, stored, and processed in the United States or other countries where our servers or service providers are located. By using our services, you consent to these transfers.</p>
 
-                <h2 className="text-xl font-semibold text-slate-600 mt-4 mb-1">8. Children's Privacy</h2>
+                <h2 className="text-xl font-semibold text-gray-600 mt-4 mb-1">8. Children's Privacy</h2>
                 <p>Our search engine is not intended for users under the age of 18, and we do not knowingly collect personal data from children. If we become aware that we have inadvertently collected personal information from a child under the age of 13, we will take steps to delete that information.</p>
 
-                <h2 className="text-xl font-semibold text-slate-600 mt-4 mb-1">9. Changes to This Privacy Policy</h2>
+                <h2 className="text-xl font-semibold text-gray-600 mt-4 mb-1">9. Changes to This Privacy Policy</h2>
                 <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date. We encourage you to review this Privacy Policy periodically to stay informed about how we are protecting your information.</p>
 
-                <h2 className="text-xl font-semibold text-slate-600 mt-4 mb-1">10. Contact Us</h2>
+                <h2 className="text-xl font-semibold text-gray-600 mt-4 mb-1">10. Contact Us</h2>
                 <p>If you have any questions or concerns about this Privacy Policy or how we handle your data, please contact us at:</p>
 
-                <Link href="mailto:contact@collate.harveycoombs.com">contact@collate.harveycoombs.com</Link>
+                <Link href="mailto:contact@darktensor.harveycoombs.com">contact@darktensor.harveycoombs.com</Link>
 
             </PageSection>
         </InternalPage>

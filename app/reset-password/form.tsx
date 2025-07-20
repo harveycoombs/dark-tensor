@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 
-import Field from "@/app/components/common/field";
-import Label from "@/app/components/common/label";
-import Button from "@/app/components/common/button";
-import { Error, Warning } from "@/app/components/common/notices";
+import Field from "@/app/components/common/Field";
+import Label from "@/app/components/common/Label";
+import Button from "@/app/components/common/Button";
+import { Error, Warning } from "@/app/components/common/Notices";
 
 export default function PasswordResetForm() {
     const [email, setEmail] = useState<string>("");
