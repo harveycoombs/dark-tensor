@@ -1,7 +1,7 @@
-import type { Pool } from "mysql2/promise";
+import type { Pool } from "pg";
 
 declare global {
-    var _mysqlPool: Pool | undefined;
+    var _pgPool: Pool|undefined;
 }
 
 export {};

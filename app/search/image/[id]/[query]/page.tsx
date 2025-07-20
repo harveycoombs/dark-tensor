@@ -69,8 +69,8 @@ export default function ImageSearch(e: any) {
             if (!response.ok) return;
 
             const data = await response.json();
-            setSummary(<motion.div className="w-650 rounded-xl px-4 py-3 bg-sky-50 text-sky-400 mx-auto relative max-[700px]:w-full max-[700px]:px-3" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} transition={{ duration: 1, ease: "easeInOut" }} style={{ overflow: "hidden", transformOrigin: "top center" }}>
-                <h2 className="block mb-2 text-sky-500 font-semibold select-none">Summary</h2>
+            setSummary(<motion.div className="w-650 rounded-xl px-4 py-3 bg-blue-50 text-blue-400 mx-auto relative max-[700px]:w-full max-[700px]:px-3" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} transition={{ duration: 1, ease: "easeInOut" }} style={{ overflow: "hidden", transformOrigin: "top center" }}>
+                <h2 className="block mb-2 text-blue-500 font-semibold select-none">Summary</h2>
                 <p className="text-sm leading-relaxed">{data.summary}</p>
             </motion.div>);
             setLoading(false);
@@ -83,7 +83,7 @@ export default function ImageSearch(e: any) {
                 <div className="w-650 mx-auto mb-3 max-[700px]:w-full">
                     <Link href="/" className="group text-sm duration-200 font-medium hover:text-gray-500/75"><FontAwesomeIcon icon={faArrowLeft} className="pr-1 duration-200 group-hover:pr-2" />Back to Search</Link>
                 </div>
-                <div className="w-650 mx-auto py-2 pl-3.5 pr-2 mb-6 rounded-xl border border-gray-300 flex items-center duration-200 justify-between gap-2 has-[input:focus]:border-sky-500 has-[input:focus]:shadow-md max-[700px]:w-full">
+                <div className="w-650 mx-auto py-2 pl-3.5 pr-2 mb-6 rounded-xl border border-gray-300 flex items-center duration-200 justify-between gap-2 has-[input:focus]:border-blue-500 has-[input:focus]:shadow-md max-[700px]:w-full">
                     {image && b64.length ? <Image src={b64} alt={image.name} width={26} height={26} className="rounded-sm aspect-square object-cover cursor-pointer duration-200 hover:opacity-80 active:opacity-70" onClick={() => setImageEnlargement(true)} /> : null}
                     <input type="text" className="w-full focus:outline-hidden text-sm placeholder:text-gray-400/60 placeholder:select-none" placeholder="Start typing..." defaultValue={decodeURI(query)} readOnly={true} />
                     <Button classes="invisible">Search</Button>

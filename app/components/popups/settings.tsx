@@ -216,7 +216,7 @@ export default function SettingsPopup({ onClose }: Properties) {
             {settings && user ? <div className="w-650 flex gap-3">
                 <div className="w-44 py-3 pr-3 border-r border-r-gray-300 shrink-0">
                     <div>
-                        <div className="inline-grid align-middle place-items-center bg-sky-100 text-sky-500 text-sm leading-none select-none font-medium w-9 h-9 rounded-full">{(user.first_name.charAt(0).toUpperCase() + user.last_name.charAt(0)).toUpperCase()}</div>
+                        <div className="inline-grid align-middle place-items-center bg-blue-100 text-blue-500 text-sm leading-none select-none font-medium w-9 h-9 rounded-full">{(user.first_name.charAt(0).toUpperCase() + user.last_name.charAt(0)).toUpperCase()}</div>
                         <div className="inline-block align-middle mx-2">
                             <strong className="text-sm font-bold">{user.first_name} {user.last_name}</strong>
                             <div className="text-xs font-medium text-gray-400/80">Joined {new Date(user.creation_date).toLocaleString(undefined, { year: "numeric", month: "short" })}</div>

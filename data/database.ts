@@ -1,22 +1,22 @@
 import "server-only";
-import mysql, { Pool } from "mysql2/promise";
+import { Pool } from "pg";
 
 let pool: Pool;
 
-if (!globalThis._mysqlPool) {
-    console.log("Database Connection Established Successfully");
+if (!globalThis._pgPool) {
+    console.log("PostgreSQL database connection established successfully.");
 
-    globalThis._mysqlPool = mysql.createPool({
+    globalThis._pgPool = new Pool({
         host: process.env.DATABASE_HOST,
         user: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
         database: process.env.DATABASE_SCHEMA,
-        connectionLimit: 100,
-        queueLimit: 0,
-        waitForConnections: true
+        max: 100,
+        idleTimeoutMillis: 30000,
+        connectionTimeoutMillis: 2000,
     });
 }
 
-pool = globalThis._mysqlPool;
+pool = globalThis._pgPool;
 
 export default pool;

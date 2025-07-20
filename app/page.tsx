@@ -130,7 +130,7 @@ export default function Home() {
                 <h2 className="text-lg text-gray-400/60 font-normal my-4 text-center">Find &amp; summarise anything on the web with AI</h2>
 
                 <div className="flex items-center gap-5 mt-12">
-                    <div className="p-2.5 pl-4 rounded-full border border-gray-300 flex items-center duration-200 justify-between gap-2 w-full has-[input:focus]:border-sky-500 has-[input:focus]:shadow-md" onKeyUp={(e: any) => (e.key == "Enter") && search()}>
+                    <div className="p-2.5 pl-4 rounded-full border border-gray-300 flex items-center duration-200 justify-between gap-2 w-full has-[input:focus]:border-blue-500 has-[input:focus]:shadow-md" onKeyUp={(e: any) => (e.key == "Enter") && search()}>
                         <input type="text" className="w-full focus:outline-hidden text-sm placeholder:text-gray-400/60 placeholder:select-none" placeholder="Start typing..." ref={searchField} onInput={updateButtonAvailability} />
                         <Button ref={searchButton} classes="shrink-0" disabled>{image ? "Image " : ""}Search</Button>
                     </div>
