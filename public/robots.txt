@@ -3,4 +3,4 @@ Disallow: /api/
 Disallow: /admin/
 Allow: /
 
-Sitemap: https://darktensor.harveycoombs.com/sitemap.xml
+Sitemap: https://darktensor.ai/sitemap.xml

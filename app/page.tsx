@@ -123,8 +123,8 @@ export default function Home() {
     }
 
     return (
-        <main className="min-h-[calc(100vh-111px)] grid place-items-center">
-            <motion.div className="w-650 mx-auto max-[700px]:w-full max-[700px]:px-3" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeOut" }}>
+        <main className="min-h-[calc(100vh-150px)] grid place-items-center pb-6">
+            <motion.div className="w-160 mx-auto max-[700px]:w-full max-[700px]:px-3" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeOut" }}>
                 <AnimatedText className="block mx-auto h-auto w-3/4" />
 
                 <h2 className="text-lg text-gray-400/60 font-normal my-4 text-center">Find &amp; summarise anything on the web with AI</h2>

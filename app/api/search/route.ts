@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import { generate } from "@/data/model";
-import { insertSearchHistory } from "@/data/users";
-import { authenticate } from "@/data/jwt";
-import { parseHTML } from "@/data/utils";
+import { generate } from "@/lib/model";
+import { insertSearchHistory } from "@/lib/users";
+import { authenticate } from "@/lib/jwt";
+import { parseHTML } from "@/lib/utils";
 
 export async function GET(request: Request): Promise<NextResponse> {
     const url = new URL(request.url);

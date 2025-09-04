@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import { getSearchHistory } from "@/data/users";
-import { authenticate } from "@/data/jwt";
+import { getSearchHistory } from "@/lib/users";
+import { authenticate } from "@/lib/jwt";
 
 export async function GET(): Promise<NextResponse> {
     const cookieJar = await cookies();

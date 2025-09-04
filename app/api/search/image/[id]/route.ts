@@ -3,8 +3,8 @@ import { cookies } from "next/headers";
 import fs from "fs/promises";
 import mime from "mime";
 
-import { authenticate } from "@/data/jwt";
-import { generateFromImage } from "@/data/model";
+import { authenticate } from "@/lib/jwt";
+import { generateFromImage } from "@/lib/model";
 
 export async function GET(_: Request, { params }: any): Promise<NextResponse> {
     const { id } = await params;

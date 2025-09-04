@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "./globals.css";
@@ -8,7 +8,7 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import packageJson from "@/package.json";
 
-const inter = Inter({
+const geistmono = Geist_Mono({
     weight: ["300", "400", "500", "600", "700", "800"],
     subsets: ["latin"]
 });
@@ -50,7 +50,7 @@ export default function RootLayout({
                 <link rel="canonical" href="https://darktensor.ai" />
             </head>
 
-            <body className={`h-screen ${inter.className} bg-white text-gray-600`}>
+            <body className={`h-screen ${geistmono.className} bg-white text-gray-600`}>
                 <Header />
                 {children}
                 <Footer />

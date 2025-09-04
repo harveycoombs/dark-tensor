@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import { updateSettings } from "@/data/users";
-import { authenticate } from "@/data/jwt";
+import { updateSettings } from "@/lib/users";
+import { authenticate } from "@/lib/jwt";
 
 export async function PATCH(request: Request): Promise<NextResponse> {
     const cookieJar = await cookies();

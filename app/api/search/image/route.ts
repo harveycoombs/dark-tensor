@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import fs from "fs/promises";
 
-import { authenticate } from "@/data/jwt";
-import { insertImageSearchHistory } from "@/data/users";
+import { authenticate } from "@/lib/jwt";
+import { insertImageSearchHistory } from "@/lib/users";
 
 export async function POST(request: Request): Promise<NextResponse> {
     const data = await request.formData();
