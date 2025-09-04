@@ -127,7 +127,7 @@ export default function Home() {
             <motion.div className="w-160 mx-auto max-[700px]:w-full max-[700px]:px-3" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeOut" }}>
                 <AnimatedText className="block mx-auto h-auto w-3/4" />
 
-                <h2 className="text-lg text-gray-400/60 font-normal my-4 text-center">Find &amp; summarise anything on the web with AI</h2>
+                <h2 className="text-lg text-gray-400/60 font-normal my-4 text-center">Find &amp; summarise anything on the web with <span className="text-blue-600 font-semibold">AI</span></h2>
 
                 <div className="flex items-center gap-5 mt-12">
                     <div className="p-2.5 pl-4 rounded-full border border-gray-300 flex items-center duration-200 justify-between gap-2 w-full has-[input:focus]:border-blue-500 has-[input:focus]:shadow-md" onKeyUp={(e: any) => (e.key == "Enter") && search()}>

@@ -25,7 +25,7 @@ export default function Header() {
         <header className="p-4 select-none bg-white sticky top-0 z-30 w-340 mx-auto">
             <div className="p-3 border border-gray-200 rounded-full flex justify-between items-center">
                 <nav className="flex gap-8 items-center">
-                    <Link href="/" className="text-blue-600 duration-200 hover:text-gray-600 active:text-gray-500">
+                    <Link href="/" className="text-blue-600 duration-200 hover:text-blue-500 active:text-blue-400">
                         <Logo width={32} height={32} />
                     </Link>
 
