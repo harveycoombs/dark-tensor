@@ -19,7 +19,7 @@ export async function GET(_: Request, { params }: any): Promise<NextResponse> {
 
     const content = await fs.readFile(`./uploads/${file}`);
 
-    return new NextResponse(content, {
+    return new NextResponse(new Uint8Array(content), {
         headers: {
             "Content-Type": mime.getType(`./uploads/${file}`) ?? "application/octet-stream",
             "Content-Disposition": `inline; filename="${file.substring(file.indexOf("-") + 1)}"`
