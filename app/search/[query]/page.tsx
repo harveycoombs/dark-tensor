@@ -84,7 +84,7 @@ export default function Search(e: any) {
                     <Link href="/" className="group text-sm duration-200 font-medium hover:text-gray-500/75"><FontAwesomeIcon icon={faArrowLeft} className="pr-1 duration-200 group-hover:pr-2" />Back to Search</Link>
                 </div>
 
-                <div className="w-160 mx-auto py-2 pl-3.5 pr-2 mb-6 rounded-xl border border-gray-300 flex items-center duration-200 justify-between gap-2 has-[input:focus]:border-blue-500 has-[input:focus]:shadow-md max-[700px]:w-full">
+                <div className="w-160 mx-auto py-2 px-5 mb-6 rounded-full border border-gray-300 flex items-center duration-200 justify-between gap-2 has-[input:focus]:border-blue-500 has-[input:focus]:shadow-md max-[700px]:w-full">
                     <input type="text" className="w-full focus:outline-hidden text-sm placeholder:text-gray-400/60 placeholder:select-none" placeholder="Start typing..." value={query} readOnly={true} />
                     <Button classes="invisible">Search</Button>
                 </div>
