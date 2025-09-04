@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import { generate } from "@/lib/model";
 import { insertSearchHistory } from "@/lib/users";
 import { authenticate } from "@/lib/jwt";
-import { parseHTML } from "@/lib/utils";
 
 export async function GET(request: Request): Promise<NextResponse> {
     const url = new URL(request.url);
@@ -29,7 +28,7 @@ export async function GET(request: Request): Promise<NextResponse> {
 
         const results = await Promise.all(json.items.map(async (result: any) => {
             const summary = await generate({
-                model: currentSessionUser?.search_model ?? "deepseek-v2:lite",
+                model: currentSessionUser?.search_model || "gpt-oss:20b",
                 prompt: `Generate a ${style} summary of the following website in ${resultSummaryLength} words or less:
                 Title: '${result.title}'
                 Link: '${result.link}'
@@ -41,7 +40,7 @@ export async function GET(request: Request): Promise<NextResponse> {
         }));
 
         const summary = await generate({
-            model: currentSessionUser?.search_model ?? "deepseek-v2:lite",
+            model: currentSessionUser?.search_model || "gpt-oss:20b",
             prompt: `Using the following JSON search results, and your own knowledge, generate an overall ${style} consensus in ${overallSummaryLength} words or less: ${JSON.stringify(results)}. Do not hallucinate or speak in any other language than English. You must not exceed the length provided, under any circumstance.`
         });
 

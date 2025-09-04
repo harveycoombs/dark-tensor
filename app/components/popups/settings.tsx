@@ -15,12 +15,7 @@ interface Properties {
 
 export default function SettingsPopup({ onClose }: Properties) {
     const models = [
-        { value: "deepseek-v2:lite", label: "DeepSeek-V2-Lite (15.7B)" },
-        { value: "llama3.1", label: "Llama 3.1 (8B)" },
-        { value: "llama3.2:1b", label: "Llama 3.2 (1B)" },
-        { value: "llama3.2:3b", label: "Llama 3.2 (3B)" },
-        { value: "qwq", label: "QwQ (32B)" },
-        { value: "mistral", label: "Mistral (7B)" }
+        { value: "gpt-oss:20b", label: "GPT OSS (20B)" },
     ];
 
     const visionModels = [

@@ -87,7 +87,7 @@ export async function insertImageSearchHistory(userid: number): Promise<number> 
 export async function recordConversation(userid: number, messages: any): Promise<number> {
     try {
         const summary = await generate({
-            model: "deepseek-v2:lite",
+            model: "gpt-oss:20b",
             prompt: `Summarise the following text into a sentence without a period at the end and no longer than 5 words: ${messages[0].content}`
         }) ?? "Unknown Chat";
 
