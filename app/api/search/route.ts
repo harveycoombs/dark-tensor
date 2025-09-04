@@ -10,9 +10,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     const params = url.searchParams;
     const query = params.get("query");
 
-    if (!query) {
-        return NextResponse.json({ error: "Invalid prompt." }, { status: 400 });
-    }
+    if (!query) return NextResponse.json({ error: "Invalid prompt." }, { status: 400 });
 
     const cookieJar = await cookies();
     const token = cookieJar.get("token")?.value;
