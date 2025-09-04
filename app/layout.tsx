@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
+import { cookies } from "next/headers";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "./globals.css";
@@ -7,8 +8,10 @@ import "./globals.css";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import packageJson from "@/package.json";
+import { authenticate } from "@/lib/jwt";
+import UserProvider from "@/app/context/UserContext";
 
-const geistmono = Geist_Mono({
+const geistMono = Geist_Mono({
     weight: ["300", "400", "500", "600", "700", "800"],
     subsets: ["latin"]
 });
@@ -38,11 +41,15 @@ export const metadata: Metadata = {
     }
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const cookieJar = await cookies();
+    const token = cookieJar.get("token")?.value ?? "";
+    const user = await authenticate(token);
+    
     return (
         <html lang="en">
             <head>
@@ -50,10 +57,12 @@ export default function RootLayout({
                 <link rel="canonical" href="https://darktensor.ai" />
             </head>
 
-            <body className={`h-screen ${geistmono.className} bg-white text-gray-600`}>
-                <Header />
-                {children}
-                <Footer />
+            <body className={`h-screen ${geistMono.className} bg-white text-gray-600`}>
+                <UserProvider user={user}>
+                    <Header />
+                    {children}
+                    <Footer />
+                </UserProvider>
             </body>
         </html>
     );

@@ -30,7 +30,7 @@ export default function Home() {
             const response = await fetch("/api/users/searches");
 
             if (response.status == 401) {
-                setRecentSearchesArea(<div className="text-sm font-medium text-gray-400/60">You are not signed in. <Link href="/login" className="hover:underline">Click here</Link> to sign in and view your recent searches</div>);
+                setRecentSearchesArea(<div className="text-sm font-medium text-gray-400/60">You are not signed in. <Link href="/signin" className="hover:underline">Click here</Link> to sign in and view your recent searches</div>);
             } else if (!response.ok) {
                 setRecentSearchesArea(<div className="text-sm font-medium text-red-500">Something went wrong. Please try again later or report this issue if it persists</div>);
                 return;

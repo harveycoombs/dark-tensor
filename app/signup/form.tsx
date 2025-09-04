@@ -110,7 +110,7 @@ export default function RegistrationForm() {
                 </div>
             </div>
             <Button classes="block w-60 mx-auto mt-6" disabled={loading || !firstName.length || !lastName.length || !email.length || !password.length || !passwordConfirmation.length} loading={loading}>Continue</Button>
-            <Button classes="block w-60 mx-auto mt-2.5" disabled={loading} url="/login">I Already Have an Account</Button>
+            <Button classes="block w-60 mx-auto mt-2.5" disabled={loading} url="/signin">I Already Have an Account</Button>
         </form>
     );
 }
