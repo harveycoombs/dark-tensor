@@ -92,9 +92,9 @@ export default function Search(e: any) {
                 {loading && <div className="w-160 mx-auto select-none text-center font-medium text-gray-400/60 max-[700px]:w-full"><FontAwesomeIcon icon={faCircleNotch} className="animate-spin" /><span className="pl-2">Generating Summary</span></div>}
 
                 {!loading && summary.length > 0 && (
-                    <motion.div className="w-340 rounded-xl px-4 py-3 bg-blue-50 text-blue-400 mx-auto relative max-[700px]:w-full max-[700px]:px-3" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} transition={{ duration: 1, ease: "easeInOut" }} style={{ overflow: "hidden", transformOrigin: "top center" }}>
+                    <motion.div className="w-160 rounded-xl px-4 py-3 bg-blue-50 text-blue-400 mx-auto relative max-[700px]:w-full max-[700px]:px-3" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} transition={{ duration: 1, ease: "easeInOut" }} style={{ overflow: "hidden", transformOrigin: "top center" }}>
                         <h2 className="block mb-2 text-blue-500 font-semibold select-none">Summary</h2>
-                        <p className="text-sm leading-relaxed">{formatSummary(summary)}</p>
+                        <p className="text-sm leading-relaxed">{summary}</p>
                     </motion.div>
                 )}
 
