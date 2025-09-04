@@ -9,6 +9,29 @@ export function getModelCleanName(name: string) {
     }
 }
 
+export function generateCode(length: number = 6): number {
+    return Math.floor(Math.pow(10, length - 1) + Math.random() * (Math.pow(10, length) - Math.pow(10, length - 1) - 1));
+}
+
+export function formatNumber(raw: number): string {
+    const formatter = new Intl.NumberFormat("en-US");
+    return formatter.format(raw);
+}
+
+export function formatTime(ms: number): string {
+    switch (true) {
+        case (ms >= 1000 && ms < 60000):
+            return `${Math.floor(ms / 1000)}s`;
+        case (ms >= 60000 && ms < 3600000):
+            return `${Math.floor(ms / 60000)}m`;
+        case (ms >= 3600000 && ms < 86400000):
+            return `${Math.floor(ms / 3600000)}h`;
+        case (ms >= 86400000):
+        default:
+            return `${ms}ms`;
+    }
+}
+
 export function parseHTML(html: string): string {
     html = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
                .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "")

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Field from "@/app/components/common/Field";
 import Label from "@/app/components/common/Label";
@@ -44,30 +44,23 @@ export default function LoginForm() {
         window.location.href = "/";
     }
 
-    function updateField(name: string, value: string) {
-        switch (name) {
-            case "email":
-                setEmail(value);
-                break;
-            case "password":
-                setPassword(value);
-                break;
-        }
-
+    useEffect(() => {
         setErrorExistence(false);
         setWarningExistence(false);
         setFeedback(null);
-    }
+    }, [email, password]);
 
     return (
-        <form onSubmit={login} className="w-60">
+        <form onSubmit={login} className="block w-75.5">
             {feedback}
-            <Label error={errorExists} warning={warningExists} classes="mt-6">Email Address</Label>
-            <Field classes="block w-full" disabled={loading} type="email" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("email", e.target.value)} />
-            <Label error={errorExists} warning={warningExists} classes="mt-2.5">Password</Label>
-            <Field classes="block w-full" disabled={loading} type="password" error={errorExists} warning={warningExists} onInput={(e: any) => updateField("password", e.target.value)} />
-            <Button classes="block w-full mt-2.5" disabled={loading || !email.length || !password.length} loading={loading}>Continue</Button>
-            <Button classes="block w-full mt-2.5" disabled={loading} url="/signup" color="transparent">Register</Button>
+
+            <Label error={errorExists} warning={warningExists}>Email Address</Label>
+            <Field classes="block w-full" disabled={loading} type="email" error={errorExists} warning={warningExists} onInput={(e: any) => setEmail(e.target.value)} />
+            <Label error={errorExists} warning={warningExists} classes="mt-3.25">Password</Label>
+            <Field classes="block w-full" disabled={loading} type="password" error={errorExists} warning={warningExists} onInput={(e: any) => setPassword(e.target.value)} />
+
+            <Button classes="block w-full mt-3.25" disabled={loading || !email.length || !password.length} loading={loading}>Continue</Button>
+            <Button classes="block w-full mt-3.25" disabled={loading} url="/signup" color="transparent">Register</Button>
         </form>
     );
 }

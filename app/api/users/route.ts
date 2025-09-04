@@ -24,16 +24,15 @@ export async function POST(request: Request): Promise<NextResponse> {
     const password = data.get("password")?.toString();
     const firstName = data.get("firstname")?.toString();
     const lastName = data.get("lastname")?.toString();
-    const birthdate = data.get("birthdate")?.toString();
 
-    if (!email?.length || !password?.length || !firstName?.length || !lastName?.length || !birthdate?.length) {
+    if (!email?.length || !password?.length || !firstName?.length || !lastName?.length) {
         return NextResponse.json({ error: "One or more fields were not provided." }, { status: 400 });
     }
 
     const emailAlreadyExists = await emailExists(email);
     if (emailAlreadyExists) return NextResponse.json({ error: "Provided email address already exists." }, { status: 409 });
 
-    const userid = await createUser(email, password, firstName, lastName, birthdate);
+    const userid = await createUser(email, password, firstName, lastName);
 
     if (!userid) return NextResponse.json({ error: "Unable to create user." }, { status: 500 });
 
@@ -64,9 +63,6 @@ export async function PATCH(request: Request): Promise<NextResponse> {
         currentSessionUser.user_id,
         data.get("firstname")?.toString() ?? "",
         data.get("lastname")?.toString() ?? "",
-        data.get("location")?.toString() ?? "",
-        new Date(data.get("birthdate")?.toString() ?? ""),
-        data.get("gender")?.toString() ?? "",
         data.get("occupation")?.toString() ?? "",
         data.get("email")?.toString() ?? ""
     );
@@ -76,7 +72,7 @@ export async function PATCH(request: Request): Promise<NextResponse> {
 
 export async function DELETE(request: Request): Promise<NextResponse> {
     const data = await request.formData();
-    const userid = parseInt(data.get("userid")?.toString() ?? "0");
+    const userid = data.get("userid")?.toString() ?? "";
 
     const success = await deleteUser(userid);
 

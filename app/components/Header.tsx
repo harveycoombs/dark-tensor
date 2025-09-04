@@ -30,7 +30,7 @@ export default function Header() {
                     </Link>
 
                     <HeaderLink url="/about">About</HeaderLink>
-                    <HeaderLink url="/privacy">Privacy</HeaderLink>
+                    <HeaderLink url="/news">News</HeaderLink>
                     <HeaderLink url="/pricing">Pricing</HeaderLink>
                     <HeaderLink url="/support">Support</HeaderLink>
                 </nav>
@@ -45,14 +45,14 @@ export default function Header() {
                     </>
                 }</div>
                     
-                {settingsPopupIsVisible && user ? <SettingsPopup onClose={() => setSettingsPopupVisibility(false)} /> : null}
+                {settingsPopupIsVisible && user && <SettingsPopup onClose={() => setSettingsPopupVisibility(false)} />}
             </div>
         </header>
     );
 }
 
 function HeaderLink({ children, url }: any) {
-    return <Link href={url} className="text-sm text-gray-400/60 font-medium duration-200 hover:text-blue-400 active:text-blue-600">{children}</Link>;
+    return <Link href={url} className="text-sm text-gray-400/60 font-medium duration-200 hover:text-gray-400 active:text-gray-500">{children}</Link>;
 }
 
 function HeaderIconOption({ icon, ...rest }: any) {

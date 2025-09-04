@@ -16,11 +16,9 @@ export async function PATCH(request: Request): Promise<NextResponse> {
     const success = await updateSettings(
         currentSessionUser.user_id,
         data.get("theme")?.toString() ?? "",
-        data.get("searchmodel")?.toString() ?? "",
-        data.get("chatmodel")?.toString() ?? "",
+        data.get("model")?.toString() ?? "",
         data.get("visionmodel")?.toString() ?? "",
-        data.get("summarystyle")?.toString() ?? "",
-        data.get("chatstyle")?.toString() ?? ""
+        data.get("style")?.toString() ?? ""
     );
 
     return NextResponse.json({ success }, { status: 200 });

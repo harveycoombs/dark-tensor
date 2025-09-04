@@ -84,7 +84,7 @@ export default function ImageSearch(e: any) {
                     <Link href="/" className="group text-sm duration-200 font-medium hover:text-gray-500/75"><FontAwesomeIcon icon={faArrowLeft} className="pr-1 duration-200 group-hover:pr-2" />Back to Search</Link>
                 </div>
                 <div className="w-340 mx-auto py-2 pl-3.5 pr-2 mb-6 rounded-xl border border-gray-300 flex items-center duration-200 justify-between gap-2 has-[input:focus]:border-blue-500 has-[input:focus]:shadow-md max-[700px]:w-full">
-                    {image && b64.length ? <Image src={b64} alt={image.name} width={26} height={26} className="rounded-sm aspect-square object-cover cursor-pointer duration-200 hover:opacity-80 active:opacity-70" onClick={() => setImageEnlargement(true)} /> : null}
+                    {image && b64.length > 0 && <Image src={b64} alt={image.name} width={26} height={26} className="rounded-sm aspect-square object-cover cursor-pointer duration-200 hover:opacity-80 active:opacity-70" onClick={() => setImageEnlargement(true)} />}
                     <input type="text" className="w-full focus:outline-hidden text-sm placeholder:text-gray-400/60 placeholder:select-none" placeholder="Start typing..." defaultValue={decodeURI(query)} readOnly={true} />
                     <Button classes="invisible">Search</Button>
                 </div>
@@ -99,11 +99,11 @@ export default function ImageSearch(e: any) {
                 </div>
             </section>
 
-            {imageIsEnlarged && image && b64 ? <Popup title={image.name} onClose={() => setImageEnlargement(false)}>
+            {imageIsEnlarged && image && b64 && <Popup title={image.name} onClose={() => setImageEnlargement(false)}>
                 <div className="py-3">
                     <img src={b64} alt={image.name} className="block rounded-sm w-auto max-h-3/4-screen" draggable={false} />
                 </div>
-            </Popup> : null}
+            </Popup>}
         </main>
     );
 }
