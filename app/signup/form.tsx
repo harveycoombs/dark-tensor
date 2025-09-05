@@ -5,7 +5,7 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 import Field from "@/app/components/common/Field";
 import Label from "@/app/components/common/Label";
 import Button from "@/app/components/common/Button";
-import { Error, Warning } from "@/app/components/common/Notices";
+import Notice from "@/app/components/common/Notice";
 
 export default function RegistrationForm() {
     const [email, setEmail] = useState<string>("");
@@ -39,7 +39,7 @@ export default function RegistrationForm() {
             setWarningExistence(response.status == 400);
             setLoading(false);
 
-            setFeedback((response.status == 400) ? <Warning text={json.error} small={true} classes="mt-6" /> : <Error small={true} classes="mt-6" />);
+            setFeedback((response.status == 400) ? <Notice type="warning" classes="mt-6">{json.error}</Notice> : <Notice type="error" classes="mt-6">{json.error}</Notice>);
 
             return;
         }

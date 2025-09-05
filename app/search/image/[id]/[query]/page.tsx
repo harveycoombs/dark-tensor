@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "@/app/components/Header";
 import Button from "@/app/components/common/Button";
 import Result from "@/app/components/common/Result";
 import Popup from "@/app/components/common/Popup";

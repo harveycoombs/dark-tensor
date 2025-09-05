@@ -4,7 +4,7 @@ import { useState } from "react";
 import Field from "@/app/components/common/Field";
 import Label from "@/app/components/common/Label";
 import Button from "@/app/components/common/Button";
-import { Error, Warning } from "@/app/components/common/Notices";
+import Notice from "@/app/components/common/Notice";
 
 export default function PasswordResetForm() {
     const [email, setEmail] = useState<string>("");
@@ -35,7 +35,7 @@ export default function PasswordResetForm() {
         if (!response.ok) {
             setErrorExistence(response.status != 400);
             setWarningExistence(response.status == 400);
-            setFeedback((response.status == 400) ? <Warning text={json.error} /> : <Error text={json.error} />);
+            setFeedback((response.status == 400) ? <Notice type="warning" classes="mt-6">{json.error}</Notice> : <Notice type="error" classes="mt-6">{json.error}</Notice>);
 
             return;
         }

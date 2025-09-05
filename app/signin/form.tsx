@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Field from "@/app/components/common/Field";
 import Label from "@/app/components/common/Label";
 import Button from "@/app/components/common/Button";
-import { Error, Warning } from "@/app/components/common/Notices";
+import Notice from "@/app/components/common/Notice";
 
 export default function LoginForm() {
     const [email, setEmail] = useState<string>("");
@@ -24,7 +24,7 @@ export default function LoginForm() {
         setLoading(true);
         setFeedback(null);
 
-        const response = await fetch("/api/users/sessions", {
+        const response = await fetch("/api/users/session", {
             method: "POST",
             body: new URLSearchParams({ email, password })
         });
@@ -36,7 +36,7 @@ export default function LoginForm() {
             setWarningExistence(response.status == 400);
             setLoading(false);
 
-            setFeedback((response.status == 400) ? <Warning text="Invalid credentials" small={true} classes="mt-6" /> : <Error small={true} classes="mt-6" />);
+            setFeedback((response.status == 400) ? <Notice type="warning" classes="mt-6">Invalid credentials</Notice> : <Notice type="error" classes="mt-6">Invalid credentials</Notice>);
 
             return;
         }

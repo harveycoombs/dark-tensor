@@ -162,7 +162,7 @@ export default function SettingsPopup({ onClose }: Properties) {
     }
 
     async function logout() {
-        const response = await fetch("/api/users/sessions", { method: "DELETE" });
+        const response = await fetch("/api/users/session", { method: "DELETE" });
         if (!response.ok) return;
     
         window.location.reload();

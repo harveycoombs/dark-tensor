@@ -22,8 +22,8 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const email = data.get("email")?.toString();
     const password = data.get("password")?.toString();
-    const firstName = data.get("firstname")?.toString();
-    const lastName = data.get("lastname")?.toString();
+    const firstName = data.get("firstName")?.toString();
+    const lastName = data.get("lastName")?.toString();
 
     if (!email?.length || !password?.length || !firstName?.length || !lastName?.length) {
         return NextResponse.json({ error: "One or more fields were not provided." }, { status: 400 });

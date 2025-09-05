@@ -20,6 +20,8 @@ export async function GET(request: Request): Promise<NextResponse> {
         const response = await fetch(`https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${process.env.GOOGLE_API_KEY}&cx=${process.env.GOOGLE_SEARCH_ENGINE_ID}`);
         const json = await response.json();
 
+        if (!json.items) return NextResponse.json({ error: "No results found." }, { status: 404 });
+
         const results = await Promise.all(json.items.map(async (result: any) => {
             const summary = await generate({
                 model: "gemma3:12b-it-qat",//"gpt-oss:20b",

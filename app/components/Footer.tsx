@@ -6,7 +6,7 @@ import packageJson from "@/package.json";
 
 export default function Footer() {
     return (
-        <footer className="py-4 flex justify-between items-center border-t border-t-gray-200 text-sm select-none text-gray-400/60 w-340 mx-auto">
+        <footer className="py-4 flex justify-between items-center border-t border-t-gray-200 text-sm select-none text-gray-400/60 w-330 mx-auto">
             <div>&copy; 2024 &ndash; {new Date().getFullYear()} Dark Tensor {packageJson.version} &middot; <Link href="https://harveycoombs.com/" target="_blank" rel="noopener" className="hover:underline">Harvey Coombs</Link></div>
             <div className="flex items-center gap-3">
                 <Link href="/report" className="hover:underline">Report An Issue</Link>
